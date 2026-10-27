@@ -60,7 +60,7 @@ h1{ font-size:1.25rem; margin:0; letter-spacing:-0.01em; }
 .save-state{ font-size:.85rem; color:var(--muted); }
 .tabs{ display:flex; gap:4px; margin-top:10px; }
 .tab{
-  background:none; border:0; padding:8px 12px 10px; color:var(--muted);
+  background:none; border:0; padding:8px 10px 10px; white-space:nowrap; color:var(--muted);
   border-bottom:3px solid transparent; font-weight:700;
 }
 .tab[aria-selected="true"]{ color:var(--ink); border-bottom-color:var(--accent); }
@@ -107,9 +107,9 @@ main{ max-width:720px; margin:0 auto; padding:16px 16px 48px; }
 .item:first-of-type{ border-top:0; }
 .q{ margin:0 0 8px; display:flex; gap:10px; }
 .q .n{ color:var(--muted); min-width:1.6em; text-align:right; font-variant-numeric:tabular-nums; }
-.scale{ display:grid; grid-template-columns:repeat(4,1fr); gap:6px; padding-left:calc(1.6em + 10px); }
+.scale{ display:grid; grid-template-columns:repeat(4,1fr); gap:6px; }
 .scale button{
-  height:42px; border-radius:9px; border:1px solid var(--line); background:var(--bg); font-weight:700;
+  height:40px; font-size:.85rem; border-radius:9px; border:1px solid var(--line); background:var(--bg); font-weight:700;
   transition:background-color .12s, color .12s;
 }
 .scale button[aria-pressed="true"]{ background:var(--accent); color:var(--accent-ink); border-color:var(--accent); }
@@ -154,6 +154,28 @@ th{ color:var(--muted); font-weight:700; border-top:0; }
 .inline{ display:flex; align-items:center; flex-wrap:wrap; gap:8px; font-size:.95rem; }
 .opts input[type='number']{ width:4.5em; padding:6px 8px; }
 .skipped{ margin:0 0 10px; padding-left:20px; color:var(--muted); font-size:.88rem; }
+.mood{ display:grid; grid-template-columns:repeat(5,1fr); gap:6px; margin-bottom:10px; }
+.mood button{ border:1px solid var(--line); background:var(--bg); border-radius:10px; padding:8px 2px; font-size:.78rem; line-height:1.2; }
+.mood button b{ display:block; font-size:1.1rem; }
+.mood button[aria-pressed="true"]{ background:var(--accent); color:var(--accent-ink); border-color:var(--accent); }
+.sym-head{ display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; margin-bottom:6px; }
+.sym-head h2{ margin:0; }
+.sym-head .btn{ padding:7px 12px; font-size:.9rem; }
+.domain{ border-top:1px solid var(--line); padding:10px 0; }
+.domain:first-child{ border-top:0; }
+.gate{ display:flex; align-items:center; gap:12px; }
+.gate .gq{ flex:1; }
+.gate .gq span{ display:block; color:var(--muted); font-size:.85rem; }
+.yn{ display:flex; gap:6px; flex:none; }
+.yn button{ min-width:52px; height:40px; border-radius:9px; border:1px solid var(--line); background:var(--bg); font-weight:700; }
+.yn button[aria-pressed="true"][data-g="no"]{ background:var(--ink); color:var(--surface); border-color:var(--ink); }
+.yn button[aria-pressed="true"][data-g="yes"]{ background:var(--accent); color:var(--accent-ink); border-color:var(--accent); }
+.detail{ margin:10px 0 2px; padding-left:12px; border-left:3px solid var(--accent-soft); }
+.detail .q{ font-size:.92rem; margin:8px 0 6px; }
+.range{ display:flex; gap:4px; }
+.range button{ border:1px solid var(--line); background:var(--bg); border-radius:8px; padding:5px 10px; font-size:.85rem; font-weight:700; }
+.range button[aria-pressed="true"]{ background:var(--ink); color:var(--surface); border-color:var(--ink); }
+.yaxis{ width:34px !important; }
 [hidden]{ display:none !important; }
 @media (prefers-reduced-motion: reduce){ *{ transition:none !important; } }
 </style>
@@ -201,13 +223,23 @@ th{ color:var(--muted); font-weight:700; border-top:0; }
       </div>
     </div>
 
-    <div class="block" id="itemsBlock">
-      <h2>Rate each problem for today</h2>
-      <p class="hint">Fill this in each evening. Tap a number again to clear it.</p>
-      <div class="legend" aria-hidden="true">
-        <span><b>0</b>Not at all</span><span><b>1</b>Mild</span>
-        <span><b>2</b>Moderate</span><span><b>3</b>Severe</span>
+    <div class="block">
+      <h2>Overall mood today</h2>
+      <div class="mood" role="group" aria-label="Overall mood today">
+        <button data-mood="1" aria-pressed="false"><b>1</b>Very low</button>
+        <button data-mood="2" aria-pressed="false"><b>2</b>Low</button>
+        <button data-mood="3" aria-pressed="false"><b>3</b>Okay</button>
+        <button data-mood="4" aria-pressed="false"><b>4</b>Good</button>
+        <button data-mood="5" aria-pressed="false"><b>5</b>Very good</button>
       </div>
+    </div>
+
+    <div class="block" id="itemsBlock">
+      <div class="sym-head">
+        <h2>Symptoms today</h2>
+        <button class="btn" id="allClear">No symptoms today</button>
+      </div>
+      <p class="hint">Answer yes or no. Details open only when you answer yes.</p>
       <div id="items"></div>
     </div>
 
@@ -226,11 +258,19 @@ th{ color:var(--muted); font-weight:700; border-top:0; }
   <!-- HISTORY -->
   <section id="view-history" role="tabpanel" aria-labelledby="tab-history" hidden>
     <div class="block">
-      <h2>Average symptom score by day</h2>
-      <p class="hint">Mean of items 1–21 on the 0–3 scale. Tap a day to open it.</p>
+      <div class="sym-head">
+        <h2>Mood and symptoms</h2>
+        <div class="range" role="group" aria-label="Time range">
+          <button data-range="90" aria-pressed="true">3 mo</button>
+          <button data-range="365" aria-pressed="false">1 yr</button>
+          <button data-range="all" aria-pressed="false">All</button>
+        </div>
+      </div>
+      <p class="hint">Mood is 1 (very low) to 5 (very good). Symptoms are the day’s average, 0 (none) to 3 (severe). Tap a day to open it.</p>
       <div id="chartArea"></div>
       <div class="chart-legend">
-        <span><span class="sw" style="background:var(--s5)"></span>Symptom average</span>
+        <span><span class="sw" style="background:var(--accent);border-radius:50%"></span>Mood</span>
+        <span><span class="sw" style="background:var(--s5)"></span>Symptoms</span>
         <span><span class="sw" style="background:var(--bleed)"></span>Bleeding</span>
         <span><span class="sw" style="background:var(--spot)"></span>Spotting</span>
         <span><span class="sw" style="background:var(--muted);width:2px"></span>Period start</span>
@@ -294,7 +334,7 @@ th{ color:var(--muted); font-weight:700; border-top:0; }
 
     <div class="block prose">
       <h2>Export</h2>
-      <p>One row per logged day, with columns <code>date</code>, <code>cycle_day</code> (day 1 = first bleeding day), <code>days_to_next_period</code> (−1 = the day before), <code>menses</code>, <code>item01</code>–<code>item24</code> in DRSP order, and <code>notes</code>. Ratings are on a 0–3 scale (0 = not at all, 3 = severe).</p>
+      <p>One row per logged day, with columns <code>date</code>, <code>cycle_day</code> (day 1 = first bleeding day), <code>days_to_next_period</code> (−1 = the day before), <code>menses</code>, <code>mood</code> (1–5), <code>item01</code>–<code>item24</code> in DRSP order, and <code>notes</code>. Ratings are on a 0–3 scale (0 = not at all, 3 = severe).</p>
       <div class="stack">
         <button class="btn primary" id="exportBtn">Export CSV</button>
         <button class="btn" id="showCsvBtn">Show CSV to copy</button>
@@ -357,11 +397,20 @@ th{ color:var(--muted); font-weight:700; border-top:0; }
     "At least one of the problems above interfered with hobbies or social activities (e.g., avoided or did less)",
     "At least one of the problems above interfered with relationships with others"
   ];
-  var GROUPS = [
-    {title:null, from:0, to:16},
-    {title:"Physical", from:17, to:20},
-    {title:"Effect on daily life", from:21, to:23}
+  var DOMAINS = [
+    {q:"Low mood", sub:"Sad, hopeless, worthless or guilty", items:[0,1,2]},
+    {q:"Anxious or on edge", items:[3]},
+    {q:"Mood swings or extra sensitive", sub:"Suddenly tearful, feelings easily hurt", items:[4,5]},
+    {q:"Irritable or angry", sub:"Including conflicts with people", items:[6,7]},
+    {q:"Less interest in usual activities", items:[8]},
+    {q:"Trouble concentrating", items:[9]},
+    {q:"Tired or low energy", items:[10]},
+    {q:"Appetite changes or cravings", items:[11,12]},
+    {q:"Sleep problems", sub:"Sleeping more, or trouble sleeping", items:[13,14]},
+    {q:"Overwhelmed or out of control", items:[15,16]},
+    {q:"Physical symptoms", sub:"Breast tenderness, bloating, headache, aches", items:[17,18,19,20]}
   ];
+  var SEV = ["None","Mild","Moderate","Severe"];
   var KEY = "drsp-log-v1";
   var store = {entries:{}};
   var persistent = true;
@@ -401,16 +450,31 @@ th{ color:var(--muted); font-weight:700; border-top:0; }
   var cur = todayIso();
 
   // ---------- entries ----------
-  function blank(){ return {m:"none", r:ITEMS.map(function(){return null;}), n:""}; }
+  function blank(){ return {m:"none", r:ITEMS.map(function(){return null;}), n:"", mood:null, g:{}}; }
   function get(d){ return store.entries[d] || null; }
   function ensure(d){ if(!store.entries[d]) store.entries[d] = blank(); return store.entries[d]; }
-  function isEmpty(e){ return !e || (e.m==="none" && e.r.every(function(v){return v==null;}) && !e.n); }
+  function isEmpty(e){ return !e || (e.m==="none" && e.mood==null && e.r.every(function(v){return v==null;}) && !e.n); }
   function tidy(d){ if(isEmpty(store.entries[d])) delete store.entries[d]; }
   function ratedCount(e){ return e ? e.r.filter(function(v){return v!=null;}).length : 0; }
   function symptomMean(e){
     if(!e) return null; var s=0,n=0;
     for(var i=0;i<21;i++){ if(e.r[i]!=null){ s+=e.r[i]; n++; } }
     return n ? s/n : null;
+  }
+
+  function gateState(e, di){
+    if(!e) return null;
+    if(e.g && e.g[di]) return e.g[di];
+    var vals = DOMAINS[di].items.map(function(i){ return e.r[i]; });
+    if(vals.some(function(v){ return v!=null && v>0; })) return "yes";
+    if(vals.every(function(v){ return v===0; })) return "no";
+    return null;
+  }
+  function domainDone(e, di){
+    var st = gateState(e, di);
+    if(st==="no") return true;
+    if(st==="yes") return DOMAINS[di].items.every(function(i){ return e.r[i]!=null; });
+    return false;
   }
 
   // ---------- cycles ----------
@@ -426,36 +490,64 @@ th{ color:var(--muted); font-weight:700; border-top:0; }
     return {fwd:fwd, back:back};
   }
 
-  // ---------- build item rows once ----------
+  // ---------- build symptom questions once ----------
   var itemsEl = document.getElementById("items");
-  GROUPS.forEach(function(g){
-    if(g.title){
-      var h = document.createElement("h2"); h.textContent = g.title; h.style.margin = "18px 0 4px";
-      itemsEl.appendChild(h);
-    }
-    for(var i=g.from;i<=g.to;i++){
-      var wrap = document.createElement("div"); wrap.className = "item"; wrap.dataset.i = i;
-      var q = document.createElement("p"); q.className = "q"; q.id = "q"+i;
-      var n = document.createElement("span"); n.className = "n"; n.textContent = i+1;
-      var t = document.createElement("span"); t.textContent = ITEMS[i];
-      q.appendChild(n); q.appendChild(t);
+  DOMAINS.forEach(function(dm, di){
+    var box = document.createElement("div"); box.className = "domain"; box.dataset.di = di;
+    var gate = document.createElement("div"); gate.className = "gate";
+    var gq = document.createElement("div"); gq.className = "gq"; gq.id = "g"+di;
+    gq.appendChild(document.createTextNode(dm.q));
+    if(dm.sub){ var sb = document.createElement("span"); sb.textContent = dm.sub; gq.appendChild(sb); }
+    var yn = document.createElement("div"); yn.className = "yn"; yn.setAttribute("role","group"); yn.setAttribute("aria-labelledby","g"+di);
+    [["no","No"],["yes","Yes"]].forEach(function(o){
+      var b = document.createElement("button"); b.dataset.g = o[0]; b.dataset.di = di; b.textContent = o[1];
+      b.setAttribute("aria-pressed","false"); yn.appendChild(b);
+    });
+    gate.appendChild(gq); gate.appendChild(yn); box.appendChild(gate);
+    var det = document.createElement("div"); det.className = "detail"; det.hidden = true;
+    dm.items.forEach(function(i){
+      var q = document.createElement("p"); q.className = "q"; q.id = "q"+i; q.textContent = ITEMS[i];
       var sc = document.createElement("div"); sc.className = "scale"; sc.setAttribute("role","group"); sc.setAttribute("aria-labelledby","q"+i);
       for(var v=0; v<=3; v++){
-        var b = document.createElement("button"); b.textContent = v; b.dataset.v = v; b.dataset.i = i;
-        b.setAttribute("aria-pressed","false");
-        b.setAttribute("aria-label", ["Not at all","Mild","Moderate","Severe"][v]);
-        sc.appendChild(b);
+        var b = document.createElement("button"); b.textContent = SEV[v]; b.dataset.v = v; b.dataset.i = i;
+        b.setAttribute("aria-pressed","false"); sc.appendChild(b);
       }
-      wrap.appendChild(q); wrap.appendChild(sc); itemsEl.appendChild(wrap);
-    }
+      det.appendChild(q); det.appendChild(sc);
+    });
+    box.appendChild(det); itemsEl.appendChild(box);
   });
 
   itemsEl.addEventListener("click", function(ev){
+    var gb = ev.target.closest("button[data-g]");
+    if(gb){
+      var di = +gb.dataset.di, e0 = ensure(cur), st = gateState(e0, di), its = DOMAINS[di].items;
+      e0.g = e0.g || {};
+      if(gb.dataset.g==="no"){
+        if(st==="no"){ delete e0.g[di]; its.forEach(function(i){ e0.r[i] = null; }); }
+        else { e0.g[di] = "no"; its.forEach(function(i){ e0.r[i] = 0; }); }
+      } else if(st!=="yes"){
+        e0.g[di] = "yes"; its.forEach(function(i){ e0.r[i] = null; });
+      }
+      tidy(cur); persist(); renderLog(); return;
+    }
     var b = ev.target.closest("button[data-v]"); if(!b) return;
     var i = +b.dataset.i, v = +b.dataset.v;
     var e = ensure(cur);
     e.r[i] = (e.r[i]===v) ? null : v;
     tidy(cur); persist(); renderLog();
+  });
+
+  document.querySelectorAll(".mood button").forEach(function(b){
+    b.addEventListener("click", function(){
+      var e = ensure(cur), v = +b.dataset.mood;
+      e.mood = (e.mood===v) ? null : v; tidy(cur); persist(); renderLog();
+    });
+  });
+  document.getElementById("allClear").addEventListener("click", function(){
+    var e = ensure(cur); e.g = {};
+    DOMAINS.forEach(function(dm, di){ e.g[di] = "no"; });
+    DOMAINS.forEach(function(dm){ dm.items.forEach(function(i){ e.r[i] = 0; }); });
+    persist(); renderLog();
   });
 
   document.querySelectorAll(".menses button").forEach(function(b){
@@ -490,8 +582,9 @@ th{ color:var(--muted); font-weight:700; border-top:0; }
 
   // ---------- render log ----------
   function renderProgress(){
-    var e = get(cur), c = ratedCount(e);
-    document.getElementById("progress").textContent = c===24 ? "All 24 rated" : c+" of 24 rated";
+    var e = get(cur), c = 0;
+    if(e) DOMAINS.forEach(function(dm, di){ if(domainDone(e, di)) c++; });
+    document.getElementById("progress").textContent = (c===DOMAINS.length ? "All " : c+" of ") + DOMAINS.length + " symptom questions answered";
     document.getElementById("clearDay").disabled = !e;
   }
   function renderLog(){
@@ -516,6 +609,15 @@ th{ color:var(--muted); font-weight:700; border-top:0; }
     itemsEl.querySelectorAll("button[data-v]").forEach(function(b){
       b.setAttribute("aria-pressed", String(e.r[+b.dataset.i]===+b.dataset.v));
     });
+    var stored = get(cur);
+    itemsEl.querySelectorAll(".domain").forEach(function(box){
+      var di = +box.dataset.di, st = gateState(stored, di);
+      box.querySelectorAll("button[data-g]").forEach(function(b){ b.setAttribute("aria-pressed", String(b.dataset.g===st)); });
+      box.querySelector(".detail").hidden = st!=="yes";
+    });
+    document.querySelectorAll(".mood button").forEach(function(b){
+      b.setAttribute("aria-pressed", String(e.mood===+b.dataset.mood));
+    });
     if(document.activeElement!==notesEl) notesEl.value = e.n || "";
     renderProgress();
   }
@@ -525,6 +627,14 @@ th{ color:var(--muted); font-weight:700; border-top:0; }
     var k = [1,3,5,6][Math.min(3, Math.max(0, Math.round(m)))];
     return "var(--s"+k+")";
   }
+  var histRange = "90";
+  document.querySelectorAll(".range button").forEach(function(b){
+    b.addEventListener("click", function(){
+      histRange = b.dataset.range;
+      document.querySelectorAll(".range button").forEach(function(x){ x.setAttribute("aria-pressed", String(x===b)); });
+      renderHistory();
+    });
+  });
   function renderHistory(){
     var keys = Object.keys(store.entries).sort();
     var area = document.getElementById("chartArea");
@@ -535,77 +645,75 @@ th{ color:var(--muted); font-weight:700; border-top:0; }
       document.getElementById("loggedSummary").innerHTML = '<p class="empty">0 days.</p>';
       return;
     }
-    var start = keys[0], end = todayIso();
+    var end = todayIso();
     if(keys[keys.length-1] > end) end = keys[keys.length-1];
+    var start = keys[0];
+    if(histRange!=="all"){ var rs = addDays(end, -(+histRange)+1); if(rs > start) start = rs; }
     var n = diffDays(start,end)+1;
-    var W = n>400 ? 5 : 12, gap = n>400 ? 1 : 2, H = 150, top = 8, menY = H+10, menH = 10, lab = 18;
-    var width = Math.max(n*W, 200), height = menY+menH+lab+4;
+    area.innerHTML = "";
+    var avail = Math.max(200, (area.clientWidth || 320) - 40);
+    var W = Math.min(14, Math.max(3, avail/n));
+    var gap = W>=6 ? 2 : (W>=4 ? 1 : 0.5);
+    var mTop = 8, mH = 64, sTop = mTop+mH+26, sH = 84, menY = sTop+sH+8, menH = 8, lab = 18;
+    var width = Math.max(n*W, avail), height = menY+menH+lab+4;
     var ns = "http://www.w3.org/2000/svg";
-    var svg = document.createElementNS(ns,"svg");
-    svg.setAttribute("width", width); svg.setAttribute("height", height);
-    svg.setAttribute("role","img"); svg.setAttribute("aria-label","Daily average symptom score with menstrual bleeding days");
-    function y(v){ return top + (3-v)/3*(H-top); }
-    for(var g=0; g<=3; g++){
-      var ln = document.createElementNS(ns,"line");
-      ln.setAttribute("x1",0); ln.setAttribute("x2",width); ln.setAttribute("y1",y(g)); ln.setAttribute("y2",y(g));
-      ln.setAttribute("stroke","var(--line)"); ln.setAttribute("stroke-width", g===0?1.5:1);
-      svg.appendChild(ln);
-    }
+    function mk2(tag, attrs){ var el = document.createElementNS(ns, tag); for(var k in attrs) el.setAttribute(k, attrs[k]); return el; }
+    var svg = mk2("svg", {width:width, height:height, role:"img", "aria-label":"Daily mood, average symptom score, and bleeding days"});
+    function ym(v){ return mTop + (5-v)/4*mH; }
+    function ys(v){ return sTop + (3-v)/3*sH; }
+    [1,3,5].forEach(function(g){ svg.appendChild(mk2("line",{x1:0,x2:width,y1:ym(g),y2:ym(g),stroke:"var(--line)","stroke-width":1})); });
+    [0,1,2,3].forEach(function(g){ svg.appendChild(mk2("line",{x1:0,x2:width,y1:ys(g),y2:ys(g),stroke:"var(--line)","stroke-width":g===0?1.5:1})); });
     var onsetSet = {}; ons.forEach(function(o){ onsetSet[o]=1; });
+    var path = "", prevMood = false, dots = [];
     for(var i=0;i<n;i++){
-      var d = addDays(start,i), e = store.entries[d], x = i*W;
-      if(onsetSet[d]){
-        var ol = document.createElementNS(ns,"line");
-        ol.setAttribute("x1",x+0.5); ol.setAttribute("x2",x+0.5); ol.setAttribute("y1",top-4); ol.setAttribute("y2",menY+menH);
-        ol.setAttribute("stroke","var(--muted)"); ol.setAttribute("stroke-width",1.5);
-        svg.appendChild(ol);
-      }
-      var gEl = document.createElementNS(ns,"g"); gEl.style.cursor = "pointer"; gEl.dataset.d = d;
-      var hit = document.createElementNS(ns,"rect");
-      hit.setAttribute("x",x); hit.setAttribute("y",0); hit.setAttribute("width",W); hit.setAttribute("height",menY+menH);
-      hit.setAttribute("fill","transparent"); gEl.appendChild(hit);
+      var d = addDays(start,i), e = store.entries[d], x = i*W, cx = x + W/2;
+      if(onsetSet[d]) svg.appendChild(mk2("line",{x1:x+0.5,x2:x+0.5,y1:mTop-4,y2:menY+menH,stroke:"var(--muted)","stroke-width":1.5}));
+      var gEl = mk2("g",{}); gEl.style.cursor = "pointer"; gEl.dataset.d = d;
+      gEl.appendChild(mk2("rect",{x:x,y:0,width:W,height:menY+menH,fill:"transparent"}));
       var m = symptomMean(e);
       if(m!=null){
-        var r = document.createElementNS(ns,"rect");
-        var yy = y(m);
-        r.setAttribute("x",x+gap/2+1); r.setAttribute("width",W-gap-1); r.setAttribute("y",yy);
-        r.setAttribute("height", Math.max(2, y(0)-yy)); r.setAttribute("rx",2);
-        r.setAttribute("fill", sevColor(m));
-        gEl.appendChild(r);
+        var yy = ys(m);
+        gEl.appendChild(mk2("rect",{x:x+gap/2,width:Math.max(1,W-gap),y:yy,height:Math.max(2, ys(0)-yy),rx:W>=6?2:0,fill:sevColor(m)}));
       }
       if(e && e.m!=="none"){
-        var mr = document.createElementNS(ns,"rect");
-        mr.setAttribute("x",x+gap/2+1); mr.setAttribute("width",W-gap-1); mr.setAttribute("y",menY); mr.setAttribute("height",menH);
-        mr.setAttribute("rx",2); mr.setAttribute("fill", e.m==="bleeding" ? "var(--bleed)" : "var(--spot)");
-        gEl.appendChild(mr);
+        gEl.appendChild(mk2("rect",{x:x+gap/2,width:Math.max(1,W-gap),y:menY,height:menH,rx:W>=6?2:0,fill:e.m==="bleeding"?"var(--bleed)":"var(--spot)"}));
       }
-      var tt = document.createElementNS(ns,"title");
-      tt.textContent = parse(d).toLocaleDateString(undefined,{month:"short",day:"numeric"}) + (m!=null ? ": average " + m.toFixed(1) : ": no ratings") + (e && e.m!=="none" ? ", " + e.m : "");
+      var md = e && e.mood!=null ? e.mood : null;
+      if(md!=null){
+        path += (prevMood ? " L" : " M") + cx.toFixed(1) + " " + ym(md).toFixed(1);
+        dots.push([cx, ym(md)]);
+        prevMood = true;
+      } else prevMood = false;
+      var tt = mk2("title",{});
+      tt.textContent = parse(d).toLocaleDateString(undefined,{month:"short",day:"numeric",year:"numeric"}) +
+        (md!=null ? ", mood " + md : "") + (m!=null ? ", symptoms " + m.toFixed(1) : "") + (e && e.m!=="none" ? ", " + e.m : "");
       gEl.appendChild(tt);
       svg.appendChild(gEl);
       var dd = parse(d);
       if(dd.getDate()===1 || i===0){
-        var tx = document.createElementNS(ns,"text");
-        tx.setAttribute("x",x+1); tx.setAttribute("y",menY+menH+14);
-        tx.setAttribute("font-size","11"); tx.setAttribute("fill","var(--muted)");
-        tx.textContent = dd.toLocaleDateString(undefined,{month:"short", day:"numeric"});
-        svg.appendChild(tx);
+        var showYear = i===0 || dd.getMonth()===0;
+        if(W*30 >= 34 || dd.getMonth()%3===0 || i===0){
+          var tx = mk2("text",{x:x+1,y:menY+menH+14,"font-size":"11",fill:"var(--muted)"});
+          tx.textContent = dd.toLocaleDateString(undefined, showYear ? {month:"short",year:"numeric"} : {month:"short"});
+          svg.appendChild(tx);
+        }
       }
+    }
+    if(path){
+      var pl = mk2("path",{d:path,fill:"none",stroke:"var(--accent)","stroke-width":1.5,"stroke-linejoin":"round"});
+      pl.style.pointerEvents = "none"; svg.appendChild(pl);
+      var rad = Math.min(3.5, Math.max(1.5, W/2.5));
+      dots.forEach(function(p){ var c = mk2("circle",{cx:p[0],cy:p[1],r:rad,fill:"var(--accent)"}); c.style.pointerEvents = "none"; svg.appendChild(c); });
     }
     svg.addEventListener("click", function(ev){
       var g = ev.target.closest("g[data-d]"); if(!g) return;
       cur = g.dataset.d; show("log"); renderLog(); window.scrollTo(0,0);
     });
-    // y axis
-    var ya = document.createElementNS(ns,"svg");
-    ya.setAttribute("width",22); ya.setAttribute("height",height); ya.setAttribute("aria-hidden","true");
-    for(var k=0;k<=3;k++){
-      var tk = document.createElementNS(ns,"text");
-      tk.setAttribute("x",18); tk.setAttribute("y",y(k)+4); tk.setAttribute("text-anchor","end");
-      tk.setAttribute("font-size","11"); tk.setAttribute("fill","var(--muted)"); tk.textContent = k;
-      ya.appendChild(tk);
-    }
-    area.innerHTML = "";
+    var ya = mk2("svg",{width:34,height:height,"aria-hidden":"true"});
+    [1,3,5].forEach(function(k){ var t = mk2("text",{x:30,y:ym(k)+4,"text-anchor":"end","font-size":"11",fill:"var(--muted)"}); t.textContent = k; ya.appendChild(t); });
+    [0,1,2,3].forEach(function(k){ var t = mk2("text",{x:30,y:ys(k)+4,"text-anchor":"end","font-size":"11",fill:"var(--muted)"}); t.textContent = k; ya.appendChild(t); });
+    var t1 = mk2("text",{x:10,y:mTop+mH/2,"font-size":"10",fill:"var(--muted)","text-anchor":"middle",transform:"rotate(-90 10 "+(mTop+mH/2)+")"}); t1.textContent = "Mood"; ya.appendChild(t1);
+    var t2 = mk2("text",{x:10,y:sTop+sH/2,"font-size":"10",fill:"var(--muted)","text-anchor":"middle",transform:"rotate(-90 10 "+(sTop+sH/2)+")"}); t2.textContent = "Symptoms"; ya.appendChild(t2);
     var wrap = document.createElement("div"); wrap.className = "chart-wrap";
     var yWrap = document.createElement("div"); yWrap.className = "yaxis"; yWrap.appendChild(ya);
     var sc = document.createElement("div"); sc.className = "chart-scroll"; sc.appendChild(svg);
@@ -642,7 +750,7 @@ th{ color:var(--muted); font-weight:700; border-top:0; }
   }
 
   // ---------- CSV ----------
-  var HEADER = ["date","cycle_day","days_to_next_period","menses"]
+  var HEADER = ["date","cycle_day","days_to_next_period","menses","mood"]
     .concat(ITEMS.map(function(_,i){ return "item"+String(i+1).padStart(2,"0"); }))
     .concat(["notes"]);
   function q(v){
@@ -654,7 +762,7 @@ th{ color:var(--muted); font-weight:700; border-top:0; }
     var rows = [HEADER.join(",")];
     Object.keys(store.entries).sort().forEach(function(d){
       var e = store.entries[d], ci = cycleInfo(d, ons);
-      rows.push([d, ci.fwd, ci.back, e.m].concat(e.r).concat([e.n]).map(q).join(","));
+      rows.push([d, ci.fwd, ci.back, e.m, e.mood].concat(e.r).concat([e.n]).map(q).join(","));
     });
     return rows.join("\n") + "\n";
   }
@@ -679,7 +787,7 @@ th{ color:var(--muted); font-weight:700; border-top:0; }
     var rows = parseCsv(text.replace(/^\uFEFF/,""));
     if(!rows.length) throw new Error("The file is empty.");
     var h = rows[0].map(function(s){ return s.trim(); });
-    var di = h.indexOf("date"), mi = h.indexOf("menses"), ni = h.indexOf("notes");
+    var di = h.indexOf("date"), mi = h.indexOf("menses"), ni = h.indexOf("notes"), moi = h.indexOf("mood");
     var ii = []; for(var k=1;k<=24;k++){ ii.push(h.indexOf("item"+String(k).padStart(2,"0"))); }
     if(di<0 || ii.some(function(x){ return x<0; })) throw new Error("This doesn’t look like a CSV exported from this page. It needs a date column and item01–item24.");
     var count = 0, skipped = 0;
@@ -689,7 +797,8 @@ th{ color:var(--muted); font-weight:700; border-top:0; }
       var m = mi>=0 ? (r[mi]||"none").trim() : "none";
       if(["none","spotting","bleeding"].indexOf(m)<0) m = "none";
       var vals = ii.map(function(x){ var v = parseInt(r[x],10); return (v>=0 && v<=3) ? v : null; });
-      var e = {m:m, r:vals, n: ni>=0 ? (r[ni]||"") : ""};
+      var mv = moi>=0 ? parseInt(r[moi],10) : NaN;
+      var e = {m:m, r:vals, n: ni>=0 ? (r[ni]||"") : "", mood: (mv>=1 && mv<=5) ? mv : null, g:{}};
       if(isEmpty(e)) { skipped++; return; }
       store.entries[d] = e; count++;
     });
