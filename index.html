@@ -19,6 +19,7 @@
   --accent:#3B4BC4; --accent-ink:#FFFFFF; --accent-soft:#E2E6FA;
   --bleed:#B3335C; --spot:#E8A3B8; --warn-bg:#FFF2D6; --warn-ink:#6B4A00;
   --s1:#DDE2EC; --s2:#C3CBF0; --s3:#9CA9EA; --s4:#6F7FDA; --s5:#4656C2; --s6:#283493;
+  --m1:#3F2D8F; --m2:#8173D6; --m3:#CFCBE0; --m4:#86CBA8; --m5:#23935F;
   color-scheme: light;
 }
 @media (prefers-color-scheme: dark){
@@ -27,6 +28,7 @@
     --accent:#8C98FF; --accent-ink:#11141B; --accent-soft:#262C48;
     --bleed:#E5698F; --spot:#7C4558; --warn-bg:#3A2F14; --warn-ink:#F3D58E;
     --s1:#262B38; --s2:#2F3966; --s3:#3E4C94; --s4:#5866C2; --s5:#7886E6; --s6:#A7B1FF;
+    --m1:#8B78F0; --m2:#5A4F9E; --m3:#4A4D5C; --m4:#3F8F6B; --m5:#5CD49A;
     color-scheme: dark;
   }
 }
@@ -35,6 +37,7 @@
   --accent:#8C98FF; --accent-ink:#11141B; --accent-soft:#262C48;
   --bleed:#E5698F; --spot:#7C4558; --warn-bg:#3A2F14; --warn-ink:#F3D58E;
   --s1:#262B38; --s2:#2F3966; --s3:#3E4C94; --s4:#5866C2; --s5:#7886E6; --s6:#A7B1FF;
+  --m1:#8B78F0; --m2:#5A4F9E; --m3:#4A4D5C; --m4:#3F8F6B; --m5:#5CD49A;
   color-scheme: dark;
 }
 :root{ box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px); }
@@ -172,10 +175,34 @@ th{ color:var(--muted); font-weight:700; border-top:0; }
 .yn button[aria-pressed="true"][data-g="yes"]{ background:var(--accent); color:var(--accent-ink); border-color:var(--accent); }
 .detail{ margin:10px 0 2px; padding-left:12px; border-left:3px solid var(--accent-soft); }
 .detail .q{ font-size:.92rem; margin:8px 0 6px; }
-.range{ display:flex; gap:4px; }
+.range,.seg{ display:flex; gap:4px; flex-wrap:wrap; }
+.seg button{ border:1px solid var(--line); background:var(--bg); border-radius:8px; padding:5px 10px; font-size:.85rem; font-weight:700; }
+.seg button[aria-pressed="true"]{ background:var(--ink); color:var(--surface); border-color:var(--ink); }
+.hctl{ display:flex; flex-wrap:wrap; align-items:center; gap:8px 12px; margin:0 0 10px; }
+.hctl .small{ font-size:.88rem; }
+.yearnav{ display:flex; align-items:center; gap:8px; font-weight:700; }
+.yearnav button{ width:34px; height:34px; border-radius:50%; border:1px solid var(--line); background:var(--surface); font-size:1.1rem; line-height:1; }
+.yearnav button:disabled{ opacity:.35; cursor:default; }
 .range button{ border:1px solid var(--line); background:var(--bg); border-radius:8px; padding:5px 10px; font-size:.85rem; font-weight:700; }
 .range button[aria-pressed="true"]{ background:var(--ink); color:var(--surface); border-color:var(--ink); }
 .yaxis{ width:34px !important; }
+.cal-nav{ display:flex; align-items:center; gap:8px; margin:6px 0 8px; }
+.cal-nav .nav{ width:40px; height:40px; flex:none; border-radius:50%; border:1px solid var(--line); background:var(--surface); font-size:1.2rem; line-height:1; }
+.cal-nav .nav:disabled{ opacity:.35; cursor:default; }
+.cal-jump{ flex:1; display:flex; gap:6px; justify-content:center; }
+.cal-jump select{ border:1px solid var(--line); background:var(--bg); color:var(--ink); border-radius:9px; padding:7px 8px; font:inherit; }
+.cal{ display:grid; grid-template-columns:repeat(7,1fr); gap:3px; }
+.cal .wd{ text-align:center; font-size:.75rem; color:var(--muted); padding:2px 0 4px; }
+.cal button{ aspect-ratio:1; border:0; border-radius:9px; background:transparent; font-size:.95rem; font-variant-numeric:tabular-nums; }
+.cal button:disabled{ opacity:.3; cursor:default; }
+.cal button.today{ box-shadow:inset 0 0 0 1.5px var(--muted); }
+.cal button.spot{ background:var(--spot); color:var(--ink); }
+.cal button.bleed{ background:var(--bleed); color:#fff; }
+.cal button.inrange{ background:var(--accent-soft); color:var(--ink); }
+.cal button.endpoint{ background:var(--accent); color:var(--accent-ink); font-weight:700; }
+.cal-actions{ margin-top:12px; }
+.cal-actions p{ margin:0 0 4px; font-weight:700; }
+.cal-key{ display:flex; gap:14px; flex-wrap:wrap; font-size:.82rem; color:var(--muted); margin:10px 0 0; }
 [hidden]{ display:none !important; }
 @media (prefers-reduced-motion: reduce){ *{ transition:none !important; } }
 </style>
@@ -258,23 +285,35 @@ th{ color:var(--muted); font-weight:700; border-top:0; }
   <!-- HISTORY -->
   <section id="view-history" role="tabpanel" aria-labelledby="tab-history" hidden>
     <div class="block">
-      <div class="sym-head">
-        <h2>Mood and symptoms</h2>
-        <div class="range" role="group" aria-label="Time range">
+      <div class="hctl">
+        <div class="seg" id="viewSel" role="group" aria-label="Chart">
+          <button data-hv="cycles" aria-pressed="true">Cycles</button>
+          <button data-hv="year" aria-pressed="false">Year</button>
+          <button data-hv="timeline" aria-pressed="false">Timeline</button>
+        </div>
+      </div>
+      <div class="hctl">
+        <div class="seg" id="colorSel" role="group" aria-label="Color by">
+          <button data-color="mood" aria-pressed="true">Mood</button>
+          <button data-color="sym" aria-pressed="false">Symptoms</button>
+        </div>
+        <div class="seg" id="alignSel" data-for="cycles" role="group" aria-label="Line up rows">
+          <button data-align="start" aria-pressed="true">From period start</button>
+          <button data-align="end" aria-pressed="false">Up to next period</button>
+        </div>
+        <label class="inline small" data-for="cycles"><input type="checkbox" id="showAllCycles"> Show all cycles</label>
+        <div class="yearnav" data-for="year">
+          <button id="yPrev" aria-label="Previous year">‹</button><span id="yLabel"></span><button id="yNext" aria-label="Next year">›</button>
+        </div>
+        <div class="range" id="rangeSel" data-for="timeline" role="group" aria-label="Time range">
           <button data-range="90" aria-pressed="true">3 mo</button>
           <button data-range="365" aria-pressed="false">1 yr</button>
           <button data-range="all" aria-pressed="false">All</button>
         </div>
       </div>
-      <p class="hint">Mood is 1 (very low) to 5 (very good). Symptoms are the day’s average, 0 (none) to 3 (severe). Tap a day to open it.</p>
+      <p class="hint" id="histHint"></p>
       <div id="chartArea"></div>
-      <div class="chart-legend">
-        <span><span class="sw" style="background:var(--accent);border-radius:50%"></span>Mood</span>
-        <span><span class="sw" style="background:var(--s5)"></span>Symptoms</span>
-        <span><span class="sw" style="background:var(--bleed)"></span>Bleeding</span>
-        <span><span class="sw" style="background:var(--spot)"></span>Spotting</span>
-        <span><span class="sw" style="background:var(--muted);width:2px"></span>Period start</span>
-      </div>
+      <div class="chart-legend" id="histLegend"></div>
     </div>
     <div class="block">
       <h2>Cycles</h2>
@@ -290,13 +329,27 @@ th{ color:var(--muted); font-weight:700; border-top:0; }
   <!-- PERIODS -->
   <section id='view-periods' role='tabpanel' aria-labelledby='tab-periods' hidden>
     <div class='block prose'>
-      <h2>Add one period</h2>
-      <div class='pair'>
-        <label>Started<input type='date' id='pStart'></label>
-        <label>Ended (optional)<input type='date' id='pEnd'></label>
+      <h2>Mark periods on the calendar</h2>
+      <p class='hint'>Tap the first day, then the last day. Tap the same day twice for a one-day period.</p>
+      <div class='cal-nav'>
+        <button class='nav' id='calPrev' aria-label='Previous month'>‹</button>
+        <div class='cal-jump'>
+          <label class='sr' for='calMonth'>Month</label><select id='calMonth'></select>
+          <label class='sr' for='calYear'>Year</label><select id='calYear'></select>
+        </div>
+        <button class='nav' id='calNext' aria-label='Next month'>›</button>
       </div>
-      <div class='stack'><button class='btn primary' id='pAdd'>Add period</button></div>
-      <p class='hint' id='pAddMsg' aria-live='polite'></p>
+      <div class='cal' id='cal'></div>
+      <div class='cal-key'><span><span class='sw' style='background:var(--bleed)'></span>Bleeding</span><span><span class='sw' style='background:var(--spot)'></span>Spotting</span><span><span class='sw' style='background:var(--accent)'></span>Selected</span></div>
+      <div class='cal-actions' id='calActions' hidden>
+        <p id='calSel'></p>
+        <div class='stack'>
+          <button class='btn primary' id='calMark'>Mark as period</button>
+          <button class='btn' id='calClear'>Unmark these days</button>
+          <button class='btn' id='calCancel'>Cancel</button>
+        </div>
+      </div>
+      <p class='hint' id='calMsg' aria-live='polite'></p>
     </div>
 
     <div class='block prose'>
@@ -627,11 +680,132 @@ th{ color:var(--muted); font-weight:700; border-top:0; }
     var k = [1,3,5,6][Math.min(3, Math.max(0, Math.round(m)))];
     return "var(--s"+k+")";
   }
-  var histRange = "90";
-  document.querySelectorAll(".range button").forEach(function(b){
+  var histRange = "90", histView = "cycles", colorBy = "mood", alignEnd = false, showAllCycles = false, pixYear = new Date().getFullYear();
+  function setPressed(groupSel, btn){ document.querySelectorAll(groupSel+" button").forEach(function(x){ x.setAttribute("aria-pressed", String(x===btn)); }); }
+  document.querySelectorAll("#viewSel button").forEach(function(b){ b.addEventListener("click", function(){ histView = b.dataset.hv; setPressed("#viewSel", b); renderHistory(); }); });
+  document.querySelectorAll("#colorSel button").forEach(function(b){ b.addEventListener("click", function(){ colorBy = b.dataset.color; setPressed("#colorSel", b); renderHistory(); }); });
+  document.querySelectorAll("#alignSel button").forEach(function(b){ b.addEventListener("click", function(){ alignEnd = b.dataset.align==="end"; setPressed("#alignSel", b); renderHistory(); }); });
+  document.getElementById("showAllCycles").addEventListener("change", function(ev){ showAllCycles = ev.target.checked; renderHistory(); });
+  document.getElementById("yPrev").addEventListener("click", function(){ pixYear--; renderHistory(); });
+  document.getElementById("yNext").addEventListener("click", function(){ pixYear++; renderHistory(); });
+  var SVGNS = "http://www.w3.org/2000/svg";
+  function sv(tag, attrs){ var el2 = document.createElementNS(SVGNS, tag); for(var k in attrs) el2.setAttribute(k, attrs[k]); return el2; }
+  function cellFill(e){
+    if(!e) return null;
+    if(colorBy==="mood") return e.mood!=null ? "var(--m"+e.mood+")" : null;
+    var m = symptomMean(e); return m!=null ? sevColor(m) : null;
+  }
+  function drawCell(svgEl, x, y, size, d, hgt){
+    hgt = hgt || size;
+    var e = store.entries[d], g = sv("g",{}); g.dataset.d = d; g.style.cursor = "pointer";
+    var f = cellFill(e), r = size>=9 ? 2 : 1;
+    if(f) g.appendChild(sv("rect",{x:x,y:y,width:size,height:hgt,rx:r,fill:f}));
+    else g.appendChild(sv("rect",{x:x+0.5,y:y+0.5,width:size-1,height:hgt-1,rx:r,fill:"transparent",stroke:"var(--line)"}));
+    if(e && e.m!=="none"){
+      var bh = Math.max(2, Math.round(hgt*0.25));
+      g.appendChild(sv("rect",{x:x,y:y+hgt-bh,width:size,height:bh,fill:e.m==="bleeding"?"var(--bleed)":"var(--spot)"}));
+    }
+    var tt = sv("title",{});
+    tt.textContent = fmt(d) + (e && e.mood!=null ? ", mood " + e.mood : "") + (symptomMean(e)!=null ? ", symptoms " + symptomMean(e).toFixed(1) : "") + (e && e.m!=="none" ? ", " + e.m : "");
+    g.appendChild(tt); svgEl.appendChild(g);
+  }
+  function openDayFromSvg(svgEl){
+    svgEl.addEventListener("click", function(ev){
+      var g = ev.target.closest("g[data-d]"); if(!g) return;
+      cur = g.dataset.d; show("log"); renderLog(); window.scrollTo(0,0);
+    });
+  }
+  function renderHistControls(){
+    document.querySelectorAll("#view-history [data-for]").forEach(function(n){ n.hidden = n.dataset.for!==histView; });
+    document.getElementById("colorSel").hidden = histView==="timeline";
+    var hint = "", leg = document.getElementById("histLegend");
+    if(histView==="cycles") hint = alignEnd ? "Each row ends the day before the next period starts, so premenstrual days line up on the right. Your current cycle appears once your next period starts." : "Each row is one cycle, newest at the top, starting on the first day of your period. Tap a square to open that day.";
+    else if(histView==="year") hint = "Each square is one day. Tap a square to open it.";
+    else hint = "Mood is 1 (very low) to 5 (very good). Symptoms are the day’s average, 0 (none) to 3 (severe). Tap a day to open it.";
+    document.getElementById("histHint").textContent = hint;
+    var parts = [];
+    function sw(color, label, extra){ return '<span><span class="sw" style="background:'+color+(extra||'')+'"></span>'+label+'</span>'; }
+    if(histView==="timeline"){
+      parts = [sw("var(--accent)","Mood",";border-radius:50%"), sw("var(--s5)","Symptoms"), sw("var(--bleed)","Bleeding"), sw("var(--spot)","Spotting"), sw("var(--muted)","Period start",";width:2px")];
+    } else {
+      if(colorBy==="mood") parts = [sw("var(--m1)","1 Very low"), sw("var(--m2)","2 Low"), sw("var(--m3)","3 Okay"), sw("var(--m4)","4 Good"), sw("var(--m5)","5 Very good")];
+      else parts = [sw("var(--s1)","None"), sw("var(--s3)","Mild"), sw("var(--s5)","Moderate"), sw("var(--s6)","Severe")];
+      parts.push(sw("var(--bleed)","Bleeding (bar)"), sw("var(--spot)","Spotting"), sw("transparent","No entry",";box-shadow:inset 0 0 0 1px var(--line)"));
+    }
+    leg.innerHTML = parts.join("");
+  }
+  function drawCycleRows(area, ons){
+    var t = todayIso(), cycles = [];
+    ons.forEach(function(o, i){
+      var next = ons[i+1];
+      if(next && diffDays(o,next) > 60) return;
+      if(!next && alignEnd) return;
+      var endD = next ? addDays(next,-1) : t;
+      var L = diffDays(o,endD)+1; if(!next && L > 60) return;
+      cycles.push({start:o, end:endD, len:L});
+    });
+    function hasData(c){ for(var d=c.start; d<=c.end; d=addDays(d,1)){ var e = store.entries[d]; if(e && (e.mood!=null || ratedCount(e)>0)) return true; } return false; }
+    var shown = showAllCycles ? cycles : cycles.filter(hasData);
+    if(!ons.length){ area.innerHTML = '<p class="empty">Mark at least one period to see cycle rows.</p>'; return; }
+    if(!shown.length){
+      area.innerHTML = '<p class="empty">' + (cycles.length ? 'No cycles with mood or symptom entries yet. As you log, one row per cycle appears here. Turn on “Show all cycles” to see your past periods.' : 'Not enough complete cycles yet. Rows appear once you have a period start followed by another.') + '</p>';
+      return;
+    }
+    shown = shown.slice().reverse();
+    var maxLen = Math.min(45, Math.max.apply(null, shown.map(function(c){ return c.len; })));
+    var labW = 66, avail = Math.max(240, (area.clientWidth || 320)) - labW - 2;
+    var cell = Math.max(5, Math.min(14, Math.floor(avail/maxLen)));
+    var gap = cell>=8 ? 2 : 1, size = cell - gap, top = 18, rowH = Math.max(cell, 18), hgt = rowH - 2;
+    var width = labW + maxLen*cell, height = top + shown.length*rowH + 4;
+    var svgEl = sv("svg",{width:width, height:height, role:"img", "aria-label":"One row per cycle, colored by " + (colorBy==="mood" ? "mood" : "symptom average")});
+    var ticks = alignEnd ? [-1,-7,-14,-21,-28,-35,-42] : [1,7,14,21,28,35,42];
+    ticks.forEach(function(k){
+      var col = alignEnd ? maxLen + k : k - 1; if(col < 0 || col >= maxLen) return;
+      var tx = sv("text",{x:labW + col*cell + size/2, y:12, "font-size":"10", fill:"var(--muted)", "text-anchor":"middle"});
+      tx.textContent = alignEnd ? String(k) : String(k); svgEl.appendChild(tx);
+    });
+    shown.forEach(function(c, r){
+      var y = top + r*rowH;
+      var lb = sv("text",{x:labW-6, y:y+hgt/2+4, "font-size":"11", fill:"var(--muted)", "text-anchor":"end"});
+      var cy = parse(c.start).getFullYear(), py = r>0 ? parse(shown[r-1].start).getFullYear() : null;
+      lb.textContent = parse(c.start).toLocaleDateString(undefined,{month:"short", day:"numeric"}) + (r===0 || cy!==py ? " ’" + String(cy).slice(2) : "");
+      svgEl.appendChild(lb);
+      for(var k=0; k<c.len; k++){
+        var col = alignEnd ? maxLen - c.len + k : k;
+        if(col < 0 || col >= maxLen) continue;
+        drawCell(svgEl, labW + col*cell, y, size, addDays(c.start,k), hgt);
+      }
+    });
+    openDayFromSvg(svgEl);
+    var sc = document.createElement("div"); sc.className = "chart-scroll"; sc.appendChild(svgEl); area.appendChild(sc);
+  }
+  function drawYear(area, keys){
+    var nowY = new Date().getFullYear(), firstY = keys.length ? parse(keys[0]).getFullYear() : nowY;
+    if(pixYear > nowY) pixYear = nowY; if(pixYear < firstY) pixYear = firstY;
+    document.getElementById("yLabel").textContent = pixYear;
+    document.getElementById("yPrev").disabled = pixYear <= firstY;
+    document.getElementById("yNext").disabled = pixYear >= nowY;
+    var t = todayIso(), labW = 32, avail = Math.max(240, (area.clientWidth || 320)) - labW - 2;
+    var cell = Math.max(7, Math.min(18, Math.floor(avail/31))), gap = cell>=10 ? 2 : 1, size = cell - gap, top = 16, rowH = Math.max(cell, 20), hgt = rowH - 2;
+    var svgEl = sv("svg",{width:labW + 31*cell, height:top + 12*rowH + 4, role:"img", "aria-label":"Year " + pixYear + ", one square per day"});
+    [1,10,20,31].forEach(function(dn){ var tx = sv("text",{x:labW + (dn-1)*cell + size/2, y:11, "font-size":"10", fill:"var(--muted)", "text-anchor":"middle"}); tx.textContent = dn; svgEl.appendChild(tx); });
+    for(var mo=0; mo<12; mo++){
+      var y = top + mo*rowH;
+      var lb = sv("text",{x:labW-5, y:y+hgt/2+4, "font-size":"11", fill:"var(--muted)", "text-anchor":"end"});
+      lb.textContent = new Date(2000, mo, 1).toLocaleDateString(undefined,{month:"short"}); svgEl.appendChild(lb);
+      var dim = new Date(pixYear, mo+1, 0).getDate();
+      for(var dn=1; dn<=dim; dn++){
+        var d = iso(new Date(pixYear, mo, dn)); if(d > t) break;
+        drawCell(svgEl, labW + (dn-1)*cell, y, size, d, hgt);
+      }
+    }
+    openDayFromSvg(svgEl);
+    var sc = document.createElement("div"); sc.className = "chart-scroll"; sc.appendChild(svgEl); area.appendChild(sc);
+  }
+  document.querySelectorAll("#rangeSel button").forEach(function(b){
     b.addEventListener("click", function(){
       histRange = b.dataset.range;
-      document.querySelectorAll(".range button").forEach(function(x){ x.setAttribute("aria-pressed", String(x===b)); });
+      document.querySelectorAll("#rangeSel button").forEach(function(x){ x.setAttribute("aria-pressed", String(x===b)); });
       renderHistory();
     });
   });
@@ -640,11 +814,17 @@ th{ color:var(--muted); font-weight:700; border-top:0; }
     var area = document.getElementById("chartArea");
     var ons = onsets();
     if(!keys.length){
+      renderHistControls();
       area.innerHTML = '<p class="empty">Nothing logged yet. Entries you make on the Log tab show up here.</p>';
       document.getElementById("cycleTable").innerHTML = '<p class="empty">No periods logged yet.</p>';
       document.getElementById("loggedSummary").innerHTML = '<p class="empty">0 days.</p>';
       return;
     }
+    renderHistControls();
+    area.innerHTML = "";
+    if(histView==="cycles"){ drawCycleRows(area, ons); }
+    else if(histView==="year"){ drawYear(area, keys); }
+    else {
     var end = todayIso();
     if(keys[keys.length-1] > end) end = keys[keys.length-1];
     var start = keys[0];
@@ -719,6 +899,7 @@ th{ color:var(--muted); font-weight:700; border-top:0; }
     var sc = document.createElement("div"); sc.className = "chart-scroll"; sc.appendChild(svg);
     wrap.appendChild(yWrap); wrap.appendChild(sc); area.appendChild(wrap);
     sc.scrollLeft = sc.scrollWidth;
+    }
 
     // cycles table
     var ct = document.getElementById("cycleTable");
@@ -728,10 +909,11 @@ th{ color:var(--muted); font-weight:700; border-top:0; }
       var html = "<table><thead><tr><th>Period started</th><th>Cycle length</th><th>Days logged</th></tr></thead><tbody>";
       ons.forEach(function(o,idx){
         var next = ons[idx+1];
-        var len = next ? diffDays(o,next)+" days" : "In progress";
+        var L0 = next ? diffDays(o,next) : null, gapRow = L0!=null && L0 > 60;
+        var len = L0==null ? "In progress" : (gapRow ? "Gap (periods missing)" : L0+" days");
         var stop = next || addDays(todayIso(),1);
         var logged = keys.filter(function(k){ return k>=o && k<stop && ratedCount(store.entries[k])>0; }).length;
-        if(next) lens.push(diffDays(o,next));
+        if(next && !gapRow) lens.push(L0);
         rowsH.push("<tr><td>"+parse(o).toLocaleDateString(undefined,{year:"numeric",month:"short",day:"numeric"})+"</td><td>"+len+"</td><td>"+logged+"</td></tr>");
       });
       ct.innerHTML = cycleSummary(lens, ons.length) + html + rowsH.reverse().join('') + "</tbody></table>";
@@ -934,7 +1116,7 @@ th{ color:var(--muted); font-weight:700; border-top:0; }
     var s = lens.slice().sort(function(a,b){ return a-b; });
     var mid = Math.floor(s.length/2);
     var med = s.length % 2 ? s[mid] : Math.round((s[mid-1]+s[mid])/2);
-    return '<p class=hint>' + count + ' periods logged. Median cycle length ' + med + ' days (range ' + s[0] + '–' + s[s.length-1] + '). Very long cycles can mean a period wasn’t logged.</p>';
+    return '<p class=hint>' + count + ' periods logged. Median cycle length ' + med + ' days (range ' + s[0] + '–' + s[s.length-1] + '). Gaps over 60 days are left out.</p>';
   }
   function markPeriods(periods){
     var seen = {}, undo = [];
@@ -945,7 +1127,7 @@ th{ color:var(--muted); font-weight:700; border-top:0; }
       }
     });
     store.lastAdd = {count:periods.length, undo:undo};
-    persist(); renderUndo(); renderLog();
+    persist(); renderUndo(); renderLog(); if(typeof renderCal==='function') renderCal();
     return undo.length;
   }
   function renderUndo(){
@@ -961,21 +1143,81 @@ th{ color:var(--muted); font-weight:700; border-top:0; }
       var e = store.entries[u[0]]; if(!e) return;
       e.m = u[1] || 'none'; tidy(u[0]);
     });
-    delete store.lastAdd; persist(); renderUndo(); renderLog();
+    delete store.lastAdd; persist(); renderUndo(); renderLog(); renderCal();
   });
-  document.getElementById('pAdd').addEventListener('click', function(){
-    var s = document.getElementById('pStart').value, e = document.getElementById('pEnd').value;
-    var msg = document.getElementById('pAddMsg'), t = todayIso();
-    if(!validIso(s)){ msg.textContent = 'Choose the start date.'; return; }
-    if(s > t){ msg.textContent = 'The start date can’t be in the future.'; return; }
-    if(e && validIso(e)){
-      if(e < s){ msg.textContent = 'The end date is before the start date.'; return; }
-      if(diffDays(s,e) > 14){ msg.textContent = 'That’s longer than 15 days. Check the dates.'; return; }
-      if(e > t) e = t;
-    } else { e = s; }
-    markPeriods([{start:s, end:e}]);
-    msg.textContent = 'Added ' + fmt(s) + (e!==s ? ' to ' + fmt(e) : ' (start day only)') + '.';
-    document.getElementById('pStart').value = ''; document.getElementById('pEnd').value = '';
+  // ---------- calendar range picker ----------
+  var calEl = document.getElementById('cal'), calY, calM, selA = null, selB = null;
+  (function(){ var n = new Date(); calY = n.getFullYear(); calM = n.getMonth(); })();
+  var monthSel = document.getElementById('calMonth'), yearSel = document.getElementById('calYear');
+  for(var mi2=0; mi2<12; mi2++){ var o = document.createElement('option'); o.value = mi2; o.textContent = new Date(2000, mi2, 1).toLocaleDateString(undefined,{month:'long'}); monthSel.appendChild(o); }
+  for(var yy2=new Date().getFullYear(); yy2>=new Date().getFullYear()-15; yy2--){ var o2 = document.createElement('option'); o2.value = yy2; o2.textContent = yy2; yearSel.appendChild(o2); }
+  monthSel.addEventListener('change', function(){ calM = +monthSel.value; renderCal(); });
+  yearSel.addEventListener('change', function(){ calY = +yearSel.value; clampCal(); renderCal(); });
+  document.getElementById('calPrev').addEventListener('click', function(){ calM--; if(calM<0){ calM=11; calY--; } renderCal(); });
+  document.getElementById('calNext').addEventListener('click', function(){ calM++; if(calM>11){ calM=0; calY++; } clampCal(); renderCal(); });
+  function clampCal(){ var n = new Date(); if(calY>n.getFullYear() || (calY===n.getFullYear() && calM>n.getMonth())){ calY = n.getFullYear(); calM = n.getMonth(); } }
+  function renderCal(){
+    var t = todayIso(), n = new Date();
+    monthSel.value = calM;
+    if(![].some.call(yearSel.options, function(o){ return +o.value===calY; })){ var o3 = document.createElement('option'); o3.value = calY; o3.textContent = calY; yearSel.appendChild(o3); }
+    yearSel.value = calY;
+    document.getElementById('calNext').disabled = (calY===n.getFullYear() && calM===n.getMonth());
+    calEl.innerHTML = '';
+    ['S','M','T','W','T','F','S'].forEach(function(w){ calEl.appendChild(el('div','wd',w)); });
+    var first = new Date(calY, calM, 1), lead = first.getDay(), days = new Date(calY, calM+1, 0).getDate();
+    for(var i=0;i<lead;i++) calEl.appendChild(el('div'));
+    var lo = selA, hi = selB || selA;
+    for(var dnum=1; dnum<=days; dnum++){
+      var d = iso(new Date(calY, calM, dnum)), e = store.entries[d];
+      var b = el('button', null, String(dnum)); b.dataset.d = d;
+      b.setAttribute('aria-label', fmt(d) + (e && e.m!=='none' ? ', ' + e.m : ''));
+      if(d > t) b.disabled = true;
+      if(d === t) b.classList.add('today');
+      if(e && e.m==='bleeding') b.classList.add('bleed');
+      else if(e && e.m==='spotting') b.classList.add('spot');
+      if(lo && d>=lo && d<=hi){ b.classList.add(d===lo || d===hi ? 'endpoint' : 'inrange'); }
+      calEl.appendChild(b);
+    }
+    renderCalActions();
+  }
+  function renderCalActions(){
+    var box = document.getElementById('calActions'), txt = document.getElementById('calSel');
+    var markB = document.getElementById('calMark'), clrB = document.getElementById('calClear');
+    if(!selA){ box.hidden = true; return; }
+    box.hidden = false;
+    if(!selB){
+      txt.textContent = 'Starts ' + fmt(selA) + '. Now tap the last day.';
+      markB.disabled = true; clrB.disabled = true; return;
+    }
+    var len = diffDays(selA, selB) + 1;
+    txt.textContent = (selA===selB ? fmt(selA) : fmt(selA) + ' to ' + fmt(selB)) + ' (' + len + (len===1 ? ' day)' : ' days)');
+    markB.disabled = len > 15; clrB.disabled = false;
+    document.getElementById('calMsg').textContent = len > 15 ? 'That’s more than 15 days. Choose a shorter range to mark it as a period.' : '';
+  }
+  calEl.addEventListener('click', function(ev){
+    var b = ev.target.closest('button[data-d]'); if(!b || b.disabled) return;
+    var d = b.dataset.d;
+    document.getElementById('calMsg').textContent = '';
+    if(!selA || selB){ selA = d; selB = null; }
+    else if(d < selA){ selB = selA; selA = d; }
+    else { selB = d; }
+    renderCal();
+  });
+  document.getElementById('calCancel').addEventListener('click', function(){ selA = selB = null; document.getElementById('calMsg').textContent = ''; renderCal(); });
+  document.getElementById('calMark').addEventListener('click', function(){
+    if(!selA || !selB) return;
+    var a = selA, z = selB;
+    markPeriods([{start:a, end:z}]);
+    selA = selB = null; renderCal();
+    document.getElementById('calMsg').textContent = 'Marked ' + (a===z ? fmt(a) : fmt(a) + ' to ' + fmt(z)) + ' as a period.';
+  });
+  document.getElementById('calClear').addEventListener('click', function(){
+    if(!selA || !selB) return;
+    var count = 0;
+    for(var d = selA; d <= selB; d = addDays(d,1)){ var e = store.entries[d]; if(e && e.m!=='none'){ e.m = 'none'; tidy(d); count++; } }
+    persist(); renderLog();
+    selA = selB = null; renderCal();
+    document.getElementById('calMsg').textContent = count ? 'Unmarked ' + count + (count===1 ? ' day.' : ' days.') : 'None of those days were marked.';
   });
   var pending = null;
   var bulkResult = document.getElementById('bulkResult');
@@ -1035,7 +1277,7 @@ th{ color:var(--muted); font-weight:700; border-top:0; }
       document.getElementById("tab-"+v).setAttribute("aria-selected", String(v===view));
     });
     if(view==="history") renderHistory();
-    if(view==='periods'){ document.getElementById('pStart').max = todayIso(); document.getElementById('pEnd').max = todayIso(); }
+    if(view==='periods'){ renderCal(); }
     if(view!=="data"){ csvOut.hidden = true; }
   }
   document.querySelectorAll(".tab").forEach(function(t){
