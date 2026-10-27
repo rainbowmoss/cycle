@@ -1,0 +1,954 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Daily cycle log</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Cycle log">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#3B4BC4">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" href="./icon-192.png">
+<link rel="apple-touch-icon" href="./icon-192.png">
+<style>
+:root{
+  --bg:#ECEFF5; --surface:#FFFFFF; --ink:#1A2030; --muted:#5A6479; --line:#D3D9E4;
+  --accent:#3B4BC4; --accent-ink:#FFFFFF; --accent-soft:#E2E6FA;
+  --bleed:#B3335C; --spot:#E8A3B8; --warn-bg:#FFF2D6; --warn-ink:#6B4A00;
+  --s1:#DDE2EC; --s2:#C3CBF0; --s3:#9CA9EA; --s4:#6F7FDA; --s5:#4656C2; --s6:#283493;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#11141B; --surface:#1A1E28; --ink:#E6E9F1; --muted:#9AA3B8; --line:#2C3242;
+    --accent:#8C98FF; --accent-ink:#11141B; --accent-soft:#262C48;
+    --bleed:#E5698F; --spot:#7C4558; --warn-bg:#3A2F14; --warn-ink:#F3D58E;
+    --s1:#262B38; --s2:#2F3966; --s3:#3E4C94; --s4:#5866C2; --s5:#7886E6; --s6:#A7B1FF;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#11141B; --surface:#1A1E28; --ink:#E6E9F1; --muted:#9AA3B8; --line:#2C3242;
+  --accent:#8C98FF; --accent-ink:#11141B; --accent-soft:#262C48;
+  --bleed:#E5698F; --spot:#7C4558; --warn-bg:#3A2F14; --warn-ink:#F3D58E;
+  --s1:#262B38; --s2:#2F3966; --s3:#3E4C94; --s4:#5866C2; --s5:#7886E6; --s6:#A7B1FF;
+  color-scheme: dark;
+}
+:root{ box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px); }
+*,*::before,*::after{ box-sizing:inherit; }
+html{ scroll-padding-top:calc(env(safe-area-inset-top,0px) + 120px); }
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-size:16px; line-height:1.45;
+}
+body::before{ content:""; position:fixed; inset:0 0 auto; height:env(safe-area-inset-top,0px); z-index:10; background:var(--surface); }
+button,input,textarea{ font:inherit; color:inherit; }
+button{ cursor:pointer; }
+:focus-visible{ outline:3px solid var(--accent); outline-offset:2px; }
+
+.top{
+  position:sticky; top:env(safe-area-inset-top,0px); z-index:5;
+  background:var(--surface); border-bottom:1px solid var(--line);
+}
+.top-inner{ max-width:720px; margin:0 auto; padding:12px 16px 0; }
+.title-row{ display:flex; align-items:baseline; justify-content:space-between; gap:12px; }
+h1{ font-size:1.25rem; margin:0; letter-spacing:-0.01em; }
+.save-state{ font-size:.85rem; color:var(--muted); }
+.tabs{ display:flex; gap:4px; margin-top:10px; }
+.tab{
+  background:none; border:0; padding:8px 12px 10px; color:var(--muted);
+  border-bottom:3px solid transparent; font-weight:700;
+}
+.tab[aria-selected="true"]{ color:var(--ink); border-bottom-color:var(--accent); }
+
+main{ max-width:720px; margin:0 auto; padding:16px 16px 48px; }
+.banner{
+  background:var(--warn-bg); color:var(--warn-ink); border-radius:10px;
+  padding:12px 14px; margin-bottom:16px; font-size:.95rem;
+}
+
+.datebar{ display:flex; align-items:center; gap:8px; margin-bottom:4px; }
+.datebar .nav{
+  width:44px; height:44px; border-radius:50%; border:1px solid var(--line);
+  background:var(--surface); font-size:1.25rem; line-height:1;
+}
+.datebar .nav:disabled{ opacity:.35; cursor:default; }
+.date-main{ flex:1; text-align:center; }
+.date-label{ font-size:1.15rem; font-weight:700; display:block; }
+.date-input{
+  border:0; background:none; color:var(--muted); font-size:.85rem; text-align:center; padding:2px;
+}
+.cycle-line{ text-align:center; color:var(--muted); font-size:.9rem; margin:0 0 18px; min-height:1.3em; }
+
+.block{ background:var(--surface); border-radius:14px; padding:14px 14px 6px; margin-bottom:14px; border:1px solid var(--line); }
+.block h2{ font-size:1rem; margin:0 0 8px; }
+.block .hint{ color:var(--muted); font-size:.85rem; margin:-4px 0 10px; }
+
+.menses{ display:grid; grid-template-columns:repeat(3,1fr); gap:6px; margin-bottom:10px; }
+.menses button{
+  border:1px solid var(--line); background:var(--bg); border-radius:10px; padding:10px 6px; font-weight:700;
+}
+.menses button[aria-pressed="true"][data-m="none"]{ background:var(--ink); color:var(--surface); border-color:var(--ink); }
+.menses button[aria-pressed="true"][data-m="spotting"]{ background:var(--spot); border-color:var(--spot); color:var(--ink); }
+.menses button[aria-pressed="true"][data-m="bleeding"]{ background:var(--bleed); border-color:var(--bleed); color:#fff; }
+
+.legend{
+  display:grid; grid-template-columns:repeat(4,1fr); gap:4px; font-size:.78rem; color:var(--muted);
+  text-align:center; margin:0 0 6px; position:sticky; top:calc(env(safe-area-inset-top,0px) + 96px);
+  background:var(--surface); padding:6px 0; z-index:2;
+}
+.legend b{ display:block; color:var(--ink); font-size:.85rem; }
+
+.item{ padding:10px 0 12px; border-top:1px solid var(--line); }
+.item:first-of-type{ border-top:0; }
+.q{ margin:0 0 8px; display:flex; gap:10px; }
+.q .n{ color:var(--muted); min-width:1.6em; text-align:right; font-variant-numeric:tabular-nums; }
+.scale{ display:grid; grid-template-columns:repeat(4,1fr); gap:6px; padding-left:calc(1.6em + 10px); }
+.scale button{
+  height:42px; border-radius:9px; border:1px solid var(--line); background:var(--bg); font-weight:700;
+  transition:background-color .12s, color .12s;
+}
+.scale button[aria-pressed="true"]{ background:var(--accent); color:var(--accent-ink); border-color:var(--accent); }
+.item.unrated .q span:last-child{ }
+textarea{
+  width:100%; min-height:72px; border:1px solid var(--line); border-radius:10px; background:var(--bg);
+  padding:10px; resize:vertical; margin-bottom:10px;
+}
+.row-actions{ display:flex; justify-content:space-between; align-items:center; gap:10px; margin:6px 0 0; }
+.progress{ color:var(--muted); font-size:.9rem; }
+.btn{
+  border:1px solid var(--line); background:var(--surface); border-radius:10px; padding:10px 14px; font-weight:700;
+}
+.btn.primary{ background:var(--accent); color:var(--accent-ink); border-color:var(--accent); }
+.btn.danger{ color:var(--bleed); }
+.btn:disabled{ opacity:.45; cursor:default; }
+
+/* History */
+.chart-wrap{ display:flex; gap:6px; }
+.yaxis{ flex:none; width:22px; }
+.chart-scroll{ overflow-x:auto; flex:1; -webkit-overflow-scrolling:touch; padding-bottom:4px; }
+.chart-scroll svg{ display:block; }
+.chart-legend{ display:flex; flex-wrap:wrap; gap:14px; font-size:.82rem; color:var(--muted); margin:10px 0 4px; }
+.sw{ display:inline-block; width:12px; height:12px; border-radius:3px; vertical-align:-1px; margin-right:5px; }
+table{ width:100%; border-collapse:collapse; font-size:.92rem; margin-bottom:10px; }
+th,td{ text-align:left; padding:8px 6px; border-top:1px solid var(--line); font-variant-numeric:tabular-nums; }
+th{ color:var(--muted); font-weight:700; border-top:0; }
+.empty{ color:var(--muted); padding:8px 0 14px; }
+
+/* Data */
+.prose p{ margin:0 0 10px; max-width:62ch; }
+.prose code{ font-size:.88em; background:var(--bg); padding:1px 5px; border-radius:5px; }
+.stack{ display:flex; flex-wrap:wrap; gap:8px; margin:6px 0 14px; }
+.csv-out{ font-family:ui-monospace, Menlo, Consolas, monospace; font-size:.75rem; min-height:140px; }
+.sr{ position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); }
+.pair{ display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:8px; }
+.pair label{ display:flex; flex-direction:column; gap:4px; font-size:.9rem; color:var(--muted); }
+.pair input,.opts input[type='number']{ border:1px solid var(--line); border-radius:10px; background:var(--bg); padding:9px 10px; color:var(--ink); min-width:0; }
+.opts{ display:grid; gap:12px; margin:4px 0 10px; }
+.opts fieldset{ border:0; padding:0; margin:0; display:flex; flex-wrap:wrap; gap:6px 18px; }
+.opts legend{ color:var(--muted); font-size:.9rem; padding:0; margin-bottom:6px; }
+.inline{ display:flex; align-items:center; flex-wrap:wrap; gap:8px; font-size:.95rem; }
+.opts input[type='number']{ width:4.5em; padding:6px 8px; }
+.skipped{ margin:0 0 10px; padding-left:20px; color:var(--muted); font-size:.88rem; }
+[hidden]{ display:none !important; }
+@media (prefers-reduced-motion: reduce){ *{ transition:none !important; } }
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="top-inner">
+    <div class="title-row">
+      <h1>Daily cycle log</h1>
+      <span class="save-state" id="saveState" aria-live="polite"></span>
+    </div>
+    <div class="tabs" role="tablist">
+      <button class="tab" role="tab" id="tab-log" aria-selected="true" data-view="log">Log</button>
+      <button class="tab" role="tab" id="tab-history" aria-selected="false" data-view="history">History</button>
+      <button class='tab' role='tab' id='tab-periods' aria-selected='false' data-view='periods'>Periods</button>
+      <button class="tab" role="tab" id="tab-data" aria-selected="false" data-view="data">Your data</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="banner" id="storageBanner" hidden>
+    This browser isn’t allowing the page to store anything, so entries will disappear when you close it. Export your data from “Your data” before leaving, or open the page in a regular (non-private) window.
+  </div>
+
+  <!-- LOG -->
+  <section id="view-log" role="tabpanel" aria-labelledby="tab-log">
+    <div class="datebar">
+      <button class="nav" id="prevDay" aria-label="Previous day">‹</button>
+      <div class="date-main">
+        <span class="date-label" id="dateLabel"></span>
+        <label class="sr" for="dateInput">Choose a date</label>
+        <input type="date" class="date-input" id="dateInput">
+      </div>
+      <button class="nav" id="nextDay" aria-label="Next day">›</button>
+    </div>
+    <p class="cycle-line" id="cycleLine"></p>
+
+    <div class="block">
+      <h2>Period today</h2>
+      <div class="menses" role="group" aria-label="Menstrual bleeding today">
+        <button data-m="none" aria-pressed="false">None</button>
+        <button data-m="spotting" aria-pressed="false">Spotting</button>
+        <button data-m="bleeding" aria-pressed="false">Bleeding</button>
+      </div>
+    </div>
+
+    <div class="block" id="itemsBlock">
+      <h2>Rate each problem for today</h2>
+      <p class="hint">Fill this in each evening. Tap a number again to clear it.</p>
+      <div class="legend" aria-hidden="true">
+        <span><b>0</b>Not at all</span><span><b>1</b>Mild</span>
+        <span><b>2</b>Moderate</span><span><b>3</b>Severe</span>
+      </div>
+      <div id="items"></div>
+    </div>
+
+    <div class="block">
+      <h2>Notes</h2>
+      <label class="sr" for="notes">Notes for this day</label>
+      <textarea id="notes" placeholder="Optional: medications, stressors, anything unusual"></textarea>
+    </div>
+
+    <div class="row-actions">
+      <span class="progress" id="progress"></span>
+      <button class="btn danger" id="clearDay">Clear this day</button>
+    </div>
+  </section>
+
+  <!-- HISTORY -->
+  <section id="view-history" role="tabpanel" aria-labelledby="tab-history" hidden>
+    <div class="block">
+      <h2>Average symptom score by day</h2>
+      <p class="hint">Mean of items 1–21 on the 0–3 scale. Tap a day to open it.</p>
+      <div id="chartArea"></div>
+      <div class="chart-legend">
+        <span><span class="sw" style="background:var(--s5)"></span>Symptom average</span>
+        <span><span class="sw" style="background:var(--bleed)"></span>Bleeding</span>
+        <span><span class="sw" style="background:var(--spot)"></span>Spotting</span>
+        <span><span class="sw" style="background:var(--muted);width:2px"></span>Period start</span>
+      </div>
+    </div>
+    <div class="block">
+      <h2>Cycles</h2>
+      <p class="hint">A cycle starts on the first bleeding day after a day without bleeding. Spotting doesn’t count.</p>
+      <div id="cycleTable"></div>
+    </div>
+    <div class="block">
+      <h2>Days logged</h2>
+      <div id="loggedSummary"></div>
+    </div>
+  </section>
+
+  <!-- PERIODS -->
+  <section id='view-periods' role='tabpanel' aria-labelledby='tab-periods' hidden>
+    <div class='block prose'>
+      <h2>Add one period</h2>
+      <div class='pair'>
+        <label>Started<input type='date' id='pStart'></label>
+        <label>Ended (optional)<input type='date' id='pEnd'></label>
+      </div>
+      <div class='stack'><button class='btn primary' id='pAdd'>Add period</button></div>
+      <p class='hint' id='pAddMsg' aria-live='polite'></p>
+    </div>
+
+    <div class='block prose'>
+      <h2>Paste past periods from a spreadsheet</h2>
+      <p>In Excel, select your start-date column (plus the end-date column next to it, if you have one), copy, and paste here. One period per line. What you paste stays on this device.</p>
+      <label class='sr' for='bulkIn'>Pasted dates</label>
+      <textarea class='csv-out' id='bulkIn' placeholder='3/14/2019    3/19/2019&#10;4/11/2019    4/16/2019'></textarea>
+      <div class='opts'>
+        <fieldset>
+          <legend>Date order in your file</legend>
+          <label class='inline'><input type='radio' name='dorder' value='mdy' checked> Month/day (3/14/2019)</label>
+          <label class='inline'><input type='radio' name='dorder' value='dmy'> Day/month (14/3/2019)</label>
+        </fieldset>
+        <label class='inline'>If a line has no end date, mark <input type='number' id='bulkLen' min='1' max='10' value='1' inputmode='numeric'> day(s) as bleeding</label>
+      </div>
+      <p class='hint'>Dates like 2019-03-14 or Mar 14, 2019 work with either setting. Nothing is added until you review and confirm.</p>
+      <div class='stack'><button class='btn' id='bulkPreview'>Check dates</button></div>
+      <div id='bulkResult' aria-live='polite'></div>
+    </div>
+
+    <div class='block prose' id='undoBlock' hidden>
+      <h2>Undo</h2>
+      <p id='undoText'></p>
+      <div class='stack'><button class='btn danger' id='undoBtn'>Undo last addition</button></div>
+    </div>
+  </section>
+
+  <!-- DATA -->
+  <section id="view-data" role="tabpanel" aria-labelledby="tab-data" hidden>
+    <div class="block prose">
+      <h2>Where your entries live</h2>
+      <p>The website only delivers this page. Everything you enter is saved in this browser on this device and is never sent to the site or anyone else.</p>
+      <p>Install this page as an app and always open it from that icon. It works without an internet connection. Clearing Chrome’s data for this site, uninstalling the app, or switching browsers can erase entries. Export a backup regularly.</p>
+    </div>
+
+    <div class="block prose">
+      <h2>Export</h2>
+      <p>One row per logged day, with columns <code>date</code>, <code>cycle_day</code> (day 1 = first bleeding day), <code>days_to_next_period</code> (−1 = the day before), <code>menses</code>, <code>item01</code>–<code>item24</code> in DRSP order, and <code>notes</code>. Ratings are on a 0–3 scale (0 = not at all, 3 = severe).</p>
+      <div class="stack">
+        <button class="btn primary" id="exportBtn">Export CSV</button>
+        <button class="btn" id="showCsvBtn">Show CSV to copy</button>
+      </div>
+      <p class="hint" id="exportMsg" aria-live="polite"></p>
+      <label class="sr" for="csvOut">CSV text</label>
+      <textarea class="csv-out" id="csvOut" readonly hidden></textarea>
+    </div>
+
+    <div class="block prose">
+      <h2>Import a backup</h2>
+      <p>Choose a CSV exported from this page, or paste its contents below. Imported days replace any days with the same date.</p>
+      <div class="stack">
+        <label class="btn" for="importFile" style="display:inline-block">Choose file</label>
+        <input type="file" id="importFile" accept=".csv,text/csv" class="sr">
+      </div>
+      <label class="sr" for="pasteIn">Paste CSV</label>
+      <textarea class="csv-out" id="pasteIn" placeholder="Or paste CSV here"></textarea>
+      <div class="stack"><button class="btn" id="importPasteBtn">Import pasted CSV</button></div>
+      <p class="hint" id="importMsg" aria-live="polite"></p>
+    </div>
+
+    <div class="block prose">
+      <h2>Delete everything</h2>
+      <p>Removes every entry from this browser. Export first if you want a copy.</p>
+      <div class="stack"><button class="btn danger" id="deleteAll">Delete all entries</button></div>
+    </div>
+
+    <div class="block prose">
+      <p class="hint">Items follow the Daily Record of Severity of Problems (Endicott, Nee &amp; Harrison, 2006), rated 0–3 instead of the original 1–6. This page is a personal log, not a diagnosis.</p>
+    </div>
+  </section>
+</main>
+
+<script>
+(function(){
+  var ITEMS = [
+    "Felt depressed, sad, “down,” or “blue”",
+    "Felt hopeless",
+    "Felt worthless or guilty",
+    "Felt anxious, tense, “keyed up,” or “on edge”",
+    "Had mood swings (e.g., suddenly feeling sad or tearful)",
+    "Was more sensitive to rejection or my feelings were easily hurt",
+    "Felt angry or irritable",
+    "Had conflicts or problems with people",
+    "Had less interest in usual activities (e.g., work, school, friends, hobbies)",
+    "Had difficulty concentrating",
+    "Felt lethargic, tired, or fatigued, or had a lack of energy",
+    "Had increased appetite or overate",
+    "Had cravings for specific foods",
+    "Slept more, took naps, or found it hard to get up when intended",
+    "Had trouble getting to sleep or staying asleep",
+    "Felt overwhelmed or that I could not cope",
+    "Felt out of control",
+    "Had breast tenderness",
+    "Had breast swelling, felt bloated, or had weight gain",
+    "Had headache",
+    "Had joint or muscle pain",
+    "At work, school, home, or in daily routine, at least one of the problems above caused reduced productivity or inefficiency",
+    "At least one of the problems above interfered with hobbies or social activities (e.g., avoided or did less)",
+    "At least one of the problems above interfered with relationships with others"
+  ];
+  var GROUPS = [
+    {title:null, from:0, to:16},
+    {title:"Physical", from:17, to:20},
+    {title:"Effect on daily life", from:21, to:23}
+  ];
+  var KEY = "drsp-log-v1";
+  var store = {entries:{}};
+  var persistent = true;
+
+  // ---------- storage ----------
+  function load(){
+    try{
+      var t = "__drsp_test__";
+      localStorage.setItem(t,"1"); localStorage.removeItem(t);
+      var raw = localStorage.getItem(KEY);
+      if(raw){ var p = JSON.parse(raw); if(p && p.entries) store = p; }
+    }catch(e){ persistent = false; }
+    document.getElementById("storageBanner").hidden = persistent;
+  }
+  var saveTimer = null;
+  function persist(){
+    var el = document.getElementById("saveState");
+    if(!persistent){ el.textContent = "Not stored"; return; }
+    try{
+      localStorage.setItem(KEY, JSON.stringify(store));
+      el.textContent = "Saved on this device";
+    }catch(e){
+      persistent = false;
+      document.getElementById("storageBanner").hidden = false;
+      el.textContent = "Not stored";
+    }
+  }
+
+  // ---------- dates ----------
+  function iso(d){ return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
+  function parse(s){ var a = s.split("-").map(Number); return new Date(a[0],a[1]-1,a[2]); }
+  function addDays(s,n){ var d = parse(s); d.setDate(d.getDate()+n); return iso(d); }
+  function diffDays(a,b){ return Math.round((parse(b)-parse(a))/86400000); }
+  function todayIso(){ return iso(new Date()); }
+  function validIso(s){ return /^\d{4}-\d{2}-\d{2}$/.test(s) && !isNaN(parse(s).getTime()); }
+
+  var cur = todayIso();
+
+  // ---------- entries ----------
+  function blank(){ return {m:"none", r:ITEMS.map(function(){return null;}), n:""}; }
+  function get(d){ return store.entries[d] || null; }
+  function ensure(d){ if(!store.entries[d]) store.entries[d] = blank(); return store.entries[d]; }
+  function isEmpty(e){ return !e || (e.m==="none" && e.r.every(function(v){return v==null;}) && !e.n); }
+  function tidy(d){ if(isEmpty(store.entries[d])) delete store.entries[d]; }
+  function ratedCount(e){ return e ? e.r.filter(function(v){return v!=null;}).length : 0; }
+  function symptomMean(e){
+    if(!e) return null; var s=0,n=0;
+    for(var i=0;i<21;i++){ if(e.r[i]!=null){ s+=e.r[i]; n++; } }
+    return n ? s/n : null;
+  }
+
+  // ---------- cycles ----------
+  function onsets(){
+    var bleed = Object.keys(store.entries).filter(function(d){ return store.entries[d].m==="bleeding"; }).sort();
+    var set = {}; bleed.forEach(function(d){ set[d]=1; });
+    return bleed.filter(function(d){ return !set[addDays(d,-1)]; });
+  }
+  function cycleInfo(d, ons){
+    var fwd=null, back=null;
+    for(var i=ons.length-1;i>=0;i--){ if(ons[i]<=d){ fwd = diffDays(ons[i],d)+1; break; } }
+    for(var j=0;j<ons.length;j++){ if(ons[j]>d){ back = -diffDays(d,ons[j]); break; } }
+    return {fwd:fwd, back:back};
+  }
+
+  // ---------- build item rows once ----------
+  var itemsEl = document.getElementById("items");
+  GROUPS.forEach(function(g){
+    if(g.title){
+      var h = document.createElement("h2"); h.textContent = g.title; h.style.margin = "18px 0 4px";
+      itemsEl.appendChild(h);
+    }
+    for(var i=g.from;i<=g.to;i++){
+      var wrap = document.createElement("div"); wrap.className = "item"; wrap.dataset.i = i;
+      var q = document.createElement("p"); q.className = "q"; q.id = "q"+i;
+      var n = document.createElement("span"); n.className = "n"; n.textContent = i+1;
+      var t = document.createElement("span"); t.textContent = ITEMS[i];
+      q.appendChild(n); q.appendChild(t);
+      var sc = document.createElement("div"); sc.className = "scale"; sc.setAttribute("role","group"); sc.setAttribute("aria-labelledby","q"+i);
+      for(var v=0; v<=3; v++){
+        var b = document.createElement("button"); b.textContent = v; b.dataset.v = v; b.dataset.i = i;
+        b.setAttribute("aria-pressed","false");
+        b.setAttribute("aria-label", ["Not at all","Mild","Moderate","Severe"][v]);
+        sc.appendChild(b);
+      }
+      wrap.appendChild(q); wrap.appendChild(sc); itemsEl.appendChild(wrap);
+    }
+  });
+
+  itemsEl.addEventListener("click", function(ev){
+    var b = ev.target.closest("button[data-v]"); if(!b) return;
+    var i = +b.dataset.i, v = +b.dataset.v;
+    var e = ensure(cur);
+    e.r[i] = (e.r[i]===v) ? null : v;
+    tidy(cur); persist(); renderLog();
+  });
+
+  document.querySelectorAll(".menses button").forEach(function(b){
+    b.addEventListener("click", function(){
+      var e = ensure(cur); e.m = b.dataset.m; tidy(cur); persist(); renderLog();
+    });
+  });
+
+  var notesEl = document.getElementById("notes");
+  notesEl.addEventListener("input", function(){
+    var e = ensure(cur); e.n = notesEl.value;
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(function(){ tidy(cur); persist(); renderProgress(); }, 400);
+  });
+
+  document.getElementById("clearDay").addEventListener("click", function(){
+    if(!get(cur)) return;
+    if(!confirm("Clear everything logged for this day?")) return;
+    delete store.entries[cur]; persist(); renderLog();
+  });
+
+  // ---------- date nav ----------
+  var dateInput = document.getElementById("dateInput");
+  document.getElementById("prevDay").addEventListener("click", function(){ goTo(addDays(cur,-1)); });
+  document.getElementById("nextDay").addEventListener("click", function(){ goTo(addDays(cur,1)); });
+  dateInput.addEventListener("change", function(){ if(validIso(dateInput.value)) goTo(dateInput.value); });
+  function goTo(d){
+    flushNotes();
+    var t = todayIso(); if(d>t) d=t; cur = d; renderLog();
+  }
+  function flushNotes(){ if(saveTimer){ clearTimeout(saveTimer); saveTimer=null; tidy(cur); persist(); } }
+
+  // ---------- render log ----------
+  function renderProgress(){
+    var e = get(cur), c = ratedCount(e);
+    document.getElementById("progress").textContent = c===24 ? "All 24 rated" : c+" of 24 rated";
+    document.getElementById("clearDay").disabled = !e;
+  }
+  function renderLog(){
+    var t = todayIso();
+    var d = parse(cur);
+    var label = d.toLocaleDateString(undefined,{weekday:"long", month:"long", day:"numeric"});
+    if(cur===t) label = "Today, " + d.toLocaleDateString(undefined,{month:"long", day:"numeric"});
+    document.getElementById("dateLabel").textContent = label;
+    dateInput.value = cur; dateInput.max = t;
+    document.getElementById("nextDay").disabled = cur>=t;
+
+    var info = cycleInfo(cur, onsets());
+    var cl = "";
+    if(info.fwd!=null) cl = "Cycle day " + info.fwd;
+    if(info.back!=null) cl += (cl ? ", " : "") + Math.abs(info.back) + (Math.abs(info.back)===1 ? " day" : " days") + " before next period";
+    document.getElementById("cycleLine").textContent = cl || "Log a bleeding day to start counting cycle days";
+
+    var e = get(cur) || blank();
+    document.querySelectorAll(".menses button").forEach(function(b){
+      b.setAttribute("aria-pressed", String(b.dataset.m===e.m));
+    });
+    itemsEl.querySelectorAll("button[data-v]").forEach(function(b){
+      b.setAttribute("aria-pressed", String(e.r[+b.dataset.i]===+b.dataset.v));
+    });
+    if(document.activeElement!==notesEl) notesEl.value = e.n || "";
+    renderProgress();
+  }
+
+  // ---------- history ----------
+  function sevColor(m){
+    var k = [1,3,5,6][Math.min(3, Math.max(0, Math.round(m)))];
+    return "var(--s"+k+")";
+  }
+  function renderHistory(){
+    var keys = Object.keys(store.entries).sort();
+    var area = document.getElementById("chartArea");
+    var ons = onsets();
+    if(!keys.length){
+      area.innerHTML = '<p class="empty">Nothing logged yet. Entries you make on the Log tab show up here.</p>';
+      document.getElementById("cycleTable").innerHTML = '<p class="empty">No periods logged yet.</p>';
+      document.getElementById("loggedSummary").innerHTML = '<p class="empty">0 days.</p>';
+      return;
+    }
+    var start = keys[0], end = todayIso();
+    if(keys[keys.length-1] > end) end = keys[keys.length-1];
+    var n = diffDays(start,end)+1;
+    var W = n>400 ? 5 : 12, gap = n>400 ? 1 : 2, H = 150, top = 8, menY = H+10, menH = 10, lab = 18;
+    var width = Math.max(n*W, 200), height = menY+menH+lab+4;
+    var ns = "http://www.w3.org/2000/svg";
+    var svg = document.createElementNS(ns,"svg");
+    svg.setAttribute("width", width); svg.setAttribute("height", height);
+    svg.setAttribute("role","img"); svg.setAttribute("aria-label","Daily average symptom score with menstrual bleeding days");
+    function y(v){ return top + (3-v)/3*(H-top); }
+    for(var g=0; g<=3; g++){
+      var ln = document.createElementNS(ns,"line");
+      ln.setAttribute("x1",0); ln.setAttribute("x2",width); ln.setAttribute("y1",y(g)); ln.setAttribute("y2",y(g));
+      ln.setAttribute("stroke","var(--line)"); ln.setAttribute("stroke-width", g===0?1.5:1);
+      svg.appendChild(ln);
+    }
+    var onsetSet = {}; ons.forEach(function(o){ onsetSet[o]=1; });
+    for(var i=0;i<n;i++){
+      var d = addDays(start,i), e = store.entries[d], x = i*W;
+      if(onsetSet[d]){
+        var ol = document.createElementNS(ns,"line");
+        ol.setAttribute("x1",x+0.5); ol.setAttribute("x2",x+0.5); ol.setAttribute("y1",top-4); ol.setAttribute("y2",menY+menH);
+        ol.setAttribute("stroke","var(--muted)"); ol.setAttribute("stroke-width",1.5);
+        svg.appendChild(ol);
+      }
+      var gEl = document.createElementNS(ns,"g"); gEl.style.cursor = "pointer"; gEl.dataset.d = d;
+      var hit = document.createElementNS(ns,"rect");
+      hit.setAttribute("x",x); hit.setAttribute("y",0); hit.setAttribute("width",W); hit.setAttribute("height",menY+menH);
+      hit.setAttribute("fill","transparent"); gEl.appendChild(hit);
+      var m = symptomMean(e);
+      if(m!=null){
+        var r = document.createElementNS(ns,"rect");
+        var yy = y(m);
+        r.setAttribute("x",x+gap/2+1); r.setAttribute("width",W-gap-1); r.setAttribute("y",yy);
+        r.setAttribute("height", Math.max(2, y(0)-yy)); r.setAttribute("rx",2);
+        r.setAttribute("fill", sevColor(m));
+        gEl.appendChild(r);
+      }
+      if(e && e.m!=="none"){
+        var mr = document.createElementNS(ns,"rect");
+        mr.setAttribute("x",x+gap/2+1); mr.setAttribute("width",W-gap-1); mr.setAttribute("y",menY); mr.setAttribute("height",menH);
+        mr.setAttribute("rx",2); mr.setAttribute("fill", e.m==="bleeding" ? "var(--bleed)" : "var(--spot)");
+        gEl.appendChild(mr);
+      }
+      var tt = document.createElementNS(ns,"title");
+      tt.textContent = parse(d).toLocaleDateString(undefined,{month:"short",day:"numeric"}) + (m!=null ? ": average " + m.toFixed(1) : ": no ratings") + (e && e.m!=="none" ? ", " + e.m : "");
+      gEl.appendChild(tt);
+      svg.appendChild(gEl);
+      var dd = parse(d);
+      if(dd.getDate()===1 || i===0){
+        var tx = document.createElementNS(ns,"text");
+        tx.setAttribute("x",x+1); tx.setAttribute("y",menY+menH+14);
+        tx.setAttribute("font-size","11"); tx.setAttribute("fill","var(--muted)");
+        tx.textContent = dd.toLocaleDateString(undefined,{month:"short", day:"numeric"});
+        svg.appendChild(tx);
+      }
+    }
+    svg.addEventListener("click", function(ev){
+      var g = ev.target.closest("g[data-d]"); if(!g) return;
+      cur = g.dataset.d; show("log"); renderLog(); window.scrollTo(0,0);
+    });
+    // y axis
+    var ya = document.createElementNS(ns,"svg");
+    ya.setAttribute("width",22); ya.setAttribute("height",height); ya.setAttribute("aria-hidden","true");
+    for(var k=0;k<=3;k++){
+      var tk = document.createElementNS(ns,"text");
+      tk.setAttribute("x",18); tk.setAttribute("y",y(k)+4); tk.setAttribute("text-anchor","end");
+      tk.setAttribute("font-size","11"); tk.setAttribute("fill","var(--muted)"); tk.textContent = k;
+      ya.appendChild(tk);
+    }
+    area.innerHTML = "";
+    var wrap = document.createElement("div"); wrap.className = "chart-wrap";
+    var yWrap = document.createElement("div"); yWrap.className = "yaxis"; yWrap.appendChild(ya);
+    var sc = document.createElement("div"); sc.className = "chart-scroll"; sc.appendChild(svg);
+    wrap.appendChild(yWrap); wrap.appendChild(sc); area.appendChild(wrap);
+    sc.scrollLeft = sc.scrollWidth;
+
+    // cycles table
+    var ct = document.getElementById("cycleTable");
+    if(!ons.length){ ct.innerHTML = '<p class="empty">No bleeding days logged yet.</p>'; }
+    else{
+      var lens = [], rowsH = [];
+      var html = "<table><thead><tr><th>Period started</th><th>Cycle length</th><th>Days logged</th></tr></thead><tbody>";
+      ons.forEach(function(o,idx){
+        var next = ons[idx+1];
+        var len = next ? diffDays(o,next)+" days" : "In progress";
+        var stop = next || addDays(todayIso(),1);
+        var logged = keys.filter(function(k){ return k>=o && k<stop && ratedCount(store.entries[k])>0; }).length;
+        if(next) lens.push(diffDays(o,next));
+        rowsH.push("<tr><td>"+parse(o).toLocaleDateString(undefined,{year:"numeric",month:"short",day:"numeric"})+"</td><td>"+len+"</td><td>"+logged+"</td></tr>");
+      });
+      ct.innerHTML = cycleSummary(lens, ons.length) + html + rowsH.reverse().join('') + "</tbody></table>";
+    }
+    var full = keys.filter(function(k){ return ratedCount(store.entries[k])===24; }).length;
+    var partial = keys.filter(function(k){ var c = ratedCount(store.entries[k]); return c>0 && c<24; }).length;
+    var span = diffDays(keys[0], todayIso())+1;
+    var ratedKeys = keys.filter(function(k){ return ratedCount(store.entries[k])>0; });
+    var missing = ratedKeys.length ? diffDays(ratedKeys[0], todayIso())+1-ratedKeys.length : 0;
+    document.getElementById("loggedSummary").innerHTML =
+      "<table><tbody>"+
+      "<tr><td>Fully rated days</td><td>"+full+"</td></tr>"+
+      "<tr><td>Partly rated days</td><td>"+partial+"</td></tr>"+
+      "<tr><td>Days with no ratings since your first rated day</td><td>"+Math.max(0,missing)+"</td></tr>"+
+      "</tbody></table>";
+  }
+
+  // ---------- CSV ----------
+  var HEADER = ["date","cycle_day","days_to_next_period","menses"]
+    .concat(ITEMS.map(function(_,i){ return "item"+String(i+1).padStart(2,"0"); }))
+    .concat(["notes"]);
+  function q(v){
+    v = v==null ? "" : String(v);
+    return /[",\n\r]/.test(v) ? '"'+v.replace(/"/g,'""')+'"' : v;
+  }
+  function buildCsv(){
+    var ons = onsets();
+    var rows = [HEADER.join(",")];
+    Object.keys(store.entries).sort().forEach(function(d){
+      var e = store.entries[d], ci = cycleInfo(d, ons);
+      rows.push([d, ci.fwd, ci.back, e.m].concat(e.r).concat([e.n]).map(q).join(","));
+    });
+    return rows.join("\n") + "\n";
+  }
+  function parseCsv(text){
+    var rows = [], row = [], f = "", inQ = false;
+    for(var i=0;i<text.length;i++){
+      var c = text[i];
+      if(inQ){
+        if(c==='"'){ if(text[i+1]==='"'){ f+='"'; i++; } else inQ=false; }
+        else f+=c;
+      }else{
+        if(c==='"') inQ=true;
+        else if(c===","){ row.push(f); f=""; }
+        else if(c==="\n"||c==="\r"){ if(c==="\r"&&text[i+1]==="\n") i++; row.push(f); rows.push(row); row=[]; f=""; }
+        else f+=c;
+      }
+    }
+    if(f!=="" || row.length){ row.push(f); rows.push(row); }
+    return rows.filter(function(r){ return r.some(function(x){ return x!==""; }); });
+  }
+  function importCsv(text){
+    var rows = parseCsv(text.replace(/^\uFEFF/,""));
+    if(!rows.length) throw new Error("The file is empty.");
+    var h = rows[0].map(function(s){ return s.trim(); });
+    var di = h.indexOf("date"), mi = h.indexOf("menses"), ni = h.indexOf("notes");
+    var ii = []; for(var k=1;k<=24;k++){ ii.push(h.indexOf("item"+String(k).padStart(2,"0"))); }
+    if(di<0 || ii.some(function(x){ return x<0; })) throw new Error("This doesn’t look like a CSV exported from this page. It needs a date column and item01–item24.");
+    var count = 0, skipped = 0;
+    rows.slice(1).forEach(function(r){
+      var d = (r[di]||"").trim();
+      if(!validIso(d)){ skipped++; return; }
+      var m = mi>=0 ? (r[mi]||"none").trim() : "none";
+      if(["none","spotting","bleeding"].indexOf(m)<0) m = "none";
+      var vals = ii.map(function(x){ var v = parseInt(r[x],10); return (v>=0 && v<=3) ? v : null; });
+      var e = {m:m, r:vals, n: ni>=0 ? (r[ni]||"") : ""};
+      if(isEmpty(e)) { skipped++; return; }
+      store.entries[d] = e; count++;
+    });
+    persist();
+    return {count:count, skipped:skipped};
+  }
+
+  var downloads = null;
+  if(window.claude && typeof window.claude.use==="function"){
+    window.claude.use("downloads").then(function(ns){ downloads = ns; }).catch(function(){ downloads = null; });
+  }
+  var exportMsg = document.getElementById("exportMsg");
+  var csvOut = document.getElementById("csvOut");
+  function showCsv(){
+    csvOut.value = buildCsv(); csvOut.hidden = false; csvOut.focus(); csvOut.select();
+  }
+  document.getElementById("exportBtn").addEventListener("click", function(){
+    flushNotes();
+    if(!Object.keys(store.entries).length){ exportMsg.textContent = "Nothing to export yet."; return; }
+    if(!downloads){
+      try{
+        var blob = new Blob([buildCsv()], {type:"text/csv"});
+        var a = document.createElement("a");
+        a.href = URL.createObjectURL(blob); a.download = "drsp-log-"+todayIso()+".csv";
+        document.body.appendChild(a); a.click(); a.remove();
+        setTimeout(function(){ URL.revokeObjectURL(a.href); }, 2000);
+        exportMsg.textContent = "Saved to your downloads folder.";
+      }catch(e){
+        exportMsg.textContent = "Your browser blocked the download. Copy the text below into a file named drsp-log.csv.";
+        showCsv();
+      }
+      return;
+    }
+    exportMsg.textContent = "";
+    downloads.save({filename:"drsp-log-"+todayIso()+".csv", data:buildCsv()}).then(function(res){
+      exportMsg.textContent = res.status==="saved" ? "Saved." : "";
+    }).catch(function(err){
+      var code = err && err.code;
+      if(code==="declined"){ exportMsg.textContent = "Export cancelled."; }
+      else if(code==="rate_limited"){ exportMsg.textContent = "A save prompt is already open. Finish that one first."; }
+      else { exportMsg.textContent = "File saving isn’t available here. Copy the text below into a file named drsp-log.csv."; showCsv(); }
+    });
+  });
+  document.getElementById("showCsvBtn").addEventListener("click", function(){ flushNotes(); showCsv(); });
+
+  var importMsg = document.getElementById("importMsg");
+  function doImport(text){
+    try{
+      var r = importCsv(text);
+      importMsg.textContent = "Imported " + r.count + (r.count===1?" day":" days") + (r.skipped ? ", skipped " + r.skipped + " empty or unreadable " + (r.skipped===1?"row":"rows") : "") + ".";
+      renderLog();
+    }catch(e){ importMsg.textContent = e.message || "That file couldn’t be read."; }
+  }
+  document.getElementById("importFile").addEventListener("change", function(ev){
+    var f = ev.target.files && ev.target.files[0]; if(!f) return;
+    var rd = new FileReader();
+    rd.onload = function(){ doImport(String(rd.result)); ev.target.value=""; };
+    rd.onerror = function(){ importMsg.textContent = "That file couldn’t be read."; };
+    rd.readAsText(f);
+  });
+  document.getElementById("importPasteBtn").addEventListener("click", function(){
+    var t = document.getElementById("pasteIn").value;
+    if(!t.trim()){ importMsg.textContent = "Paste the CSV text first."; return; }
+    doImport(t); document.getElementById("pasteIn").value = "";
+  });
+
+  document.getElementById("deleteAll").addEventListener("click", function(){
+    if(!Object.keys(store.entries).length) return;
+    if(!confirm("Delete every entry stored in this browser? This can’t be undone.")) return;
+    store = {entries:{}}; persist(); renderUndo(); renderLog();
+  });
+
+  // ---------- past periods ----------
+  var MON = {jan:1,feb:2,mar:3,apr:4,may:5,jun:6,jul:7,aug:8,sep:9,oct:10,nov:11,dec:12};
+  var RE_ISO = /^([0-9]{4})[-/.]([0-9]{1,2})[-/.]([0-9]{1,2})$/;
+  var RE_NUM = /^([0-9]{1,2})[-/.]([0-9]{1,2})[-/.]([0-9]{2,4})$/;
+  var RE_DMON = /^([0-9]{1,2})[ -]([A-Za-z]{3,9})[.]?[ ,-]+([0-9]{2,4})$/;
+  var RE_MOND = /^([A-Za-z]{3,9})[.]?[ ]+([0-9]{1,2})(?:st|nd|rd|th)?,?[ ]+([0-9]{2,4})$/;
+  var RE_SER = /^[0-9]{5}(?:[.][0-9]+)?$/;
+  var RE_ANY = /[0-9]{4}[-/.][0-9]{1,2}[-/.][0-9]{1,2}|[0-9]{1,2}[-/.][0-9]{1,2}[-/.][0-9]{2,4}|[0-9]{1,2}[ -][A-Za-z]{3,9}[.]?[ ,-]+[0-9]{2,4}|[A-Za-z]{3,9}[.]?[ ]+[0-9]{1,2}(?:st|nd|rd|th)?,?[ ]+[0-9]{2,4}|[0-9]{5}(?:[.][0-9]+)?/g;
+  function mk(y,m,d){
+    if(y<100) y += (y<50 ? 2000 : 1900);
+    if(m<1||m>12||d<1||d>31) return null;
+    var dt = new Date(y,m-1,d);
+    if(dt.getFullYear()!==y||dt.getMonth()!==m-1||dt.getDate()!==d) return null;
+    return iso(dt);
+  }
+  function monthNum(w){ return MON[w.toLowerCase().slice(0,3)] || null; }
+  function looseDate(s, dmy){
+    s = String(s||'').trim(); var m;
+    if((m = s.match(RE_ISO))) return mk(+m[1],+m[2],+m[3]);
+    if((m = s.match(RE_NUM))) return dmy ? mk(+m[3],+m[2],+m[1]) : mk(+m[3],+m[1],+m[2]);
+    if((m = s.match(RE_DMON))){ var a = monthNum(m[2]); return a ? mk(+m[3],a,+m[1]) : null; }
+    if((m = s.match(RE_MOND))){ var b = monthNum(m[1]); return b ? mk(+m[3],b,+m[2]) : null; }
+    if(RE_SER.test(s)){ var n = Math.floor(+s); if(n>20000 && n<80000){ var base = new Date(1899,11,30); base.setDate(base.getDate()+n); return iso(base); } }
+    return null;
+  }
+  function fmt(d){ return parse(d).toLocaleDateString(undefined,{year:'numeric',month:'short',day:'numeric'}); }
+  function readRows(text, dmy, defLen){
+    var out = [], bad = [], swapHint = 0, t = todayIso();
+    text.split(String.fromCharCode(10)).forEach(function(line, idx){
+      var raw = line.trim(); if(!raw) return;
+      var toks = raw.match(RE_ANY) || [], dates = [];
+      toks.forEach(function(tk){
+        var d = looseDate(tk, dmy);
+        if(d) dates.push(d);
+        else if(looseDate(tk, !dmy)) swapHint++;
+      });
+      if(!dates.length){ bad.push([idx+1, raw, 'no date found']); return; }
+      var start = dates[0], end = dates[1] || null, len = null;
+      if(!end){
+        var rest = raw; toks.forEach(function(tk){ rest = rest.replace(tk,' '); });
+        var lm = rest.match(/(^|[^0-9])([0-9]{1,2})([^0-9]|$)/);
+        if(lm){ var n = +lm[2]; if(n>=1 && n<=15) len = n; }
+      }
+      if(start > t){ bad.push([idx+1, raw, 'start date is in the future']); return; }
+      if(end){
+        if(end < start){ bad.push([idx+1, raw, 'end date is before start date']); return; }
+        if(diffDays(start,end) > 14){ bad.push([idx+1, raw, 'more than 15 days long']); return; }
+      } else {
+        end = addDays(start, (len || defLen) - 1);
+      }
+      if(end > t) end = t;
+      out.push({start:start, end:end});
+    });
+    out.sort(function(a,b){ return a.start < b.start ? -1 : a.start > b.start ? 1 : 0; });
+    out = out.filter(function(p,i){ return i===0 || p.start!==out[i-1].start; });
+    return {periods:out, bad:bad, swapHint:swapHint};
+  }
+  function el(tag, cls, text){ var e = document.createElement(tag); if(cls) e.className = cls; if(text!=null) e.textContent = text; return e; }
+  function cycleSummary(lens, count){
+    if(!lens.length) return '';
+    var s = lens.slice().sort(function(a,b){ return a-b; });
+    var mid = Math.floor(s.length/2);
+    var med = s.length % 2 ? s[mid] : Math.round((s[mid-1]+s[mid])/2);
+    return '<p class=hint>' + count + ' periods logged. Median cycle length ' + med + ' days (range ' + s[0] + '–' + s[s.length-1] + '). Very long cycles can mean a period wasn’t logged.</p>';
+  }
+  function markPeriods(periods){
+    var seen = {}, undo = [];
+    periods.forEach(function(p){
+      for(var d = p.start; d <= p.end; d = addDays(d,1)){
+        if(!seen[d]){ seen[d] = 1; undo.push([d, store.entries[d] ? store.entries[d].m : null]); }
+        ensure(d).m = 'bleeding';
+      }
+    });
+    store.lastAdd = {count:periods.length, undo:undo};
+    persist(); renderUndo(); renderLog();
+    return undo.length;
+  }
+  function renderUndo(){
+    var la = store.lastAdd, b = document.getElementById('undoBlock');
+    if(!la || !la.undo || !la.undo.length){ b.hidden = true; return; }
+    b.hidden = false;
+    document.getElementById('undoText').textContent = 'Your last addition marked ' + la.count + (la.count===1 ? ' period' : ' periods') + ' (' + la.undo.length + (la.undo.length===1 ? ' day' : ' days') + '). Undoing it removes only those period marks; symptom ratings stay.';
+  }
+  document.getElementById('undoBtn').addEventListener('click', function(){
+    var la = store.lastAdd; if(!la) return;
+    if(!confirm('Undo your last addition of period dates?')) return;
+    la.undo.forEach(function(u){
+      var e = store.entries[u[0]]; if(!e) return;
+      e.m = u[1] || 'none'; tidy(u[0]);
+    });
+    delete store.lastAdd; persist(); renderUndo(); renderLog();
+  });
+  document.getElementById('pAdd').addEventListener('click', function(){
+    var s = document.getElementById('pStart').value, e = document.getElementById('pEnd').value;
+    var msg = document.getElementById('pAddMsg'), t = todayIso();
+    if(!validIso(s)){ msg.textContent = 'Choose the start date.'; return; }
+    if(s > t){ msg.textContent = 'The start date can’t be in the future.'; return; }
+    if(e && validIso(e)){
+      if(e < s){ msg.textContent = 'The end date is before the start date.'; return; }
+      if(diffDays(s,e) > 14){ msg.textContent = 'That’s longer than 15 days. Check the dates.'; return; }
+      if(e > t) e = t;
+    } else { e = s; }
+    markPeriods([{start:s, end:e}]);
+    msg.textContent = 'Added ' + fmt(s) + (e!==s ? ' to ' + fmt(e) : ' (start day only)') + '.';
+    document.getElementById('pStart').value = ''; document.getElementById('pEnd').value = '';
+  });
+  var pending = null;
+  var bulkResult = document.getElementById('bulkResult');
+  document.getElementById('bulkPreview').addEventListener('click', function(){
+    var text = document.getElementById('bulkIn').value;
+    var dmy = document.querySelector('input[name=dorder]:checked').value === 'dmy';
+    var defLen = Math.min(10, Math.max(1, parseInt(document.getElementById('bulkLen').value,10) || 1));
+    bulkResult.innerHTML = ''; pending = null;
+    if(!text.trim()){ bulkResult.appendChild(el('p','hint','Paste your dates first.')); return; }
+    var r = readRows(text, dmy, defLen), P = r.periods;
+    if(P.length){
+      var days = P.reduce(function(sum,p){ return sum + diffDays(p.start,p.end) + 1; }, 0);
+      bulkResult.appendChild(el('p', null, 'Found ' + P.length + (P.length===1 ? ' period' : ' periods') + ' (' + days + ' bleeding days), from ' + fmt(P[0].start) + ' to ' + fmt(P[P.length-1].start) + '. Check that these look right:'));
+      var tbl = el('table'), thead = el('thead'), hr = el('tr'), tb = el('tbody');
+      ['Started','Ended','Days'].forEach(function(h){ hr.appendChild(el('th', null, h)); });
+      thead.appendChild(hr); tbl.appendChild(thead);
+      var show = P.length > 6 ? P.slice(0,3).concat([null]).concat(P.slice(-3)) : P;
+      show.forEach(function(p){
+        var tr = el('tr');
+        if(!p){ tr.appendChild(el('td', null, '…')); tr.appendChild(el('td')); tr.appendChild(el('td')); }
+        else { tr.appendChild(el('td', null, fmt(p.start))); tr.appendChild(el('td', null, fmt(p.end))); tr.appendChild(el('td', null, String(diffDays(p.start,p.end)+1))); }
+        tb.appendChild(tr);
+      });
+      tbl.appendChild(tb); bulkResult.appendChild(tbl);
+      var overlaps = 0; for(var i=1;i<P.length;i++){ if(P[i].start <= P[i-1].end) overlaps++; }
+      if(overlaps) bulkResult.appendChild(el('p','hint', overlaps + (overlaps===1 ? ' period overlaps' : ' periods overlap') + ' the one before. Shared days are marked once.'));
+    } else {
+      bulkResult.appendChild(el('p', null, 'No periods found. Each line needs at least one date.'));
+    }
+    if(r.swapHint) bulkResult.appendChild(el('p','hint','Some dates only work with the other date order. Switch the setting above and check again.'));
+    if(r.bad.length){
+      bulkResult.appendChild(el('p','hint','Skipped ' + r.bad.length + (r.bad.length===1 ? ' line' : ' lines') + ' (a header row is normal to skip):'));
+      var ul = el('ul','skipped');
+      r.bad.slice(0,8).forEach(function(b){ ul.appendChild(el('li', null, 'Line ' + b[0] + ': “' + b[1].slice(0,60) + '” (' + b[2] + ')')); });
+      if(r.bad.length > 8) ul.appendChild(el('li', null, 'and ' + (r.bad.length-8) + ' more'));
+      bulkResult.appendChild(ul);
+    }
+    if(P.length){
+      pending = P;
+      var go = el('button','btn primary','Add ' + P.length + (P.length===1 ? ' period' : ' periods') + ' to my log');
+      go.addEventListener('click', function(){
+        if(!pending) return;
+        var n = markPeriods(pending); pending = null;
+        bulkResult.innerHTML = '';
+        bulkResult.appendChild(el('p','hint','Added. ' + n + ' days are now marked as bleeding. See them on the History tab.'));
+        document.getElementById('bulkIn').value = '';
+      });
+      var st = el('div','stack'); st.appendChild(go); bulkResult.appendChild(st);
+    }
+  });
+
+  // ---------- tabs ----------
+  function show(view){
+    flushNotes();
+    ["log","history","periods","data"].forEach(function(v){
+      document.getElementById("view-"+v).hidden = v!==view;
+      document.getElementById("tab-"+v).setAttribute("aria-selected", String(v===view));
+    });
+    if(view==="history") renderHistory();
+    if(view==='periods'){ document.getElementById('pStart').max = todayIso(); document.getElementById('pEnd').max = todayIso(); }
+    if(view!=="data"){ csvOut.hidden = true; }
+  }
+  document.querySelectorAll(".tab").forEach(function(t){
+    t.addEventListener("click", function(){ show(t.dataset.view); window.scrollTo(0,0); });
+  });
+
+  window.addEventListener("pagehide", flushNotes);
+  document.addEventListener("visibilitychange", function(){ if(document.hidden) flushNotes(); else if(cur!==todayIso() && !get(cur)) { cur = todayIso(); renderLog(); } });
+
+  // offline support + ask the browser not to clear stored entries
+  if("serviceWorker" in navigator && location.protocol==="https:"){
+    navigator.serviceWorker.register("./sw.js").catch(function(){});
+  }
+  if(navigator.storage && navigator.storage.persist){
+    navigator.storage.persist().catch(function(){});
+  }
+
+  load();
+  renderUndo();
+  renderLog();
+  document.getElementById("saveState").textContent = persistent ? "Saved on this device" : "Not stored";
+})();
+</script>
+</body>
+</html>
