@@ -20,6 +20,7 @@
   --bleed:#B3335C; --spot:#E8A3B8; --warn-bg:#FFF2D6; --warn-ink:#6B4A00;
   --s1:#DDE2EC; --s2:#C3CBF0; --s3:#9CA9EA; --s4:#6F7FDA; --s5:#4656C2; --s6:#283493;
   --m1:#3F2D8F; --m2:#8173D6; --m3:#CFCBE0; --m4:#86CBA8; --m5:#23935F;
+  --y0:#EDE3CC; --y1:#F2C26B; --y2:#E5843A; --y3:#A9481A;
   color-scheme: light;
 }
 @media (prefers-color-scheme: dark){
@@ -28,7 +29,7 @@
     --accent:#8C98FF; --accent-ink:#11141B; --accent-soft:#262C48;
     --bleed:#E5698F; --spot:#7C4558; --warn-bg:#3A2F14; --warn-ink:#F3D58E;
     --s1:#262B38; --s2:#2F3966; --s3:#3E4C94; --s4:#5866C2; --s5:#7886E6; --s6:#A7B1FF;
-    --m1:#8B78F0; --m2:#5A4F9E; --m3:#4A4D5C; --m4:#3F8F6B; --m5:#5CD49A;
+    --m1:#8B78F0; --m2:#5A4F9E; --m3:#4A4D5C; --m4:#3F8F6B; --m5:#5CD49A; --y0:#3B3529; --y1:#8C6B2C; --y2:#CC7630; --y3:#F4A35C;
     color-scheme: dark;
   }
 }
@@ -37,7 +38,7 @@
   --accent:#8C98FF; --accent-ink:#11141B; --accent-soft:#262C48;
   --bleed:#E5698F; --spot:#7C4558; --warn-bg:#3A2F14; --warn-ink:#F3D58E;
   --s1:#262B38; --s2:#2F3966; --s3:#3E4C94; --s4:#5866C2; --s5:#7886E6; --s6:#A7B1FF;
-  --m1:#8B78F0; --m2:#5A4F9E; --m3:#4A4D5C; --m4:#3F8F6B; --m5:#5CD49A;
+  --m1:#8B78F0; --m2:#5A4F9E; --m3:#4A4D5C; --m4:#3F8F6B; --m5:#5CD49A; --y0:#3B3529; --y1:#8C6B2C; --y2:#CC7630; --y3:#F4A35C;
   color-scheme: dark;
 }
 :root{ box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px); }
@@ -121,7 +122,15 @@ textarea{
   width:100%; min-height:72px; border:1px solid var(--line); border-radius:10px; background:var(--bg);
   padding:10px; resize:vertical; margin-bottom:10px;
 }
-.row-actions{ display:flex; justify-content:space-between; align-items:center; gap:10px; margin:6px 0 0; }
+.row-actions{ display:flex; justify-content:space-between; align-items:center; gap:10px; margin:6px 0 0; flex-wrap:wrap; }
+.done-row{ display:flex; flex-direction:column; align-items:stretch; gap:8px; margin:18px 0 0; }
+.done-row .btn.primary{ padding:14px; font-size:1.05rem; }
+.done-msg{ text-align:center; color:var(--muted); font-size:.92rem; min-height:1.3em; }
+.gap-line{ text-align:center; font-size:.9rem; margin:-10px 0 16px; }
+.gap-line button{ background:none; border:0; color:var(--accent); font-weight:700; text-decoration:underline; padding:0 2px; }
+.notlogged{ text-align:center; color:var(--muted); font-size:.85rem; margin:-12px 0 14px; }
+.banner .stack{ margin:8px 0 0; }
+.banner .btn{ padding:7px 12px; font-size:.9rem; }
 .progress{ color:var(--muted); font-size:.9rem; }
 .btn{
   border:1px solid var(--line); background:var(--surface); border-radius:10px; padding:10px 14px; font-weight:700;
@@ -228,6 +237,11 @@ th{ color:var(--muted); font-weight:700; border-top:0; }
     This browser isn’t allowing the page to store anything, so entries will disappear when you close it. Export your data from “Your data” before leaving, or open the page in a regular (non-private) window.
   </div>
 
+  <div class="banner" id="backupBanner" hidden>
+    <span id="backupText"></span>
+    <div class="stack"><button class="btn primary" id="backupGo">Back up now</button><button class="btn" id="backupLater">Remind me later</button></div>
+  </div>
+
   <!-- LOG -->
   <section id="view-log" role="tabpanel" aria-labelledby="tab-log">
     <div class="datebar">
@@ -240,6 +254,8 @@ th{ color:var(--muted); font-weight:700; border-top:0; }
       <button class="nav" id="nextDay" aria-label="Next day">›</button>
     </div>
     <p class="cycle-line" id="cycleLine"></p>
+    <p class="notlogged" id="notLogged" hidden>Not logged yet</p>
+    <p class="gap-line" id="gapLine" hidden></p>
 
     <div class="block">
       <h2>Period today</h2>
@@ -279,6 +295,10 @@ th{ color:var(--muted); font-weight:700; border-top:0; }
     <div class="row-actions">
       <span class="progress" id="progress"></span>
       <button class="btn danger" id="clearDay">Clear this day</button>
+    </div>
+    <div class="done-row">
+      <button class="btn primary" id="doneBtn">Done</button>
+      <p class="done-msg" id="doneMsg" aria-live="polite">Everything saves as you go.</p>
     </div>
   </section>
 
@@ -380,6 +400,12 @@ th{ color:var(--muted); font-weight:700; border-top:0; }
   <!-- DATA -->
   <section id="view-data" role="tabpanel" aria-labelledby="tab-data" hidden>
     <div class="block prose">
+      <h2>Questions</h2>
+      <label class="inline"><input type="checkbox" id="impairToggle"> Also ask whether symptoms got in the way of my day (work, hobbies, relationships)</label>
+      <p class="hint">Adds one yes/no question to the daily log. Turning it off later keeps any answers you’ve already saved.</p>
+    </div>
+
+    <div class="block prose">
       <h2>Where your entries live</h2>
       <p>The website only delivers this page. Everything you enter is saved in this browser on this device and is never sent to the site or anyone else.</p>
       <p>Install this page as an app and always open it from that icon. It works without an internet connection. Clearing Chrome’s data for this site, uninstalling the app, or switching browsers can erase entries. Export a backup regularly.</p>
@@ -387,6 +413,7 @@ th{ color:var(--muted); font-weight:700; border-top:0; }
 
     <div class="block prose">
       <h2>Export</h2>
+      <p><strong id="lastBackup"></strong></p>
       <p>One row per logged day, with columns <code>date</code>, <code>cycle_day</code> (day 1 = first bleeding day), <code>days_to_next_period</code> (−1 = the day before), <code>menses</code>, <code>mood</code> (1–5), <code>item01</code>–<code>item24</code> in DRSP order, and <code>notes</code>. Ratings are on a 0–3 scale (0 = not at all, 3 = severe).</p>
       <div class="stack">
         <button class="btn primary" id="exportBtn">Export CSV</button>
@@ -506,7 +533,7 @@ th{ color:var(--muted); font-weight:700; border-top:0; }
   function blank(){ return {m:"none", r:ITEMS.map(function(){return null;}), n:"", mood:null, g:{}}; }
   function get(d){ return store.entries[d] || null; }
   function ensure(d){ if(!store.entries[d]) store.entries[d] = blank(); return store.entries[d]; }
-  function isEmpty(e){ return !e || (e.m==="none" && e.mood==null && e.r.every(function(v){return v==null;}) && !e.n); }
+  function isEmpty(e){ return !e || (e.m==="none" && !e.mx && e.mood==null && e.r.every(function(v){return v==null;}) && !e.n); }
   function tidy(d){ if(isEmpty(store.entries[d])) delete store.entries[d]; }
   function ratedCount(e){ return e ? e.r.filter(function(v){return v!=null;}).length : 0; }
   function symptomMean(e){
@@ -530,6 +557,20 @@ th{ color:var(--muted); font-weight:700; border-top:0; }
     return false;
   }
 
+  function isLogged(e){ return !!e && (e.mood!=null || e.mx || e.m!=="none" || e.r.some(function(v){ return v!=null; })); }
+  function firstDailyLog(){
+    var ks = Object.keys(store.entries).sort();
+    for(var i=0;i<ks.length;i++){ var e = store.entries[ks[i]]; if(e.mood!=null || e.r.some(function(v){ return v!=null; })) return ks[i]; }
+    return null;
+  }
+  function medianCycle(ons){
+    var L = [];
+    for(var i=1;i<ons.length;i++){ var d = diffDays(ons[i-1], ons[i]); if(d>=15 && d<=60) L.push(d); }
+    L = L.slice(-6); if(!L.length) return null;
+    var s2 = L.slice().sort(function(a,b){ return a-b; }), m = Math.floor(s2.length/2);
+    return s2.length%2 ? s2[m] : Math.round((s2[m-1]+s2[m])/2);
+  }
+
   // ---------- cycles ----------
   function onsets(){
     var bleed = Object.keys(store.entries).filter(function(d){ return store.entries[d].m==="bleeding"; }).sort();
@@ -545,6 +586,9 @@ th{ color:var(--muted); font-weight:700; border-top:0; }
 
   // ---------- build symptom questions once ----------
   var itemsEl = document.getElementById("items");
+  var IMPAIR = {q:"Did symptoms get in the way today?", sub:"Work, hobbies, or relationships", items:[21,22,23]};
+  function buildDomains(){
+  itemsEl.innerHTML = "";
   DOMAINS.forEach(function(dm, di){
     var box = document.createElement("div"); box.className = "domain"; box.dataset.di = di;
     var gate = document.createElement("div"); gate.className = "gate";
@@ -569,6 +613,15 @@ th{ color:var(--muted); font-weight:700; border-top:0; }
     });
     box.appendChild(det); itemsEl.appendChild(box);
   });
+  }
+  function applyImpairSetting(){
+    var on = !!(store.settings && store.settings.impair);
+    var has = DOMAINS.indexOf(IMPAIR) >= 0;
+    if(on && !has) DOMAINS.push(IMPAIR);
+    if(!on && has) DOMAINS.splice(DOMAINS.indexOf(IMPAIR), 1);
+    document.getElementById("impairToggle").checked = on;
+    buildDomains();
+  }
 
   itemsEl.addEventListener("click", function(ev){
     var gb = ev.target.closest("button[data-g]");
@@ -605,7 +658,9 @@ th{ color:var(--muted); font-weight:700; border-top:0; }
 
   document.querySelectorAll(".menses button").forEach(function(b){
     b.addEventListener("click", function(){
-      var e = ensure(cur); e.m = b.dataset.m; tidy(cur); persist(); renderLog();
+      var e = ensure(cur), on = b.getAttribute("aria-pressed")==="true";
+      if(on){ e.m = "none"; e.mx = false; } else { e.m = b.dataset.m; e.mx = true; }
+      tidy(cur); persist(); renderLog();
     });
   });
 
@@ -633,6 +688,61 @@ th{ color:var(--muted); font-weight:700; border-top:0; }
   }
   function flushNotes(){ if(saveTimer){ clearTimeout(saveTimer); saveTimer=null; tidy(cur); persist(); } }
 
+  // ---------- unlogged days ----------
+  var gapTarget = null;
+  function renderGaps(){
+    var line = document.getElementById("gapLine"), first = firstDailyLog(), t = todayIso();
+    if(!first){ line.hidden = true; return; }
+    var missing = [];
+    for(var k=1;k<=7;k++){ var d = addDays(t,-k); if(d < first) break; if(!isLogged(store.entries[d])) missing.push(d); }
+    if(!missing.length){ line.hidden = true; return; }
+    gapTarget = missing[missing.length-1];
+    line.hidden = false; line.innerHTML = "";
+    line.appendChild(document.createTextNode(missing.length + (missing.length===1 ? " day" : " days") + " in the past week not logged. "));
+    var b = document.createElement("button"); b.textContent = "Fill in"; b.addEventListener("click", function(){ goTo(gapTarget); window.scrollTo(0,0); });
+    line.appendChild(b);
+  }
+
+  // ---------- backup reminder ----------
+  function daysSinceBackup(){ return store.lastBackup ? diffDays(store.lastBackup, todayIso()) : null; }
+  function renderBackup(){
+    var since = daysSinceBackup(), lb = document.getElementById("lastBackup");
+    lb.textContent = since==null ? "No backup yet." : (since===0 ? "Last backup: today." : "Last backup: " + since + (since===1 ? " day ago." : " days ago."));
+    var ban = document.getElementById("backupBanner"), t = todayIso();
+    var count = Object.keys(store.entries).filter(function(k){ return isLogged(store.entries[k]); }).length;
+    var due = since==null ? count >= 14 : since >= 30;
+    if(store.backupSnooze && store.backupSnooze > t) due = false;
+    if(document.getElementById("view-data").hidden===false) due = false;
+    ban.hidden = !due;
+    if(due) document.getElementById("backupText").textContent = since==null ? "You haven’t backed up your log yet. Your entries live only on this phone." : "It’s been " + since + " days since your last backup.";
+  }
+  document.getElementById("backupGo").addEventListener("click", function(){ show("data"); window.scrollTo(0,0); });
+  document.getElementById("backupLater").addEventListener("click", function(){ store.backupSnooze = addDays(todayIso(), 7); persist(); renderBackup(); });
+  function markBackedUp(){ store.lastBackup = todayIso(); delete store.backupSnooze; persist(); renderBackup(); }
+
+  // ---------- done + swipe ----------
+  document.getElementById("doneBtn").addEventListener("click", function(){
+    flushNotes(); persist();
+    var msg = document.getElementById("doneMsg");
+    msg.textContent = isLogged(get(cur)) ? "Saved. Nice work." : "Nothing logged for this day yet.";
+    setTimeout(function(){ msg.textContent = "Everything saves as you go."; }, 3000);
+    window.scrollTo({top:0, behavior:"smooth"});
+  });
+  (function(){
+    var sx = null, sy = null, logEl = document.getElementById("view-log");
+    logEl.addEventListener("touchstart", function(ev){
+      if(ev.target.closest("textarea,input")){ sx = null; return; }
+      sx = ev.touches[0].clientX; sy = ev.touches[0].clientY;
+    }, {passive:true});
+    logEl.addEventListener("touchend", function(ev){
+      if(sx==null) return;
+      var dx = ev.changedTouches[0].clientX - sx, dy = ev.changedTouches[0].clientY - sy; sx = null;
+      if(Math.abs(dx) > 70 && Math.abs(dy) < 50){
+        if(dx > 0) goTo(addDays(cur,-1)); else if(cur < todayIso()) goTo(addDays(cur,1));
+      }
+    }, {passive:true});
+  })();
+
   // ---------- render log ----------
   function renderProgress(){
     var e = get(cur), c = 0;
@@ -653,11 +763,24 @@ th{ color:var(--muted); font-weight:700; border-top:0; }
     var cl = "";
     if(info.fwd!=null) cl = "Cycle day " + info.fwd;
     if(info.back!=null) cl += (cl ? ", " : "") + Math.abs(info.back) + (Math.abs(info.back)===1 ? " day" : " days") + " before next period";
+    var onsAll = onsets(), lastOn = null;
+    for(var oi=onsAll.length-1; oi>=0; oi--){ if(onsAll[oi]<=cur){ lastOn = onsAll[oi]; break; } }
+    var med = medianCycle(onsAll);
+    if(info.back==null && lastOn && med && diffDays(lastOn, t) < 60){
+      var expect = addDays(lastOn, med), until = diffDays(cur, expect);
+      if(until > 1) cl += ". Next period expected in about " + until + " days";
+      else if(until === 1) cl += ". Next period expected around tomorrow";
+      else if(until === 0) cl += ". Next period expected around today";
+      else cl += ". Period is " + (-until) + (until===-1 ? " day" : " days") + " later than your typical cycle";
+    }
     document.getElementById("cycleLine").textContent = cl || "Log a bleeding day to start counting cycle days";
+    document.getElementById("notLogged").hidden = isLogged(get(cur));
+    renderGaps();
 
     var e = get(cur) || blank();
     document.querySelectorAll(".menses button").forEach(function(b){
-      b.setAttribute("aria-pressed", String(b.dataset.m===e.m));
+      var shown = (e.m!=="none" || e.mx) ? e.m : null;
+      b.setAttribute("aria-pressed", String(b.dataset.m===shown));
     });
     itemsEl.querySelectorAll("button[data-v]").forEach(function(b){
       b.setAttribute("aria-pressed", String(e.r[+b.dataset.i]===+b.dataset.v));
@@ -677,12 +800,11 @@ th{ color:var(--muted); font-weight:700; border-top:0; }
 
   // ---------- history ----------
   function sevColor(m){
-    var k = [1,3,5,6][Math.min(3, Math.max(0, Math.round(m)))];
-    return "var(--s"+k+")";
+    return "var(--y"+Math.min(3, Math.max(0, Math.round(m)))+")";
   }
   var histRange = "90", histView = "cycles", colorBy = "mood", alignEnd = false, showAllCycles = false, pixYear = new Date().getFullYear();
   function setPressed(groupSel, btn){ document.querySelectorAll(groupSel+" button").forEach(function(x){ x.setAttribute("aria-pressed", String(x===btn)); }); }
-  document.querySelectorAll("#viewSel button").forEach(function(b){ b.addEventListener("click", function(){ histView = b.dataset.hv; setPressed("#viewSel", b); renderHistory(); }); });
+  document.querySelectorAll("#viewSel button").forEach(function(b){ b.addEventListener("click", function(){ histViewChosen = true; histView = b.dataset.hv; setPressed("#viewSel", b); renderHistory(); }); });
   document.querySelectorAll("#colorSel button").forEach(function(b){ b.addEventListener("click", function(){ colorBy = b.dataset.color; setPressed("#colorSel", b); renderHistory(); }); });
   document.querySelectorAll("#alignSel button").forEach(function(b){ b.addEventListener("click", function(){ alignEnd = b.dataset.align==="end"; setPressed("#alignSel", b); renderHistory(); }); });
   document.getElementById("showAllCycles").addEventListener("change", function(ev){ showAllCycles = ev.target.checked; renderHistory(); });
@@ -726,10 +848,10 @@ th{ color:var(--muted); font-weight:700; border-top:0; }
     var parts = [];
     function sw(color, label, extra){ return '<span><span class="sw" style="background:'+color+(extra||'')+'"></span>'+label+'</span>'; }
     if(histView==="timeline"){
-      parts = [sw("var(--accent)","Mood",";border-radius:50%"), sw("var(--s5)","Symptoms"), sw("var(--bleed)","Bleeding"), sw("var(--spot)","Spotting"), sw("var(--muted)","Period start",";width:2px")];
+      parts = [sw("var(--accent)","Mood",";border-radius:50%"), sw("var(--y2)","Symptoms"), sw("var(--bleed)","Bleeding"), sw("var(--spot)","Spotting"), sw("var(--muted)","Period start",";width:2px")];
     } else {
       if(colorBy==="mood") parts = [sw("var(--m1)","1 Very low"), sw("var(--m2)","2 Low"), sw("var(--m3)","3 Okay"), sw("var(--m4)","4 Good"), sw("var(--m5)","5 Very good")];
-      else parts = [sw("var(--s1)","None"), sw("var(--s3)","Mild"), sw("var(--s5)","Moderate"), sw("var(--s6)","Severe")];
+      else parts = [sw("var(--y0)","None"), sw("var(--y1)","Mild"), sw("var(--y2)","Moderate"), sw("var(--y3)","Severe")];
       parts.push(sw("var(--bleed)","Bleeding (bar)"), sw("var(--spot)","Spotting"), sw("transparent","No entry",";box-shadow:inset 0 0 0 1px var(--line)"));
     }
     leg.innerHTML = parts.join("");
@@ -809,7 +931,21 @@ th{ color:var(--muted); font-weight:700; border-top:0; }
       renderHistory();
     });
   });
+  var histViewChosen = false;
+  document.querySelectorAll("#viewSel button").forEach(function(b){ b.addEventListener("click", function(){ histViewChosen = true; }); });
+  function cyclesHaveData(){
+    var ons = onsets();
+    for(var i=1;i<ons.length;i++){
+      if(diffDays(ons[i-1],ons[i]) > 60) continue;
+      for(var d=ons[i-1]; d<ons[i]; d=addDays(d,1)){ var e = store.entries[d]; if(e && (e.mood!=null || ratedCount(e)>0)) return true; }
+    }
+    return false;
+  }
   function renderHistory(){
+    if(!histViewChosen){
+      histView = cyclesHaveData() ? "cycles" : "year";
+      document.querySelectorAll("#viewSel button").forEach(function(x){ x.setAttribute("aria-pressed", String(x.dataset.hv===histView)); });
+    }
     var keys = Object.keys(store.entries).sort();
     var area = document.getElementById("chartArea");
     var ons = onsets();
@@ -1007,7 +1143,7 @@ th{ color:var(--muted); font-weight:700; border-top:0; }
         a.href = URL.createObjectURL(blob); a.download = "drsp-log-"+todayIso()+".csv";
         document.body.appendChild(a); a.click(); a.remove();
         setTimeout(function(){ URL.revokeObjectURL(a.href); }, 2000);
-        exportMsg.textContent = "Saved to your downloads folder.";
+        exportMsg.textContent = "Saved to your downloads folder."; markBackedUp();
       }catch(e){
         exportMsg.textContent = "Your browser blocked the download. Copy the text below into a file named drsp-log.csv.";
         showCsv();
@@ -1016,7 +1152,7 @@ th{ color:var(--muted); font-weight:700; border-top:0; }
     }
     exportMsg.textContent = "";
     downloads.save({filename:"drsp-log-"+todayIso()+".csv", data:buildCsv()}).then(function(res){
-      exportMsg.textContent = res.status==="saved" ? "Saved." : "";
+      exportMsg.textContent = res.status==="saved" ? "Saved." : ""; if(res.status==="saved") markBackedUp();
     }).catch(function(err){
       var code = err && err.code;
       if(code==="declined"){ exportMsg.textContent = "Export cancelled."; }
@@ -1050,7 +1186,7 @@ th{ color:var(--muted); font-weight:700; border-top:0; }
   document.getElementById("deleteAll").addEventListener("click", function(){
     if(!Object.keys(store.entries).length) return;
     if(!confirm("Delete every entry stored in this browser? This can’t be undone.")) return;
-    store = {entries:{}}; persist(); renderUndo(); renderLog();
+    store = {entries:{}}; persist(); applyImpairSetting(); renderUndo(); renderLog();
   });
 
   // ---------- past periods ----------
@@ -1123,7 +1259,7 @@ th{ color:var(--muted); font-weight:700; border-top:0; }
     periods.forEach(function(p){
       for(var d = p.start; d <= p.end; d = addDays(d,1)){
         if(!seen[d]){ seen[d] = 1; undo.push([d, store.entries[d] ? store.entries[d].m : null]); }
-        ensure(d).m = 'bleeding';
+        var ee = ensure(d); ee.m = 'bleeding'; ee.mx = true;
       }
     });
     store.lastAdd = {count:periods.length, undo:undo};
@@ -1279,6 +1415,7 @@ th{ color:var(--muted); font-weight:700; border-top:0; }
     if(view==="history") renderHistory();
     if(view==='periods'){ renderCal(); }
     if(view!=="data"){ csvOut.hidden = true; }
+    renderBackup();
   }
   document.querySelectorAll(".tab").forEach(function(t){
     t.addEventListener("click", function(){ show(t.dataset.view); window.scrollTo(0,0); });
@@ -1295,7 +1432,14 @@ th{ color:var(--muted); font-weight:700; border-top:0; }
     navigator.storage.persist().catch(function(){});
   }
 
+  document.getElementById("impairToggle").addEventListener("change", function(ev){
+    store.settings = store.settings || {}; store.settings.impair = ev.target.checked;
+    persist(); applyImpairSetting(); renderLog();
+  });
+
   load();
+  applyImpairSetting();
+  renderBackup();
   renderUndo();
   renderLog();
   document.getElementById("saveState").textContent = persistent ? "Saved on this device" : "Not stored";
