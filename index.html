@@ -212,6 +212,33 @@ th{ color:var(--muted); font-weight:700; border-top:0; }
 .cal-actions{ margin-top:12px; }
 .cal-actions p{ margin:0 0 4px; font-weight:700; }
 .cal-key{ display:flex; gap:14px; flex-wrap:wrap; font-size:.82rem; color:var(--muted); margin:10px 0 0; }
+.scale.six{ grid-template-columns:repeat(3,1fr); }
+.skipline{ text-align:center; font-size:.9rem; color:var(--muted); margin:-8px 0 16px; }
+.skipline button, .linkbtn{ background:none; border:0; color:var(--accent); font-weight:700; text-decoration:underline; padding:0 2px; font-size:inherit; }
+.collapsed{ color:var(--muted); font-size:.95rem; margin:4px 0 8px; }
+.skipcard{ text-align:center; padding:18px 14px; }
+.skipcard p{ margin:0 0 8px; }
+.sym-btns{ display:flex; gap:6px; flex-wrap:wrap; }
+.rpt-bar{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:8px; }
+.rpt-tip{ margin:0 0 12px; }
+@media print{
+  body::before, header.top, .banner, main > section:not(#view-report), .rpt-bar, .rpt-tip{ display:none !important; }
+  :root{ padding:0 !important; } body{ background:#fff !important; } main{ max-width:none; padding:0; }
+  *{ -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+}
+.title-right{ display:flex; align-items:center; gap:10px; }
+h1, .save-state{ white-space:nowrap; }
+.about-btn{ width:28px; height:28px; border-radius:50%; border:1.5px solid var(--muted); background:none; color:var(--muted); font-weight:700; font-size:.9rem; line-height:1; padding:0; }
+.about{ font-size:.84rem; line-height:1.32; padding:12px 14px 10px; margin:0; }
+.about h2{ font-size:1.05rem; margin:0 0 2px; }
+.about .lede{ margin:0 0 10px; color:var(--muted); }
+.about dl{ margin:0; display:grid; grid-template-columns:4.6em 1fr; gap:6px 8px; }
+.about dt{ font-weight:700; }
+.about dd{ margin:0; }
+.about .fine{ margin:8px 0 0; color:var(--muted); font-size:.78rem; }
+body.about-open main{ padding-top:10px; padding-bottom:10px; }
+body.about-open #backupBanner{ display:none !important; }
+.about-top{ display:flex; justify-content:space-between; align-items:baseline; gap:10px; }
 [hidden]{ display:none !important; }
 @media (prefers-reduced-motion: reduce){ *{ transition:none !important; } }
 </style>
@@ -221,7 +248,10 @@ th{ color:var(--muted); font-weight:700; border-top:0; }
   <div class="top-inner">
     <div class="title-row">
       <h1>Daily cycle log</h1>
-      <span class="save-state" id="saveState" aria-live="polite"></span>
+      <div class="title-right">
+        <span class="save-state" id="saveState" aria-live="polite"></span>
+        <button class="about-btn" id="aboutBtn" aria-label="About this app">?</button>
+      </div>
     </div>
     <div class="tabs" role="tablist">
       <button class="tab" role="tab" id="tab-log" aria-selected="true" data-view="log">Log</button>
@@ -256,6 +286,11 @@ th{ color:var(--muted); font-weight:700; border-top:0; }
     <p class="cycle-line" id="cycleLine"></p>
     <p class="notlogged" id="notLogged" hidden>Not logged yet</p>
     <p class="gap-line" id="gapLine" hidden></p>
+    <p class="skipline" id="skipLine" hidden>Not up for it? <button id="skipBtn">Skip today</button></p>
+    <div class="block skipcard" id="skipCard" hidden>
+      <p><strong>Skipped.</strong> This day won’t count as missed, and reports treat it as not logged.</p>
+      <button class="linkbtn" id="unskipBtn">Undo skip</button>
+    </div>
 
     <div class="block">
       <h2>Period today</h2>
@@ -266,7 +301,7 @@ th{ color:var(--muted); font-weight:700; border-top:0; }
       </div>
     </div>
 
-    <div class="block">
+    <div class="block" id="moodBlock">
       <h2>Overall mood today</h2>
       <div class="mood" role="group" aria-label="Overall mood today">
         <button data-mood="1" aria-pressed="false"><b>1</b>Very low</button>
@@ -280,10 +315,17 @@ th{ color:var(--muted); font-weight:700; border-top:0; }
     <div class="block" id="itemsBlock">
       <div class="sym-head">
         <h2>Symptoms today</h2>
-        <button class="btn" id="allClear">No symptoms today</button>
+        <div class="sym-btns" id="symBtns">
+          <button class="btn" id="allClear">No symptoms</button>
+          <button class="btn" id="justMood">Just mood today</button>
+        </div>
       </div>
-      <p class="hint">Answer yes or no. Details open only when you answer yes.</p>
-      <div id="items"></div>
+      <p class="collapsed" id="symCollapsed" hidden><span id="symCollapsedText"></span> <button class="linkbtn" id="symAnyway">Answer anyway</button></p>
+      <div id="symBody">
+        <p class="hint">Answer yes or no. Details open only when you answer yes. “No symptoms” records that you had none, so use it only when that’s true.</p>
+        <p class="hint" id="scaleNote" hidden></p>
+        <div id="items"></div>
+      </div>
     </div>
 
     <div class="block">
@@ -397,24 +439,82 @@ th{ color:var(--muted); font-weight:700; border-top:0; }
     </div>
   </section>
 
+  <!-- ABOUT -->
+  <section id="view-about" hidden>
+    <div class="block about">
+      <div class="about-top"><h2>About Cycle log</h2><button class="linkbtn" id="aboutClose">Close</button></div>
+      <p class="lede">A private daily log for mood, symptoms and periods. No account, and nothing leaves this phone.</p>
+      <dl>
+        <dt>Log</dt><dd>Period, mood 1–5 and quick yes/no symptoms. Low-effort day? Tap <b>Just mood</b> or <b>Skip today</b>. Swipe to change days.</dd>
+        <dt>History</dt><dd><b>Cycles</b>, <b>Year</b> or <b>Timeline</b>, colored by mood or symptoms. Tap a day to open it.</dd>
+        <dt>Periods</dt><dd>Mark past periods on a calendar or paste them from a spreadsheet.</dd>
+        <dt>Settings</dt><dd><b>Your data → Questions</b>: Focus mode, Mood only, the full 1–6 scale, or an extra “got in the way” question.</dd>
+        <dt>Report</dt><dd><b>Your data → Report for your doctor</b> covers your last 2, 3 or 6 cycles.</dd>
+        <dt>Backup</dt><dd><b>Export CSV</b> every few weeks. <b>Import</b> restores it.</dd>
+        <dt>Install</dt><dd>Android: Chrome ⋮ → Install app. iPhone: Safari → Share → Add to Home Screen.</dd>
+      </dl>
+      <p class="fine">Adapted from the DRSP (Endicott et al., 2006). For noticing your own patterns, not a diagnosis.</p>
+    </div>
+  </section>
+
+  <!-- REPORT -->
+  <section id="view-report" hidden>
+    <div class="rpt-bar">
+      <button class="btn" id="rptClose">‹ Back</button>
+      <button class="btn primary" id="rptPrint">Print or save as PDF</button>
+      <button class="btn" id="rptDl">Download file</button>
+    </div>
+    <p class="hint rpt-tip">To get a PDF on Android, tap Print, then choose “Save as PDF” as the printer. If printing doesn’t open, use Download file and print it from your files.</p>
+    <p class="hint" id="rptMsg" aria-live="polite"></p>
+    <div id="rptBody"></div>
+  </section>
+
   <!-- DATA -->
   <section id="view-data" role="tabpanel" aria-labelledby="tab-data" hidden>
     <div class="block prose">
+      <h2>Report for your doctor</h2>
+      <p>A one-page summary of your recent cycles: mood and symptom patterns, the week before vs. after your period, and cycle lengths.</p>
+      <div class="opts">
+        <fieldset>
+          <legend>Cycles to include</legend>
+          <label class="inline"><input type="radio" name="rcyc" value="2"> Last 2</label>
+          <label class="inline"><input type="radio" name="rcyc" value="3" checked> Last 3</label>
+          <label class="inline"><input type="radio" name="rcyc" value="6"> Last 6</label>
+        </fieldset>
+        <label class="inline"><input type="checkbox" id="rptNotes"> Include my notes</label>
+      </div>
+      <div class="stack"><button class="btn primary" id="rptBtn">Create report</button></div>
+    </div>
+
+    <div class="block prose">
       <h2>Questions</h2>
-      <label class="inline"><input type="checkbox" id="impairToggle"> Also ask whether symptoms got in the way of my day (work, hobbies, relationships)</label>
-      <p class="hint">Adds one yes/no question to the daily log. Turning it off later keeps any answers you’ve already saved.</p>
+      <div class="opts">
+        <fieldset>
+          <legend>Symptom questions</legend>
+          <label class="inline"><input type="radio" name="qmode" value="every"> Every day</label>
+          <label class="inline"><input type="radio" name="qmode" value="focus"> Focus mode: only the week before my period and days 4–10 after it starts</label>
+          <label class="inline"><input type="radio" name="qmode" value="mood"> Mood only: don’t ask about symptoms</label>
+        </fieldset>
+        <fieldset>
+          <legend>Rating scale</legend>
+          <label class="inline"><input type="radio" name="qscale" value="short"> Short: None, Mild, Moderate, Severe</label>
+          <label class="inline"><input type="radio" name="qscale" value="full"> Full DRSP: 1 (not at all) to 6 (extreme)</label>
+        </fieldset>
+        <label class="inline"><input type="checkbox" id="impairToggle"> Also ask whether symptoms got in the way of my day (work, hobbies, relationships)</label>
+      </div>
+      <p class="hint">Focus mode keeps the days a doctor’s report compares and roughly halves the symptom days. The full 1–6 scale matches the clinical DRSP form and can be scored with C-PASS. Pick a scale and stick with it: days rated on different scales can only be compared approximately.</p>
     </div>
 
     <div class="block prose">
       <h2>Where your entries live</h2>
       <p>The website only delivers this page. Everything you enter is saved in this browser on this device and is never sent to the site or anyone else.</p>
-      <p>Install this page as an app and always open it from that icon. It works without an internet connection. Clearing Chrome’s data for this site, uninstalling the app, or switching browsers can erase entries. Export a backup regularly.</p>
+      <p>Install this page as an app and always open it from that icon. It works without an internet connection. Clearing your browser’s data for this site, removing the app, or switching browsers can erase entries. Export a backup regularly.</p>
     </div>
 
     <div class="block prose">
       <h2>Export</h2>
       <p><strong id="lastBackup"></strong></p>
-      <p>One row per logged day, with columns <code>date</code>, <code>cycle_day</code> (day 1 = first bleeding day), <code>days_to_next_period</code> (−1 = the day before), <code>menses</code>, <code>mood</code> (1–5), <code>item01</code>–<code>item24</code> in DRSP order, and <code>notes</code>. Ratings are on a 0–3 scale (0 = not at all, 3 = severe).</p>
+      <p>One row per logged day, with columns <code>date</code>, <code>cycle_day</code> (day 1 = first bleeding day), <code>days_to_next_period</code> (−1 = the day before), <code>menses</code>, <code>mood</code> (1–5), <code>scale</code> (0-3 or 1-6), <code>skipped</code>, <code>item01</code>–<code>item24</code> in DRSP order, and <code>notes</code>. Ratings are stored on the scale shown in the <code>scale</code> column.</p>
       <div class="stack">
         <button class="btn primary" id="exportBtn">Export CSV</button>
         <button class="btn" id="showCsvBtn">Show CSV to copy</button>
@@ -511,7 +611,7 @@ th{ color:var(--muted); font-weight:700; border-top:0; }
     if(!persistent){ el.textContent = "Not stored"; return; }
     try{
       localStorage.setItem(KEY, JSON.stringify(store));
-      el.textContent = "Saved on this device";
+      el.textContent = "Saved on device";
     }catch(e){
       persistent = false;
       document.getElementById("storageBanner").hidden = false;
@@ -533,21 +633,27 @@ th{ color:var(--muted); font-weight:700; border-top:0; }
   function blank(){ return {m:"none", r:ITEMS.map(function(){return null;}), n:"", mood:null, g:{}}; }
   function get(d){ return store.entries[d] || null; }
   function ensure(d){ if(!store.entries[d]) store.entries[d] = blank(); return store.entries[d]; }
-  function isEmpty(e){ return !e || (e.m==="none" && !e.mx && e.mood==null && e.r.every(function(v){return v==null;}) && !e.n); }
+  function isEmpty(e){ return !e || (e.m==="none" && !e.mx && !e.skip && !e.jm && e.mood==null && e.r.every(function(v){return v==null;}) && !e.n); }
   function tidy(d){ if(isEmpty(store.entries[d])) delete store.entries[d]; }
   function ratedCount(e){ return e ? e.r.filter(function(v){return v!=null;}).length : 0; }
+  function hasRatings(e){ return !!e && e.r.some(function(v){ return v!=null; }); }
+  function entryScale(e){ return e && e.sc===6 ? 6 : 3; }
+  function baseVal(sc){ return sc===6 ? 1 : 0; }
+  function norm(v, sc){ return v==null ? null : (sc===6 ? (v-1)*3/5 : v); }
+  function setting(k, def){ return (store.settings && store.settings[k]!=null) ? store.settings[k] : def; }
+  function settingScale(){ return setting("scale","short")==="full" ? 6 : 3; }
   function symptomMean(e){
-    if(!e) return null; var s=0,n=0;
-    for(var i=0;i<21;i++){ if(e.r[i]!=null){ s+=e.r[i]; n++; } }
+    if(!e) return null; var s=0,n=0, sc = entryScale(e);
+    for(var i=0;i<21;i++){ if(e.r[i]!=null){ s+=norm(e.r[i], sc); n++; } }
     return n ? s/n : null;
   }
 
   function gateState(e, di){
     if(!e) return null;
     if(e.g && e.g[di]) return e.g[di];
-    var vals = DOMAINS[di].items.map(function(i){ return e.r[i]; });
-    if(vals.some(function(v){ return v!=null && v>0; })) return "yes";
-    if(vals.every(function(v){ return v===0; })) return "no";
+    var vals = DOMAINS[di].items.map(function(i){ return e.r[i]; }), b0 = baseVal(entryScale(e));
+    if(vals.some(function(v){ return v!=null && v>b0; })) return "yes";
+    if(vals.every(function(v){ return v===b0; })) return "no";
     return null;
   }
   function domainDone(e, di){
@@ -557,7 +663,7 @@ th{ color:var(--muted); font-weight:700; border-top:0; }
     return false;
   }
 
-  function isLogged(e){ return !!e && (e.mood!=null || e.mx || e.m!=="none" || e.r.some(function(v){ return v!=null; })); }
+  function isLogged(e){ return !!e && (e.skip || e.mood!=null || e.mx || e.m!=="none" || e.r.some(function(v){ return v!=null; })); }
   function firstDailyLog(){
     var ks = Object.keys(store.entries).sort();
     for(var i=0;i<ks.length;i++){ var e = store.entries[ks[i]]; if(e.mood!=null || e.r.some(function(v){ return v!=null; })) return ks[i]; }
@@ -587,7 +693,10 @@ th{ color:var(--muted); font-weight:700; border-top:0; }
   // ---------- build symptom questions once ----------
   var itemsEl = document.getElementById("items");
   var IMPAIR = {q:"Did symptoms get in the way today?", sub:"Work, hobbies, or relationships", items:[21,22,23]};
-  function buildDomains(){
+  var SEV6 = ["Not at all","Minimal","Mild","Moderate","Severe","Extreme"], builtScale = 3;
+  function buildDomains(scale){
+  scale = scale || builtScale; builtScale = scale;
+  var vals = scale===6 ? [1,2,3,4,5,6] : [0,1,2,3];
   itemsEl.innerHTML = "";
   DOMAINS.forEach(function(dm, di){
     var box = document.createElement("div"); box.className = "domain"; box.dataset.di = di;
@@ -604,11 +713,11 @@ th{ color:var(--muted); font-weight:700; border-top:0; }
     var det = document.createElement("div"); det.className = "detail"; det.hidden = true;
     dm.items.forEach(function(i){
       var q = document.createElement("p"); q.className = "q"; q.id = "q"+i; q.textContent = ITEMS[i];
-      var sc = document.createElement("div"); sc.className = "scale"; sc.setAttribute("role","group"); sc.setAttribute("aria-labelledby","q"+i);
-      for(var v=0; v<=3; v++){
-        var b = document.createElement("button"); b.textContent = SEV[v]; b.dataset.v = v; b.dataset.i = i;
+      var sc = document.createElement("div"); sc.className = "scale" + (scale===6 ? " six" : ""); sc.setAttribute("role","group"); sc.setAttribute("aria-labelledby","q"+i);
+      vals.forEach(function(v){
+        var b = document.createElement("button"); b.textContent = scale===6 ? v + " " + SEV6[v-1] : SEV[v]; b.dataset.v = v; b.dataset.i = i;
         b.setAttribute("aria-pressed","false"); sc.appendChild(b);
-      }
+      });
       det.appendChild(q); det.appendChild(sc);
     });
     box.appendChild(det); itemsEl.appendChild(box);
@@ -620,7 +729,7 @@ th{ color:var(--muted); font-weight:700; border-top:0; }
     if(on && !has) DOMAINS.push(IMPAIR);
     if(!on && has) DOMAINS.splice(DOMAINS.indexOf(IMPAIR), 1);
     document.getElementById("impairToggle").checked = on;
-    buildDomains();
+    buildDomains(builtScale);
   }
 
   itemsEl.addEventListener("click", function(ev){
@@ -630,7 +739,7 @@ th{ color:var(--muted); font-weight:700; border-top:0; }
       e0.g = e0.g || {};
       if(gb.dataset.g==="no"){
         if(st==="no"){ delete e0.g[di]; its.forEach(function(i){ e0.r[i] = null; }); }
-        else { e0.g[di] = "no"; its.forEach(function(i){ e0.r[i] = 0; }); }
+        else { e0.g[di] = "no"; e0.sc = builtScale; its.forEach(function(i){ e0.r[i] = baseVal(builtScale); }); }
       } else if(st!=="yes"){
         e0.g[di] = "yes"; its.forEach(function(i){ e0.r[i] = null; });
       }
@@ -638,7 +747,7 @@ th{ color:var(--muted); font-weight:700; border-top:0; }
     }
     var b = ev.target.closest("button[data-v]"); if(!b) return;
     var i = +b.dataset.i, v = +b.dataset.v;
-    var e = ensure(cur);
+    var e = ensure(cur); e.sc = builtScale;
     e.r[i] = (e.r[i]===v) ? null : v;
     tidy(cur); persist(); renderLog();
   });
@@ -652,7 +761,8 @@ th{ color:var(--muted); font-weight:700; border-top:0; }
   document.getElementById("allClear").addEventListener("click", function(){
     var e = ensure(cur); e.g = {};
     DOMAINS.forEach(function(dm, di){ e.g[di] = "no"; });
-    DOMAINS.forEach(function(dm){ dm.items.forEach(function(i){ e.r[i] = 0; }); });
+    e.sc = builtScale; e.jm = false;
+    DOMAINS.forEach(function(dm){ dm.items.forEach(function(i){ e.r[i] = baseVal(builtScale); }); });
     persist(); renderLog();
   });
 
@@ -743,6 +853,46 @@ th{ color:var(--muted); font-weight:700; border-top:0; }
     }, {passive:true});
   })();
 
+  // ---------- skip / just mood / focus ----------
+  var forceShow = {};
+  document.getElementById("skipBtn").addEventListener("click", function(){ var e = ensure(cur); e.skip = true; persist(); renderLog(); });
+  document.getElementById("unskipBtn").addEventListener("click", function(){ var e = get(cur); if(e){ e.skip = false; tidy(cur); persist(); } renderLog(); });
+  document.getElementById("justMood").addEventListener("click", function(){ var e = ensure(cur); e.jm = true; persist(); renderLog(); });
+  document.getElementById("symAnyway").addEventListener("click", function(){ var e = get(cur); if(e && e.jm){ e.jm = false; tidy(cur); persist(); } forceShow[cur] = true; renderLog(); });
+  function inFocusWindow(d){
+    var ons = onsets(), lastOn = null, nextOn = null;
+    for(var i=0;i<ons.length;i++){ if(ons[i]<=d) lastOn = ons[i]; else { nextOn = ons[i]; break; } }
+    if(lastOn){ var cd = diffDays(lastOn,d)+1; if(cd>=4 && cd<=10) return true; }
+    if(nextOn){ var b = diffDays(d,nextOn); return b>=1 && b<=7; }
+    var med = medianCycle(ons);
+    if(!lastOn || !med) return true;
+    if(diffDays(lastOn,d) >= 60) return true;
+    var until = diffDays(d, addDays(lastOn, med));
+    return until <= 7;
+  }
+  function renderSymptomArea(){
+    var e = get(cur), mode = setting("mode","every"), rated = hasRatings(e);
+    var skipped = !!(e && e.skip);
+    document.getElementById("skipCard").hidden = !skipped;
+    document.getElementById("moodBlock").hidden = skipped;
+    document.getElementById("skipLine").hidden = skipped || !!(e && (e.mood!=null || rated));
+    var block = document.getElementById("itemsBlock"), body = document.getElementById("symBody");
+    var col = document.getElementById("symCollapsed"), colText = document.getElementById("symCollapsedText");
+    var btns = document.getElementById("symBtns");
+    if(skipped || (mode==="mood" && !rated && !forceShow[cur])){ block.hidden = true; return false; }
+    block.hidden = false;
+    var why = "";
+    if(e && e.jm && !rated) why = "Just mood today.";
+    else if(mode==="focus" && !rated && !forceShow[cur] && !inFocusWindow(cur)) why = "Focus mode: no symptom questions today. They’re asked the week before your period and days 4–10 after it starts.";
+    col.hidden = !why; colText.textContent = why; body.hidden = !!why; btns.hidden = !!why;
+    var dayScale = rated ? entryScale(e) : settingScale();
+    if(dayScale !== builtScale) buildDomains(dayScale);
+    var note = document.getElementById("scaleNote");
+    note.hidden = !(rated && entryScale(e) !== settingScale());
+    note.textContent = entryScale(e)===6 ? "This day was rated on the full 1–6 scale." : "This day was rated on the short None–Severe scale.";
+    return !why;
+  }
+
   // ---------- render log ----------
   function renderProgress(){
     var e = get(cur), c = 0;
@@ -795,7 +945,9 @@ th{ color:var(--muted); font-weight:700; border-top:0; }
       b.setAttribute("aria-pressed", String(e.mood===+b.dataset.mood));
     });
     if(document.activeElement!==notesEl) notesEl.value = e.n || "";
+    var symOn = renderSymptomArea();
     renderProgress();
+    if(!symOn) document.getElementById("progress").textContent = "";
   }
 
   // ---------- history ----------
@@ -822,6 +974,7 @@ th{ color:var(--muted); font-weight:700; border-top:0; }
     var e = store.entries[d], g = sv("g",{}); g.dataset.d = d; g.style.cursor = "pointer";
     var f = cellFill(e), r = size>=9 ? 2 : 1;
     if(f) g.appendChild(sv("rect",{x:x,y:y,width:size,height:hgt,rx:r,fill:f}));
+    else if(e && e.skip) g.appendChild(sv("rect",{x:x,y:y,width:size,height:hgt,rx:r,fill:"var(--line)"}));
     else g.appendChild(sv("rect",{x:x+0.5,y:y+0.5,width:size-1,height:hgt-1,rx:r,fill:"transparent",stroke:"var(--line)"}));
     if(e && e.m!=="none"){
       var bh = Math.max(2, Math.round(hgt*0.25));
@@ -852,7 +1005,7 @@ th{ color:var(--muted); font-weight:700; border-top:0; }
     } else {
       if(colorBy==="mood") parts = [sw("var(--m1)","1 Very low"), sw("var(--m2)","2 Low"), sw("var(--m3)","3 Okay"), sw("var(--m4)","4 Good"), sw("var(--m5)","5 Very good")];
       else parts = [sw("var(--y0)","None"), sw("var(--y1)","Mild"), sw("var(--y2)","Moderate"), sw("var(--y3)","Severe")];
-      parts.push(sw("var(--bleed)","Bleeding (bar)"), sw("var(--spot)","Spotting"), sw("transparent","No entry",";box-shadow:inset 0 0 0 1px var(--line)"));
+      parts.push(sw("var(--bleed)","Bleeding (bar)"), sw("var(--spot)","Spotting"), sw("var(--line)","Skipped"), sw("transparent","No entry",";box-shadow:inset 0 0 0 1px var(--line)"));
     }
     leg.innerHTML = parts.join("");
   }
@@ -1068,7 +1221,7 @@ th{ color:var(--muted); font-weight:700; border-top:0; }
   }
 
   // ---------- CSV ----------
-  var HEADER = ["date","cycle_day","days_to_next_period","menses","mood"]
+  var HEADER = ["date","cycle_day","days_to_next_period","menses","mood","scale","skipped"]
     .concat(ITEMS.map(function(_,i){ return "item"+String(i+1).padStart(2,"0"); }))
     .concat(["notes"]);
   function q(v){
@@ -1080,7 +1233,7 @@ th{ color:var(--muted); font-weight:700; border-top:0; }
     var rows = [HEADER.join(",")];
     Object.keys(store.entries).sort().forEach(function(d){
       var e = store.entries[d], ci = cycleInfo(d, ons);
-      rows.push([d, ci.fwd, ci.back, e.m, e.mood].concat(e.r).concat([e.n]).map(q).join(","));
+      rows.push([d, ci.fwd, ci.back, e.m, e.mood, hasRatings(e) ? (entryScale(e)===6 ? "1-6" : "0-3") : "", e.skip ? 1 : ""].concat(e.r).concat([e.n]).map(q).join(","));
     });
     return rows.join("\n") + "\n";
   }
@@ -1105,7 +1258,7 @@ th{ color:var(--muted); font-weight:700; border-top:0; }
     var rows = parseCsv(text.replace(/^\uFEFF/,""));
     if(!rows.length) throw new Error("The file is empty.");
     var h = rows[0].map(function(s){ return s.trim(); });
-    var di = h.indexOf("date"), mi = h.indexOf("menses"), ni = h.indexOf("notes"), moi = h.indexOf("mood");
+    var di = h.indexOf("date"), mi = h.indexOf("menses"), ni = h.indexOf("notes"), moi = h.indexOf("mood"), sci = h.indexOf("scale"), ski = h.indexOf("skipped");
     var ii = []; for(var k=1;k<=24;k++){ ii.push(h.indexOf("item"+String(k).padStart(2,"0"))); }
     if(di<0 || ii.some(function(x){ return x<0; })) throw new Error("This doesn’t look like a CSV exported from this page. It needs a date column and item01–item24.");
     var count = 0, skipped = 0;
@@ -1114,9 +1267,11 @@ th{ color:var(--muted); font-weight:700; border-top:0; }
       if(!validIso(d)){ skipped++; return; }
       var m = mi>=0 ? (r[mi]||"none").trim() : "none";
       if(["none","spotting","bleeding"].indexOf(m)<0) m = "none";
-      var vals = ii.map(function(x){ var v = parseInt(r[x],10); return (v>=0 && v<=3) ? v : null; });
+      var rsc = (sci>=0 && (r[sci]||"").trim()==="1-6") ? 6 : 3, lo = baseVal(rsc), hi = rsc===6 ? 6 : 3;
+      var vals = ii.map(function(x){ var v = parseInt(r[x],10); return (v>=lo && v<=hi) ? v : null; });
       var mv = moi>=0 ? parseInt(r[moi],10) : NaN;
-      var e = {m:m, r:vals, n: ni>=0 ? (r[ni]||"") : "", mood: (mv>=1 && mv<=5) ? mv : null, g:{}};
+      var e = {m:m, r:vals, n: ni>=0 ? (r[ni]||"") : "", mood: (mv>=1 && mv<=5) ? mv : null, g:{}, sc:rsc, skip: ski>=0 && (r[ski]||"").trim()==="1"};
+      if(m!=="none") e.mx = true;
       if(isEmpty(e)) { skipped++; return; }
       store.entries[d] = e; count++;
     });
@@ -1186,7 +1341,7 @@ th{ color:var(--muted); font-weight:700; border-top:0; }
   document.getElementById("deleteAll").addEventListener("click", function(){
     if(!Object.keys(store.entries).length) return;
     if(!confirm("Delete every entry stored in this browser? This can’t be undone.")) return;
-    store = {entries:{}}; persist(); applyImpairSetting(); renderUndo(); renderLog();
+    store = {entries:{}}; persist(); syncSettingsUI(); applyImpairSetting(); renderUndo(); renderLog();
   });
 
   // ---------- past periods ----------
@@ -1408,15 +1563,21 @@ th{ color:var(--muted); font-weight:700; border-top:0; }
   // ---------- tabs ----------
   function show(view){
     flushNotes();
-    ["log","history","periods","data"].forEach(function(v){
+    if(view!=="about") lastView = view;
+    document.body.classList.toggle("about-open", view==="about");
+    ["log","history","periods","data","report","about"].forEach(function(v){
       document.getElementById("view-"+v).hidden = v!==view;
-      document.getElementById("tab-"+v).setAttribute("aria-selected", String(v===view));
+      var tb = document.getElementById("tab-"+v);
+      if(tb) tb.setAttribute("aria-selected", String(v===view || (view==="report" && v==="data")));
     });
     if(view==="history") renderHistory();
     if(view==='periods'){ renderCal(); }
     if(view!=="data"){ csvOut.hidden = true; }
     renderBackup();
   }
+  var lastView = "log";
+  document.getElementById("aboutBtn").addEventListener("click", function(){ var back = lastView; show("about"); lastView = back; window.scrollTo(0,0); });
+  document.getElementById("aboutClose").addEventListener("click", function(){ show(lastView || "log"); window.scrollTo(0,0); });
   document.querySelectorAll(".tab").forEach(function(t){
     t.addEventListener("click", function(){ show(t.dataset.view); window.scrollTo(0,0); });
   });
@@ -1432,17 +1593,189 @@ th{ color:var(--muted); font-weight:700; border-top:0; }
     navigator.storage.persist().catch(function(){});
   }
 
+  function syncSettingsUI(){
+    var md = setting("mode","every"), scl = setting("scale","short");
+    document.querySelectorAll("input[name=qmode]").forEach(function(x){ x.checked = x.value===md; });
+    document.querySelectorAll("input[name=qscale]").forEach(function(x){ x.checked = x.value===scl; });
+  }
+  document.querySelectorAll("input[name=qmode]").forEach(function(x){ x.addEventListener("change", function(){
+    store.settings = store.settings || {}; store.settings.mode = x.value; persist(); renderLog();
+  }); });
+  document.querySelectorAll("input[name=qscale]").forEach(function(x){ x.addEventListener("change", function(){
+    var prev = setting("scale","short");
+    var anyRated = Object.keys(store.entries).some(function(k){ return hasRatings(store.entries[k]); });
+    if(anyRated && x.value!==prev && !confirm("Switch rating scale? Days you’ve already rated keep their old scale, and charts and reports convert between them, so comparisons become approximate.")){ syncSettingsUI(); return; }
+    store.settings = store.settings || {}; store.settings.scale = x.value; persist(); renderLog();
+  }); });
+
+  // ---------- doctor report ----------
+  var REPORT_CSS = [
+    ".rpt{ --ink:#1A2030; --muted:#5A6479; --line:#D3D9E4; --bleed:#B3335C; --spot:#E8A3B8; --m1:#3F2D8F; --m2:#8173D6; --m3:#CFCBE0; --m4:#86CBA8; --m5:#23935F; --y0:#EDE3CC; --y1:#F2C26B; --y2:#E5843A; --y3:#A9481A; background:#fff; color:var(--ink); font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif; font-size:14px; line-height:1.45; max-width:760px; margin:0 auto; padding:28px 28px 36px; border-radius:12px; }",
+    ".rpt h1{ font-size:22px; margin:0 0 4px; } .rpt h2{ font-size:15px; margin:24px 0 8px; } .rpt .sub{ color:var(--muted); margin:0; }",
+    ".rpt .about{ font-size:12.5px; color:var(--muted); border-left:3px solid var(--line); padding:4px 0 4px 10px; margin:14px 0 0; }",
+    ".rpt .kpis{ display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-top:16px; } .rpt .kpi{ border:1px solid var(--line); border-radius:8px; padding:8px 10px; } .rpt .kpi b{ display:block; font-size:18px; } .rpt .kpi span{ font-size:12px; color:var(--muted); }",
+    ".rpt table{ width:100%; border-collapse:collapse; font-size:13px; } .rpt th,.rpt td{ text-align:left; padding:5px 6px; border-top:1px solid var(--line); } .rpt th{ color:var(--muted); font-weight:600; border-top:0; } .rpt .num{ text-align:right; font-variant-numeric:tabular-nums; } .rpt tr.flag td{ font-weight:700; }",
+    ".rpt .legend{ display:flex; flex-wrap:wrap; gap:10px; font-size:11.5px; color:var(--muted); margin-top:6px; } .rpt .legend i{ display:inline-block; width:11px; height:11px; border-radius:2px; vertical-align:-1px; margin-right:4px; }",
+    ".rpt .note{ font-size:12px; color:var(--muted); margin:6px 0 0; } .rpt .foot{ margin-top:24px; font-size:11.5px; color:var(--muted); border-top:1px solid var(--line); padding-top:8px; } .rpt svg{ width:100%; height:auto; display:block; } .rpt .notes p{ margin:0 0 4px; font-size:12.5px; }",
+    "@media (max-width:560px){ .rpt{ padding:18px 14px; } .rpt .kpis{ grid-template-columns:repeat(2,1fr); } }",
+    "@media print{ .rpt{ max-width:none; padding:0; border-radius:0; } .rpt h2{ break-after:avoid; } .rpt table, .rpt svg{ break-inside:avoid; } }"
+  ].join("\n");
+  (function(){ var st = document.createElement("style"); st.textContent = REPORT_CSS; document.head.appendChild(st); })();
+  function esc(x){ return String(x).replace(/[&<>"]/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]; }); }
+  function avg(a){ return a.length ? a.reduce(function(x,y){ return x+y; },0)/a.length : null; }
+  function f1(v){ return v==null ? "–" : v.toFixed(1); }
+  function rptRows(cycles, kind){
+    var maxLen = Math.min(40, Math.max.apply(null, cycles.map(function(c){ return c.len; })));
+    var labW = 74, cell = Math.max(12, Math.floor(640/maxLen)), rowH = 20, top = 16;
+    var W = labW + maxLen*cell, H = top + cycles.length*rowH + 2, o = [];
+    o.push('<svg viewBox="0 0 '+W+' '+H+'" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="'+(kind==="mood"?"Mood":"Symptoms")+' by day, one row per cycle">');
+    [-1,-7,-14,-21,-28,-35].forEach(function(k){ var col = maxLen + k; if(col<0) return; o.push('<text x="'+(labW+col*cell+cell/2)+'" y="11" font-size="10" fill="#5A6479" text-anchor="middle">'+k+'</text>'); });
+    cycles.forEach(function(c, r){
+      var y = top + r*rowH, h = rowH - 3;
+      o.push('<text x="'+(labW-6)+'" y="'+(y+h/2+4)+'" font-size="11" fill="#5A6479" text-anchor="end">'+esc(parse(c.start).toLocaleDateString(undefined,{month:"short",day:"numeric",year:"numeric"}))+'</text>');
+      for(var k=0;k<c.len;k++){
+        var col = maxLen - c.len + k; if(col<0) continue;
+        var d = addDays(c.start,k), e = store.entries[d], x = labW + col*cell, w = cell - 2, fill = null;
+        if(e && kind==="mood" && e.mood!=null) fill = "var(--m"+e.mood+")";
+        if(e && kind!=="mood"){ var m = symptomMean(e); if(m!=null) fill = "var(--y"+Math.min(3,Math.max(0,Math.round(m)))+")"; }
+        if(fill) o.push('<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" rx="2" fill="'+fill+'"/>');
+        else if(e && e.skip) o.push('<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" rx="2" fill="#D3D9E4"/>');
+        else o.push('<rect x="'+(x+0.5)+'" y="'+(y+0.5)+'" width="'+(w-1)+'" height="'+(h-1)+'" rx="2" fill="none" stroke="#D3D9E4"/>');
+        if(e && e.m!=="none") o.push('<rect x="'+x+'" y="'+(y+h-4)+'" width="'+w+'" height="4" fill="'+(e.m==="bleeding"?"var(--bleed)":"var(--spot)")+'"/>');
+      }
+    });
+    o.push('</svg>');
+    return o.join("");
+  }
+  function buildReport(nCyc, withNotes){
+    var t = todayIso(), ons = onsets(), si = Math.max(0, ons.length - 1 - nCyc);
+    var start = ons.length ? ons[si] : addDays(t, -90);
+    var complete = [];
+    for(var i=si; i<ons.length-1; i++){ var L = diffDays(ons[i], ons[i+1]); if(L<=60) complete.push({start:ons[i], len:L}); }
+    var lens = complete.map(function(c){ return c.len; }).sort(function(a,b){ return a-b; });
+    var medL = lens.length ? (lens.length%2 ? lens[(lens.length-1)/2] : Math.round((lens[lens.length/2-1]+lens[lens.length/2])/2)) : null;
+    var inOns = ons.filter(function(o){ return o>=start; });
+    function periodLen(o){ var n=0; for(var d=o; store.entries[d] && store.entries[d].m==="bleeding"; d=addDays(d,1)) n++; return n; }
+    var pl = inOns.map(periodLen).sort(function(a,b){ return a-b; });
+    var medP = pl.length ? pl[Math.floor((pl.length-1)/2)] : null;
+    var span = diffDays(start, t) + 1, logged = 0, skipped = 0, any6 = false, notes = [];
+    for(var d=start; d<=t; d=addDays(d,1)){
+      var e = store.entries[d];
+      if(e && e.skip) skipped++; else if(e && (e.mood!=null || hasRatings(e))) logged++;
+      if(e && hasRatings(e) && entryScale(e)===6) any6 = true;
+      if(e && e.n && e.n.trim()) notes.push([d, e.n.trim()]);
+    }
+    // before vs after windows
+    var pre = {}, post = {};
+    inOns.forEach(function(o){
+      for(var k=1;k<=7;k++){ var d1 = addDays(o,-k); if(d1>=start) pre[d1] = 1; }
+      for(var k2=3;k2<=9;k2++){ var d2 = addDays(o,k2); if(d2<=t) post[d2] = 1; }
+    });
+    var doms = DOMAINS.slice();
+    if(doms.indexOf(IMPAIR)<0 && Object.keys(pre).concat(Object.keys(post)).some(function(dd){ var e=store.entries[dd]; return e && [21,22,23].some(function(i){ return e.r[i]!=null; }); })) doms.push(IMPAIR);
+    function winStats(days){
+      var moods = [], per = doms.map(function(){ return []; }), n = 0;
+      Object.keys(days).forEach(function(dd){
+        var e = store.entries[dd]; if(!e || e.skip) return;
+        if(e.mood!=null) moods.push(e.mood);
+        var sc = entryScale(e), had = false;
+        doms.forEach(function(dm, j){
+          var v = dm.items.map(function(i){ return norm(e.r[i], sc); }).filter(function(x){ return x!=null; });
+          if(v.length){ per[j].push(avg(v)); had = true; }
+        });
+        if(had || e.mood!=null) n++;
+      });
+      return {mood: avg(moods), per: per.map(avg), n: n};
+    }
+    var A = winStats(pre), B = winStats(post);
+    var modeTxt = {every:"were asked every day", focus:"were asked in the week before each period and on days 4–10 after it starts", mood:"are currently not being asked (mood-only mode)"}[setting("mode","every")];
+    var h = [];
+    h.push('<div class="rpt">');
+    h.push('<h1>Cycle and mood report</h1>');
+    h.push('<p class="sub">'+esc(fmt(start))+' to '+esc(fmt(t))+(complete.length ? ' ('+complete.length+(complete.length===1?' complete cycle':' complete cycles')+')' : '')+'. Created '+esc(fmt(t))+'.</p>');
+    h.push('<p class="about">Self-tracked daily on a phone. Mood is rated 1 (very low) to 5 (very good). Symptoms are adapted from the Daily Record of Severity of Problems (DRSP; Endicott, Nee &amp; Harrison, 2006) and '+esc(modeTxt)+'. Symptom averages below are on a 0 (none) to 3 (severe) scale'+(any6 ? '; days rated on the full 1–6 DRSP scale were converted, and the original ratings are in the exported data' : '')+'. This is a personal record, not a diagnosis.</p>');
+    h.push('<div class="kpis">');
+    h.push('<div class="kpi"><b>'+(medL!=null ? medL+' days' : '–')+'</b><span>Median cycle length'+(lens.length>1 ? ' (range '+lens[0]+'–'+lens[lens.length-1]+')' : '')+'</span></div>');
+    h.push('<div class="kpi"><b>'+(medP ? medP+(medP===1?' day':' days') : '–')+'</b><span>Typical period length</span></div>');
+    h.push('<div class="kpi"><b>'+logged+' of '+span+'</b><span>Days logged ('+Math.round(100*logged/span)+'%)</span></div>');
+    h.push('<div class="kpi"><b>'+skipped+'</b><span>Days intentionally skipped</span></div>');
+    h.push('</div>');
+    if(complete.length){
+      h.push('<h2>Mood across each cycle</h2>'+rptRows(complete,"mood"));
+      h.push('<div class="legend"><span><i style="background:var(--m1)"></i>1 Very low</span><span><i style="background:var(--m2)"></i>2 Low</span><span><i style="background:var(--m3)"></i>3 Okay</span><span><i style="background:var(--m4)"></i>4 Good</span><span><i style="background:var(--m5)"></i>5 Very good</span><span><i style="background:var(--bleed);height:4px"></i>Bleeding</span></div>');
+      h.push('<p class="note">One row per cycle, aligned so each row ends the day before the next period (−1). Premenstrual days line up on the right. The cycle in progress isn’t shown.</p>');
+      if(setting("mode","every")!=="mood" || complete.some(function(c){ for(var k=0;k<c.len;k++){ if(hasRatings(store.entries[addDays(c.start,k)])) return true; } return false; })){
+        h.push('<h2>Symptom average across each cycle</h2>'+rptRows(complete,"sym"));
+        h.push('<div class="legend"><span><i style="background:var(--y0)"></i>None</span><span><i style="background:var(--y1)"></i>Mild</span><span><i style="background:var(--y2)"></i>Moderate</span><span><i style="background:var(--y3)"></i>Severe</span><span><i style="background:#fff;box-shadow:inset 0 0 0 1px #D3D9E4"></i>Not rated</span></div>');
+      }
+    } else {
+      h.push('<h2>Cycle charts</h2><p class="note">Not enough complete cycles yet. Charts appear once two period starts are logged with daily entries between them.</p>');
+    }
+    h.push('<h2>Week before vs. week after the period</h2>');
+    h.push('<table><thead><tr><th>Measure</th><th class="num">Before (days −7 to −1)</th><th class="num">After (days 4–10)</th><th class="num">Difference</th></tr></thead><tbody>');
+    var md = (A.mood!=null && B.mood!=null) ? A.mood - B.mood : null;
+    h.push('<tr'+(md!=null && md<=-1 ? ' class="flag"' : '')+'><td>Mood (1–5, higher is better)</td><td class="num">'+f1(A.mood)+'</td><td class="num">'+f1(B.mood)+'</td><td class="num">'+(md==null?'–':(md>0?'+':'')+md.toFixed(1))+'</td></tr>');
+    doms.forEach(function(dm, j){
+      var a = A.per[j], b = B.per[j], df = (a!=null && b!=null) ? a - b : null;
+      h.push('<tr'+(df!=null && df>=1 ? ' class="flag"' : '')+'><td>'+esc(dm.q.replace(/\?$/,""))+'</td><td class="num">'+f1(a)+'</td><td class="num">'+f1(b)+'</td><td class="num">'+(df==null?'–':(df>0?'+':'')+df.toFixed(1))+'</td></tr>');
+    });
+    h.push('</tbody></table>');
+    h.push('<p class="note">Averages across the cycles shown ('+A.n+' days before, '+B.n+' days after). Symptoms 0–3. Bold rows differ by 1 point or more. Day −1 is the day before bleeding starts; day 4 is the fourth day after it starts.</p>');
+    h.push('<h2>Periods</h2><table><thead><tr><th>Started</th><th class="num">Bleeding days</th><th class="num">Cycle length</th></tr></thead><tbody>');
+    inOns.forEach(function(o){
+      var idx = ons.indexOf(o), nx = ons[idx+1], L = nx ? diffDays(o,nx) : null;
+      h.push('<tr><td>'+esc(fmt(o))+'</td><td class="num">'+periodLen(o)+'</td><td class="num">'+(L==null ? 'In progress' : (L>60 ? 'Gap in records' : L+' days'))+'</td></tr>');
+    });
+    h.push('</tbody></table>');
+    if(withNotes && notes.length){
+      h.push('<h2>Notes</h2><div class="notes">');
+      notes.forEach(function(nn){ h.push('<p><b>'+esc(fmt(nn[0]))+':</b> '+esc(nn[1])+'</p>'); });
+      h.push('</div>');
+    }
+    h.push('<p class="foot">Created with a private cycle log. Entries are stored only on the patient’s own device.</p>');
+    h.push('</div>');
+    return h.join("");
+  }
+  var lastReport = "";
+  document.getElementById("rptBtn").addEventListener("click", function(){
+    flushNotes();
+    var n = +((document.querySelector("input[name=rcyc]:checked")||{}).value || 3);
+    lastReport = buildReport(n, document.getElementById("rptNotes").checked);
+    document.getElementById("rptBody").innerHTML = lastReport;
+    document.getElementById("rptMsg").textContent = "";
+    show("report"); window.scrollTo(0,0);
+  });
+  document.getElementById("rptClose").addEventListener("click", function(){ show("data"); window.scrollTo(0,0); });
+  document.getElementById("rptPrint").addEventListener("click", function(){
+    try{ window.print(); }catch(err){ document.getElementById("rptMsg").textContent = "Printing isn’t available here. Use Download file instead."; }
+  });
+  document.getElementById("rptDl").addEventListener("click", function(){
+    var docHtml = '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Cycle and mood report</title><style>body{margin:0;background:#f4f5f8;padding:16px;} @media print{ body{ background:#fff; padding:0; } *{ -webkit-print-color-adjust:exact; print-color-adjust:exact; } }\n' + REPORT_CSS + '</style></head><body>' + lastReport + '</body></html>';
+    var name = "cycle-report-" + todayIso() + ".html", msg = document.getElementById("rptMsg");
+    function nativeSave(){
+      try{
+        var blob = new Blob([docHtml], {type:"text/html"}), a = document.createElement("a");
+        a.href = URL.createObjectURL(blob); a.download = name; document.body.appendChild(a); a.click(); a.remove();
+        setTimeout(function(){ URL.revokeObjectURL(a.href); }, 2000);
+        msg.textContent = "Saved to your downloads. Open it to view or print.";
+      }catch(err){ msg.textContent = "Your browser blocked the download."; }
+    }
+    if(downloads){ downloads.save({filename:name, data:docHtml}).then(function(){ msg.textContent = "Saved."; }).catch(function(err){ if(err && err.code==="declined") msg.textContent = "Download cancelled."; else nativeSave(); }); }
+    else nativeSave();
+  });
+
   document.getElementById("impairToggle").addEventListener("change", function(ev){
     store.settings = store.settings || {}; store.settings.impair = ev.target.checked;
     persist(); applyImpairSetting(); renderLog();
   });
 
   load();
+  syncSettingsUI();
   applyImpairSetting();
   renderBackup();
   renderUndo();
   renderLog();
-  document.getElementById("saveState").textContent = persistent ? "Saved on this device" : "Not stored";
+  document.getElementById("saveState").textContent = persistent ? "Saved on device" : "Not stored";
 })();
 </script>
 </body>
