@@ -312,6 +312,28 @@ details.notes-d textarea{ margin-top:2px; }
 .sumtxt{ font-size:.95rem; line-height:1.5; margin:0; }
 .center-links{ display:flex; justify-content:center; gap:22px; margin:6px 0 0; }
 .center-links .danger-link{ color:var(--bleed); }
+.medrow{ display:flex; align-items:center; justify-content:space-between; gap:10px; padding:9px 0; border-top:1px solid var(--line); }
+.medrow:first-child{ border-top:0; padding-top:2px; }
+.medrow .mn{ min-width:0; } .medrow .mn b{ display:block; font-size:.98rem; overflow-wrap:anywhere; } .medrow .mn span{ font-size:.8rem; color:var(--muted); }
+.medbtns{ display:flex; gap:6px; flex:none; }
+.medbtns button{ min-width:86px; height:40px; border-radius:10px; border:1px solid var(--line); background:var(--bg); font-weight:700; font-size:.85rem; padding:0 10px; }
+.medbtns button[aria-pressed="true"]{ background:var(--g-physical-sel); border-color:var(--g-physical-sel); color:var(--g-physical-ink); }
+.medman{ border-top:1px solid var(--line); padding:10px 0; }
+.medman:first-child{ border-top:0; }
+.medman b{ display:block; } .medman span{ display:block; font-size:.85rem; color:var(--muted); }
+.medman .acts{ display:flex; gap:16px; margin-top:6px; }
+.medform{ display:grid; gap:12px; margin-top:10px; padding-top:12px; border-top:1px solid var(--line); }
+.medform > label{ display:flex; flex-direction:column; gap:4px; font-size:.9rem; color:var(--muted); }
+.medform input[type=text], .medform input[type=date], .medform input[type=number]{ border:1px solid var(--line); border-radius:10px; background:var(--bg); padding:9px 10px; color:var(--ink); font:inherit; }
+.medform input[type=number]{ width:4.5em; padding:6px 8px; }
+.medform fieldset{ border:0; padding:0; margin:0; display:flex; flex-direction:column; gap:6px; }
+.medform legend{ color:var(--muted); font-size:.9rem; padding:0; margin-bottom:6px; }
+.daypick{ display:flex; gap:6px; flex-wrap:wrap; }
+.daypick label{ display:flex; align-items:center; gap:4px; border:1px solid var(--line); border-radius:9px; padding:6px 9px; font-size:.88rem; }
+label.inline:has(> input[type=radio]:first-child), label.inline:has(> input[type=checkbox]:first-child){ flex-wrap:nowrap; align-items:flex-start; gap:8px; }
+label.inline > input[type=radio]:first-child, label.inline > input[type=checkbox]:first-child{ flex:none; margin:.22em 0 0; }
+.medform label.inline{ flex-direction:row; align-items:center; flex-wrap:wrap; gap:8px; color:var(--ink); font-size:.95rem; }
+.opts fieldset{ flex-direction:column; align-items:flex-start; }
 [hidden]{ display:none !important; }
 @media (prefers-reduced-motion: reduce){ *{ transition:none !important; } }
 </style>
@@ -402,6 +424,11 @@ details.notes-d textarea{ margin-top:2px; }
       </div>
 
       <div id="groupCards"></div>
+
+      <div class="block" id="medsCard" hidden>
+        <h2 class="tq">Meds</h2>
+        <div id="medsList"></div>
+      </div>
 
       <details class="block notes-d" id="notesBox">
         <summary>Add a note</summary>
@@ -513,7 +540,7 @@ details.notes-d textarea{ margin-top:2px; }
           <label class='inline'><input type='radio' name='dorder' value='mdy' checked> Month/day (3/14/2019)</label>
           <label class='inline'><input type='radio' name='dorder' value='dmy'> Day/month (14/3/2019)</label>
         </fieldset>
-        <label class='inline'>If a line has no end date, mark <input type='number' id='bulkLen' min='1' max='10' value='1' inputmode='numeric'> day(s) as bleeding</label>
+        <label class='inline'>Bleeding days to mark when there’s no end date: <input type='number' id='bulkLen' min='1' max='10' value='1' inputmode='numeric'></label>
       </div>
       <p class='hint'>Dates like 2019-03-14 or Mar 14, 2019 work with either setting. Nothing is added until you review and confirm.</p>
       <div class='stack'><button class='btn' id='bulkPreview'>Check dates</button></div>
@@ -533,11 +560,12 @@ details.notes-d textarea{ margin-top:2px; }
       <div class="about-top"><h2>About Cycle log</h2><button class="linkbtn" id="aboutClose">Close</button></div>
       <p class="lede">A private daily log for mood, symptoms and periods. No account, and nothing leaves this phone.</p>
       <dl>
-        <dt>Today</dt><dd>Period, mood and “any symptoms?” If yes, pick the kind and rate it. Low-effort day? Answer just mood, or <b>Skip today</b>. Swipe to change days.</dd>
-        <dt>History</dt><dd><b>Cycles</b>, <b>Year</b> or <b>Timeline</b>, colored by mood or symptoms. Tap a day to open it.</dd>
+        <dt>Today</dt><dd>Period, mood and any symptoms. Busy day? Just mood, or <b>Skip today</b>. Swipe to change days.</dd>
+        <dt>History</dt><dd><b>Cycles</b>, <b>Year</b> or <b>Timeline</b>, by mood or symptoms. Tap a day to open it.</dd>
         <dt>Periods</dt><dd>Mark past periods on a calendar or paste them from a spreadsheet.</dd>
-        <dt>Settings</dt><dd><b>More → Questions</b>: Focus mode, Mood only, the full 1–6 scale, or an extra “got in the way” question.</dd>
-        <dt>Report</dt><dd><b>More → Report for your doctor</b> covers your last 2, 3 or 6 cycles.</dd>
+        <dt>Meds</dt><dd><b>More → Medications</b>: add a schedule, then tick doses off on Today.</dd>
+        <dt>Settings</dt><dd><b>More → Questions</b>: Focus mode, Mood only, 1–6 scale, “Daily life” group.</dd>
+        <dt>Report</dt><dd><b>More → Report for your doctor</b>: your last 2, 3 or 6 cycles.</dd>
         <dt>Backup</dt><dd><b>Export CSV</b> every few weeks. <b>Import</b> restores it.</dd>
         <dt>Install</dt><dd>Android: Chrome ⋮ → Install app. iPhone: Safari → Share → Add to Home Screen.</dd>
       </dl>
@@ -574,6 +602,38 @@ details.notes-d textarea{ margin-top:2px; }
       <div class="stack"><button class="btn primary" id="rptBtn">Create report</button></div>
     </div>
 
+    <div class="block prose" id="medsSetup">
+      <h2>Medications</h2>
+      <p class="hint">Meds you add appear on the Today screen on the days they’re due, so you can tick them off. Use a nickname if you’d rather the name not show on screen. The app can’t send reminders, so a phone alarm still helps.</p>
+      <div id="medsManage"></div>
+      <div class="stack"><button class="btn" id="medAdd">Add a medication</button></div>
+      <div class="medform" id="medForm" hidden>
+        <label>Name or nickname<input type="text" id="mfName" maxlength="40" autocomplete="off"></label>
+        <label>Dose (optional)<input type="text" id="mfDose" maxlength="30" placeholder="e.g. 50 mg" autocomplete="off"></label>
+        <fieldset>
+          <legend>When do you take it?</legend>
+          <label class="inline"><input type="radio" name="mfSched" value="daily" checked> Every day</label>
+          <label class="inline"><input type="radio" name="mfSched" value="weekdays"> Certain days of the week</label>
+          <label class="inline"><input type="radio" name="mfSched" value="luteal"> Only in the days before my period</label>
+          <label class="inline"><input type="radio" name="mfSched" value="prn"> As needed</label>
+        </fieldset>
+        <div class="daypick" id="mfDays" hidden></div>
+        <div id="mfLutWrap" hidden>
+          <label class="inline">Days before my period: <input type="number" id="mfLut" min="3" max="21" value="14" inputmode="numeric"></label>
+          <p class="hint" style="margin:4px 0 0">It shows up that many days before your period is due, and stays until your period starts.</p>
+        </div>
+        <fieldset id="mfTimeWrap">
+          <legend>Time of day</legend>
+          <label class="inline"><input type="radio" name="mfTime" value="am" checked> Morning</label>
+          <label class="inline"><input type="radio" name="mfTime" value="pm"> Evening</label>
+          <label class="inline"><input type="radio" name="mfTime" value="both"> Morning and evening</label>
+        </fieldset>
+        <label>Started<input type="date" id="mfStart"></label>
+        <div class="stack"><button class="btn primary" id="mfSave">Save</button><button class="btn" id="mfCancel">Cancel</button></div>
+        <p class="hint" id="mfMsg" aria-live="polite"></p>
+      </div>
+    </div>
+
     <div class="block prose">
       <h2>Questions</h2>
       <div class="opts">
@@ -602,7 +662,7 @@ details.notes-d textarea{ margin-top:2px; }
     <div class="block prose">
       <h2>Export</h2>
       <p><strong id="lastBackup"></strong></p>
-      <p>One row per logged day, with columns <code>date</code>, <code>cycle_day</code> (day 1 = first bleeding day), <code>days_to_next_period</code> (−1 = the day before), <code>menses</code>, <code>mood</code> (1–5), <code>scale</code> (0-3 or 1-6), <code>skipped</code>, <code>item01</code>–<code>item24</code> in DRSP order, and <code>notes</code>. Ratings are stored on the scale shown in the <code>scale</code> column.</p>
+      <p>One row per logged day, with columns <code>date</code>, <code>cycle_day</code> (day 1 = first bleeding day), <code>days_to_next_period</code> (−1 = the day before), <code>menses</code>, <code>mood</code> (1–5), <code>scale</code> (0-3 or 1-6), <code>skipped</code>, <code>item01</code>–<code>item24</code> in DRSP order, <code>notes</code>, and one <code>med:</code> column per medication. Ratings are stored on the scale shown in the <code>scale</code> column.</p>
       <div class="stack">
         <button class="btn primary" id="exportBtn">Export CSV</button>
         <button class="btn" id="showCsvBtn">Show CSV to copy</button>
@@ -632,7 +692,7 @@ details.notes-d textarea{ margin-top:2px; }
     </div>
 
     <div class="block prose">
-      <p class="hint">Items follow the Daily Record of Severity of Problems (Endicott, Nee &amp; Harrison, 2006), rated 0–3 instead of the original 1–6. This page is a personal log, not a diagnosis.</p>
+      <p class="hint">Items follow the Daily Record of Severity of Problems (Endicott, Nee &amp; Harrison, 2006), rated None to Severe by default, or 1–6 if you choose the full scale. This page is a personal log, not a diagnosis.</p>
     </div>
   </section>
 </main>
@@ -726,7 +786,7 @@ details.notes-d textarea{ margin-top:2px; }
   function blank(){ return {m:"none", r:ITEMS.map(function(){return null;}), n:"", mood:null, g:{}}; }
   function get(d){ return store.entries[d] || null; }
   function ensure(d){ if(!store.entries[d]) store.entries[d] = blank(); return store.entries[d]; }
-  function isEmpty(e){ return !e || (e.m==="none" && !e.mx && !e.skip && !e.jm && !e.sy && e.mood==null && e.r.every(function(v){return v==null;}) && !e.n); }
+  function isEmpty(e){ return !e || (e.m==="none" && !e.mx && !e.skip && !e.jm && !e.sy && !(e.md && Object.keys(e.md).length) && e.mood==null && e.r.every(function(v){return v==null;}) && !e.n); }
   function tidy(d){ if(isEmpty(store.entries[d])) delete store.entries[d]; }
   function ratedCount(e){ return e ? e.r.filter(function(v){return v!=null;}).length : 0; }
   function hasRatings(e){ return !!e && e.r.some(function(v){ return v!=null; }); }
@@ -967,6 +1027,133 @@ details.notes-d textarea{ margin-top:2px; }
     return true;
   }
 
+  // ---------- medications ----------
+  function meds(){ if(!store.meds) store.meds = []; return store.meds; }
+  function medActive(m, d){ return m.start <= d && (!m.stop || d < m.stop); }
+  function medDue(m, d){
+    if(!medActive(m, d)) return false;
+    if(m.sched==="daily") return true;
+    if(m.sched==="weekdays") return (m.days||[]).indexOf(parse(d).getDay()) >= 0;
+    if(m.sched==="luteal"){
+      var ons = onsets(), lastOn = null, nextOn = null, N = m.lut || 14;
+      for(var i=0;i<ons.length;i++){ if(ons[i]<=d) lastOn = ons[i]; else { nextOn = ons[i]; break; } }
+      if(nextOn){ var b = diffDays(d, nextOn); return b>=1 && b<=N; }
+      var mc = medianCycle(ons);
+      if(!lastOn || !mc || diffDays(lastOn, d) >= 60) return true;
+      return diffDays(d, addDays(lastOn, mc)) <= N;
+    }
+    return false;
+  }
+  function medTimes(m){ return m.sched==="prn" ? ["x"] : (m.time==="both" ? ["am","pm"] : [m.time || "am"]); }
+  var TLABEL = {am:"Morning", pm:"Evening", x:"Took it"};
+  var WD = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+  function schedText(m){
+    var t = m.sched==="prn" ? "" : (m.time==="both" ? ", morning and evening" : m.time==="pm" ? ", evening" : ", morning");
+    if(m.sched==="daily") return "Every day" + t;
+    if(m.sched==="weekdays") return (m.days||[]).slice().sort().map(function(x){ return WD[x]; }).join(", ") + t;
+    if(m.sched==="luteal") return "Last " + (m.lut||14) + " days before period" + t;
+    return "As needed";
+  }
+  function medsForDay(d){ return meds().filter(function(m){ return medActive(m, d) && (m.sched==="prn" || medDue(m, d)); }); }
+  function medTaken(e, m, t){ return !!(e && e.md && e.md[m.id] && e.md[m.id][t]); }
+  function anyMedTaken(e){ return !!(e && e.md && Object.keys(e.md).some(function(k){ var o = e.md[k]; return o && Object.keys(o).some(function(t){ return o[t]; }); })); }
+  function renderMedsCard(e){
+    var list = medsForDay(cur), card = document.getElementById("medsCard"), box = document.getElementById("medsList");
+    card.hidden = !list.length; box.innerHTML = "";
+    list.forEach(function(m){
+      var row = document.createElement("div"); row.className = "medrow";
+      var mn = document.createElement("div"); mn.className = "mn";
+      var b = document.createElement("b"); b.textContent = m.name + (m.dose ? " " + m.dose : ""); mn.appendChild(b);
+      var sp = document.createElement("span"); sp.textContent = m.sched==="prn" ? "As needed" : m.sched==="luteal" ? "Before your period" : (m.time==="both" ? "Morning and evening" : TLABEL[m.time||"am"]); mn.appendChild(sp);
+      var bt = document.createElement("div"); bt.className = "medbtns";
+      medTimes(m).forEach(function(t){
+        var tk = medTaken(e, m, t), x = document.createElement("button");
+        x.dataset.med = m.id; x.dataset.t = t; x.setAttribute("aria-pressed", String(tk));
+        x.textContent = (t==="x" ? (tk ? "Took it" : "Took it?") : (medTimes(m).length>1 ? (t==="am" ? "AM" : "PM") : "Taken")) + (tk ? " ✓" : "");
+        x.setAttribute("aria-label", m.name + " " + (t==="x" ? "taken" : TLABEL[t].toLowerCase() + " dose taken"));
+        bt.appendChild(x);
+      });
+      row.appendChild(mn); row.appendChild(bt); box.appendChild(row);
+    });
+  }
+  document.getElementById("medsList").addEventListener("click", function(ev){
+    var b = ev.target.closest("button[data-med]"); if(!b) return;
+    var e = ensure(cur); e.md = e.md || {};
+    var o = e.md[b.dataset.med] = e.md[b.dataset.med] || {};
+    if(o[b.dataset.t]) delete o[b.dataset.t]; else o[b.dataset.t] = true;
+    if(!Object.keys(o).length) delete e.md[b.dataset.med];
+    tidy(cur); persist(); renderLog();
+  });
+  // setup
+  var editingMed = null;
+  (function(){ var dp = document.getElementById("mfDays"); WD.forEach(function(w, i){ var l = document.createElement("label"); l.innerHTML = '<input type="checkbox" value="'+i+'"> '+w; dp.appendChild(l); }); })();
+  function mfSched(){ var x = document.querySelector("input[name=mfSched]:checked"); return x ? x.value : "daily"; }
+  function syncMedForm(){
+    var sc = mfSched();
+    document.getElementById("mfDays").hidden = sc!=="weekdays";
+    document.getElementById("mfLutWrap").hidden = sc!=="luteal";
+    document.getElementById("mfTimeWrap").hidden = sc==="prn";
+  }
+  document.querySelectorAll("input[name=mfSched]").forEach(function(x){ x.addEventListener("change", syncMedForm); });
+  function openMedForm(m){
+    editingMed = m ? m.id : null;
+    document.getElementById("mfName").value = m ? m.name : "";
+    document.getElementById("mfDose").value = m && m.dose ? m.dose : "";
+    document.querySelectorAll("input[name=mfSched]").forEach(function(x){ x.checked = x.value===(m ? m.sched : "daily"); });
+    document.querySelectorAll("#mfDays input").forEach(function(x){ x.checked = !!(m && (m.days||[]).indexOf(+x.value)>=0); });
+    document.getElementById("mfLut").value = m && m.lut ? m.lut : 14;
+    document.querySelectorAll("input[name=mfTime]").forEach(function(x){ x.checked = x.value===(m && m.time ? m.time : "am"); });
+    document.getElementById("mfStart").value = m ? m.start : todayIso();
+    document.getElementById("mfStart").max = todayIso();
+    document.getElementById("mfMsg").textContent = "";
+    document.getElementById("medForm").hidden = false; document.getElementById("medAdd").hidden = true;
+    syncMedForm(); document.getElementById("mfName").focus();
+  }
+  function closeMedForm(){ document.getElementById("medForm").hidden = true; document.getElementById("medAdd").hidden = false; editingMed = null; }
+  document.getElementById("medAdd").addEventListener("click", function(){ openMedForm(null); });
+  document.getElementById("mfCancel").addEventListener("click", closeMedForm);
+  document.getElementById("mfSave").addEventListener("click", function(){
+    var msg = document.getElementById("mfMsg"), name = document.getElementById("mfName").value.trim();
+    if(!name){ msg.textContent = "Add a name or nickname."; return; }
+    var sc = mfSched(), days = [].slice.call(document.querySelectorAll("#mfDays input:checked")).map(function(x){ return +x.value; });
+    if(sc==="weekdays" && !days.length){ msg.textContent = "Pick at least one day."; return; }
+    var st = document.getElementById("mfStart").value; if(!validIso(st)) st = todayIso();
+    var lut = Math.min(21, Math.max(3, parseInt(document.getElementById("mfLut").value,10) || 14));
+    var tm = (document.querySelector("input[name=mfTime]:checked")||{}).value || "am";
+    var m = editingMed ? meds().filter(function(x){ return x.id===editingMed; })[0] : null;
+    if(!m){ m = {id:"m" + Date.now().toString(36)}; meds().push(m); }
+    m.name = name; m.dose = document.getElementById("mfDose").value.trim(); m.sched = sc; m.days = days; m.lut = lut; m.time = tm; m.start = st;
+    persist(); closeMedForm(); renderMedsManage(); renderLog();
+  });
+  function renderMedsManage(){
+    var box = document.getElementById("medsManage"); box.innerHTML = "";
+    meds().forEach(function(m){
+      var d = document.createElement("div"); d.className = "medman";
+      var b = document.createElement("b"); b.textContent = m.name + (m.dose ? " " + m.dose : ""); d.appendChild(b);
+      var s1 = document.createElement("span"); s1.textContent = schedText(m); d.appendChild(s1);
+      var s2 = document.createElement("span"); s2.textContent = "Started " + fmt(m.start) + (m.stop ? ". Last dose " + fmt(addDays(m.stop,-1)) + "." : "."); d.appendChild(s2);
+      var a = document.createElement("div"); a.className = "acts";
+      [["edit","Edit"],[m.stop ? "restart" : "stop", m.stop ? "Restart" : "Stop taking"],["del","Delete"]].forEach(function(x){
+        var bt = document.createElement("button"); bt.className = "linkbtn"; bt.textContent = x[1]; bt.dataset.act = x[0]; bt.dataset.id = m.id;
+        if(x[0]==="del") bt.style.color = "var(--bleed)";
+        a.appendChild(bt);
+      });
+      d.appendChild(a); box.appendChild(d);
+    });
+  }
+  document.getElementById("medsManage").addEventListener("click", function(ev){
+    var b = ev.target.closest("button[data-act]"); if(!b) return;
+    var m = meds().filter(function(x){ return x.id===b.dataset.id; })[0]; if(!m) return;
+    if(b.dataset.act==="edit") openMedForm(m);
+    else if(b.dataset.act==="stop"){ m.stop = addDays(todayIso(), 1); persist(); }
+    else if(b.dataset.act==="restart"){ m.stop = null; persist(); }
+    else if(b.dataset.act==="del"){
+      if(!confirm("Delete " + m.name + "? Days you already ticked stay in your log but won’t show in reports. To keep its history, use Stop taking instead.")) return;
+      store.meds = meds().filter(function(x){ return x.id!==m.id; }); persist();
+    }
+    renderMedsManage(); renderLog();
+  });
+
   // ---------- render today ----------
   function renderGroups(e){
     var st = symState(e), sc = hasRatings(e) ? entryScale(e) : settingScale();
@@ -1056,6 +1243,16 @@ details.notes-d textarea{ margin-top:2px; }
         parts.push(list.length ? "Symptoms: " + list.join(", ") + "." : "No symptoms.");
       } else if(e.jm) parts.push("Just mood, no symptom questions.");
     }
+    var dueM = medsForDay(cur);
+    if(dueM.length){
+      var mt = [];
+      dueM.forEach(function(m){
+        var ts = medTimes(m), got = ts.filter(function(t){ return medTaken(e, m, t); }).length;
+        if(m.sched==="prn"){ if(got) mt.push(m.name + " taken"); }
+        else mt.push(m.name + (got===ts.length ? " taken" : got ? " partly taken" : " not ticked"));
+      });
+      if(mt.length) parts.push("Meds: " + mt.join(", ") + ".");
+    }
     if(e.n && e.n.trim()) parts.push("Note added.");
     document.getElementById("loggedSummary2").textContent = parts.join(" ");
   }
@@ -1100,6 +1297,7 @@ details.notes-d textarea{ margin-top:2px; }
       document.querySelectorAll(".sy button").forEach(function(b){ b.setAttribute("aria-pressed", String(symState(stored)===b.dataset.sy)); });
       if(why){ cardsEl.innerHTML = ""; } else renderGroups(e);
     }
+    renderMedsCard(e);
     if(document.activeElement!==notesEl) notesEl.value = e.n || "";
     var nb = document.getElementById("notesBox"); if(e.n && e.n.trim()) nb.open = true;
   }
@@ -1134,8 +1332,9 @@ details.notes-d textarea{ margin-top:2px; }
       var bh = Math.max(2, Math.round(hgt*0.25));
       g.appendChild(sv("rect",{x:x,y:y+hgt-bh,width:size,height:bh,fill:e.m==="bleeding"?"var(--bleed)":"var(--spot)"}));
     }
+    if(anyMedTaken(e)){ var rr = Math.max(1.5, Math.min(3, size*0.14)); g.appendChild(sv("circle",{cx:x+size-rr-1, cy:y+rr+1, r:rr, fill:"var(--ink)"})); }
     var tt = sv("title",{});
-    tt.textContent = fmt(d) + (e && e.mood!=null ? ", mood " + e.mood : "") + (symptomMean(e)!=null ? ", symptoms " + symptomMean(e).toFixed(1) : "") + (e && e.m!=="none" ? ", " + e.m : "");
+    tt.textContent = fmt(d) + (anyMedTaken(e) ? ", meds taken" : "") + (e && e.mood!=null ? ", mood " + e.mood : "") + (symptomMean(e)!=null ? ", symptoms " + symptomMean(e).toFixed(1) : "") + (e && e.m!=="none" ? ", " + e.m : "");
     g.appendChild(tt); svgEl.appendChild(g);
   }
   function openDayFromSvg(svgEl){
@@ -1159,6 +1358,7 @@ details.notes-d textarea{ margin-top:2px; }
     } else {
       if(colorBy==="mood") parts = [sw("var(--m1)","1 Very low"), sw("var(--m2)","2 Low"), sw("var(--m3)","3 Okay"), sw("var(--m4)","4 Good"), sw("var(--m5)","5 Very good")];
       else parts = [sw("var(--y0)","None"), sw("var(--y1)","Mild"), sw("var(--y2)","Moderate"), sw("var(--y3)","Severe")];
+      if(meds().length) parts.push(sw("var(--ink)","Med taken (dot)",";border-radius:50%;width:8px;height:8px"));
       parts.push(sw("var(--bleed)","Bleeding (bar)"), sw("var(--spot)","Spotting"), sw("var(--line)","Skipped"), sw("transparent","No entry",";box-shadow:inset 0 0 0 1px var(--line)"));
     }
     leg.innerHTML = parts.join("");
@@ -1384,10 +1584,12 @@ details.notes-d textarea{ margin-top:2px; }
   }
   function buildCsv(){
     var ons = onsets();
-    var rows = [HEADER.join(",")];
+    var ml = meds();
+    var rows = [HEADER.concat(ml.map(function(m){ return "med:" + m.name; })).map(q).join(",")];
     Object.keys(store.entries).sort().forEach(function(d){
       var e = store.entries[d], ci = cycleInfo(d, ons);
-      rows.push([d, ci.fwd, ci.back, e.m, e.mood, hasRatings(e) ? (entryScale(e)===6 ? "1-6" : "0-3") : "", e.skip ? 1 : ""].concat(e.r).concat([e.n]).map(q).join(","));
+      var mc = ml.map(function(m){ var o = e.md && e.md[m.id]; return o ? Object.keys(o).filter(function(k){ return o[k]; }).join("+") : ""; });
+      rows.push([d, ci.fwd, ci.back, e.m, e.mood, hasRatings(e) ? (entryScale(e)===6 ? "1-6" : "0-3") : "", e.skip ? 1 : ""].concat(e.r).concat([e.n]).concat(mc).map(q).join(","));
     });
     return rows.join("\n") + "\n";
   }
@@ -1415,7 +1617,14 @@ details.notes-d textarea{ margin-top:2px; }
     var di = h.indexOf("date"), mi = h.indexOf("menses"), ni = h.indexOf("notes"), moi = h.indexOf("mood"), sci = h.indexOf("scale"), ski = h.indexOf("skipped");
     var ii = []; for(var k=1;k<=24;k++){ ii.push(h.indexOf("item"+String(k).padStart(2,"0"))); }
     if(di<0 || ii.some(function(x){ return x<0; })) throw new Error("This doesn’t look like a CSV exported from this page. It needs a date column and item01–item24.");
-    var count = 0, skipped = 0;
+    var count = 0, skipped = 0, medCols = [];
+    h.forEach(function(name, ix){
+      if(name.indexOf("med:")!==0) return;
+      var nm = name.slice(4).trim(); if(!nm) return;
+      var m = meds().filter(function(x){ return x.name===nm; })[0];
+      if(!m){ m = {id:"m" + Date.now().toString(36) + ix, name:nm, dose:"", sched:"daily", days:[], lut:14, time:"am", start:null}; meds().push(m); }
+      medCols.push([ix, m]);
+    });
     rows.slice(1).forEach(function(r){
       var d = (r[di]||"").trim();
       if(!validIso(d)){ skipped++; return; }
@@ -1426,10 +1635,18 @@ details.notes-d textarea{ margin-top:2px; }
       var mv = moi>=0 ? parseInt(r[moi],10) : NaN;
       var e = {m:m, r:vals, n: ni>=0 ? (r[ni]||"") : "", mood: (mv>=1 && mv<=5) ? mv : null, g:{}, sc:rsc, skip: ski>=0 && (r[ski]||"").trim()==="1"};
       if(m!=="none") e.mx = true;
+      medCols.forEach(function(mc){
+        var v = (r[mc[0]]||"").trim(); if(!v) return;
+        var o = {}; v.split("+").forEach(function(t){ t = t.trim(); if(t==="am"||t==="pm"||t==="x") o[t] = true; });
+        if(!Object.keys(o).length) o[mc[1].sched==="prn" ? "x" : "am"] = true;
+        e.md = e.md || {}; e.md[mc[1].id] = o;
+        if(!mc[1].start || d < mc[1].start) mc[1].start = d;
+      });
       if(isEmpty(e)) { skipped++; return; }
       store.entries[d] = e; count++;
     });
-    persist();
+    meds().forEach(function(m){ if(!m.start) m.start = todayIso(); });
+    persist(); renderMedsManage();
     return {count:count, skipped:skipped};
   }
 
@@ -1495,7 +1712,7 @@ details.notes-d textarea{ margin-top:2px; }
   document.getElementById("deleteAll").addEventListener("click", function(){
     if(!Object.keys(store.entries).length) return;
     if(!confirm("Delete every entry stored in this browser? This can’t be undone.")) return;
-    store = {entries:{}}; persist(); syncSettingsUI(); applyImpairSetting(); renderUndo(); renderLog();
+    store = {entries:{}}; persist(); renderMedsManage(); syncSettingsUI(); applyImpairSetting(); renderUndo(); renderLog();
   });
 
   // ---------- past periods ----------
@@ -1769,8 +1986,8 @@ details.notes-d textarea{ margin-top:2px; }
     ".rpt .about{ font-size:12.5px; color:var(--muted); border-left:3px solid var(--line); padding:4px 0 4px 10px; margin:14px 0 0; }",
     ".rpt .kpis{ display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-top:16px; } .rpt .kpi{ border:1px solid var(--line); border-radius:8px; padding:8px 10px; } .rpt .kpi b{ display:block; font-size:18px; } .rpt .kpi span{ font-size:12px; color:var(--muted); }",
     ".rpt table{ width:100%; border-collapse:collapse; font-size:13px; } .rpt th,.rpt td{ text-align:left; padding:5px 6px; border-top:1px solid var(--line); } .rpt th{ color:var(--muted); font-weight:600; border-top:0; } .rpt .num{ text-align:right; font-variant-numeric:tabular-nums; } .rpt tr.flag td{ font-weight:700; }",
-    ".rpt .legend{ display:flex; flex-wrap:wrap; gap:10px; font-size:11.5px; color:var(--muted); margin-top:6px; } .rpt .legend i{ display:inline-block; width:11px; height:11px; border-radius:2px; vertical-align:-1px; margin-right:4px; }",
-    ".rpt .note{ font-size:12px; color:var(--muted); margin:6px 0 0; } .rpt .foot{ margin-top:24px; font-size:11.5px; color:var(--muted); border-top:1px solid var(--line); padding-top:8px; } .rpt svg{ width:100%; height:auto; display:block; } .rpt .notes p{ margin:0 0 4px; font-size:12.5px; }",
+    ".rpt .rlegend{ display:flex; flex-wrap:wrap; gap:10px; font-size:11.5px; color:var(--muted); margin-top:6px; } .rpt .rlegend i{ display:inline-block; width:11px; height:11px; border-radius:2px; vertical-align:-1px; margin-right:4px; }",
+    ".rpt td small{ color:var(--muted); font-size:11.5px; } .rpt .note{ font-size:12px; color:var(--muted); margin:6px 0 0; } .rpt .foot{ margin-top:24px; font-size:11.5px; color:var(--muted); border-top:1px solid var(--line); padding-top:8px; } .rpt svg{ width:100%; height:auto; display:block; } .rpt .notes p{ margin:0 0 4px; font-size:12.5px; }",
     "@media (max-width:560px){ .rpt{ padding:18px 14px; } .rpt .kpis{ grid-template-columns:repeat(2,1fr); } }",
     "@media print{ .rpt{ max-width:none; padding:0; border-radius:0; } .rpt h2{ break-after:avoid; } .rpt table, .rpt svg{ break-inside:avoid; } }"
   ].join("\n");
@@ -1856,11 +2073,11 @@ details.notes-d textarea{ margin-top:2px; }
     h.push('</div>');
     if(complete.length){
       h.push('<h2>Mood across each cycle</h2>'+rptRows(complete,"mood"));
-      h.push('<div class="legend"><span><i style="background:var(--m1)"></i>1 Very low</span><span><i style="background:var(--m2)"></i>2 Low</span><span><i style="background:var(--m3)"></i>3 Okay</span><span><i style="background:var(--m4)"></i>4 Good</span><span><i style="background:var(--m5)"></i>5 Very good</span><span><i style="background:var(--bleed);height:4px"></i>Bleeding</span></div>');
+      h.push('<div class="rlegend"><span><i style="background:var(--m1)"></i>1 Very low</span><span><i style="background:var(--m2)"></i>2 Low</span><span><i style="background:var(--m3)"></i>3 Okay</span><span><i style="background:var(--m4)"></i>4 Good</span><span><i style="background:var(--m5)"></i>5 Very good</span><span><i style="background:var(--bleed);height:4px"></i>Bleeding</span></div>');
       h.push('<p class="note">One row per cycle, aligned so each row ends the day before the next period (−1). Premenstrual days line up on the right. The cycle in progress isn’t shown.</p>');
       if(setting("mode","every")!=="mood" || complete.some(function(c){ for(var k=0;k<c.len;k++){ if(hasRatings(store.entries[addDays(c.start,k)])) return true; } return false; })){
         h.push('<h2>Symptom average across each cycle</h2>'+rptRows(complete,"sym"));
-        h.push('<div class="legend"><span><i style="background:var(--y0)"></i>None</span><span><i style="background:var(--y1)"></i>Mild</span><span><i style="background:var(--y2)"></i>Moderate</span><span><i style="background:var(--y3)"></i>Severe</span><span><i style="background:#fff;box-shadow:inset 0 0 0 1px #D3D9E4"></i>Not rated</span></div>');
+        h.push('<div class="rlegend"><span><i style="background:var(--y0)"></i>None</span><span><i style="background:var(--y1)"></i>Mild</span><span><i style="background:var(--y2)"></i>Moderate</span><span><i style="background:var(--y3)"></i>Severe</span><span><i style="background:#fff;box-shadow:inset 0 0 0 1px #D3D9E4"></i>Not rated</span></div>');
       }
     } else {
       h.push('<h2>Cycle charts</h2><p class="note">Not enough complete cycles yet. Charts appear once two period starts are logged with daily entries between them.</p>');
@@ -1881,6 +2098,24 @@ details.notes-d textarea{ margin-top:2px; }
       h.push('<tr><td>'+esc(fmt(o))+'</td><td class="num">'+periodLen(o)+'</td><td class="num">'+(L==null ? 'In progress' : (L>60 ? 'Gap in records' : L+' days'))+'</td></tr>');
     });
     h.push('</tbody></table>');
+    var rmeds = meds().filter(function(m){ return m.start <= t && (!m.stop || m.stop > start); });
+    if(rmeds.length){
+      h.push('<h2>Medications</h2><table><thead><tr><th>Medication</th><th>Schedule</th><th class="num">Taken</th></tr></thead><tbody>');
+      rmeds.forEach(function(m){
+        var due = 0, got = 0, prnDays = 0;
+        for(var dd = (m.start > start ? m.start : start); dd <= t; dd = addDays(dd,1)){
+          if(!medActive(m, dd)) continue;
+          var ee = store.entries[dd];
+          if(m.sched==="prn"){ if(medTaken(ee, m, "x")) prnDays++; continue; }
+          if(!medDue(m, dd)) continue;
+          medTimes(m).forEach(function(tt2){ due++; if(medTaken(ee, m, tt2)) got++; });
+        }
+        var takenTxt = m.sched==="prn" ? (prnDays + (prnDays===1 ? ' day' : ' days')) : (due ? Math.round(100*got/due) + '%<br><small>' + got + ' of ' + due + ' doses</small>' : '–');
+        var dates = 'Since ' + fmt(m.start) + (m.stop ? ', last dose ' + fmt(addDays(m.stop,-1)) : '');
+        h.push('<tr><td><b>'+esc(m.name + (m.dose ? ' ' + m.dose : ''))+'</b><br><small>'+esc(dates)+'</small></td><td>'+esc(schedText(m))+'</td><td class="num">'+takenTxt+'</td></tr>');
+      });
+      h.push('</tbody></table><p class="note">Doses are counted as taken only when ticked in the app. An unticked dose may have been taken but not recorded.</p>');
+    }
     if(withNotes && notes.length){
       h.push('<h2>Notes</h2><div class="notes">');
       notes.forEach(function(nn){ h.push('<p><b>'+esc(fmt(nn[0]))+':</b> '+esc(nn[1])+'</p>'); });
@@ -1924,6 +2159,7 @@ details.notes-d textarea{ margin-top:2px; }
   });
 
   load();
+  renderMedsManage();
   syncSettingsUI();
   applyImpairSetting();
   renderBackup();
