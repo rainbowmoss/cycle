@@ -19,8 +19,15 @@
   --accent:#3B4BC4; --accent-ink:#FFFFFF; --accent-soft:#E2E6FA;
   --bleed:#B3335C; --spot:#E8A3B8; --warn-bg:#FFF2D6; --warn-ink:#6B4A00;
   --s1:#DDE2EC; --s2:#C3CBF0; --s3:#9CA9EA; --s4:#6F7FDA; --s5:#4656C2; --s6:#283493;
-  --m1:#3F2D8F; --m2:#8173D6; --m3:#CFCBE0; --m4:#86CBA8; --m5:#23935F;
-  --y0:#EDE3CC; --y1:#F2C26B; --y2:#E5843A; --y3:#A9481A;
+  --m1:#A796D4; --m2:#CFC4EB; --m3:#E4E2EA; --m4:#BCD7C6; --m5:#8DBFA1;
+  --y0:#EEE8DC; --y1:#E8D3A4; --y2:#DCAC80; --y3:#B57C66;
+  --g-mood-bg:#EFEAF8; --g-mood-sel:#DCD1F0; --g-mood-ink:#4E4170;
+  --g-stress-bg:#F3E4D7; --g-stress-sel:#DDBFA3; --g-stress-ink:#6B4526;
+  --g-focus-bg:#DFE8F0; --g-focus-sel:#B2C6D9; --g-focus-ink:#2E4A63;
+  --g-appetite-bg:#F2DFE4; --g-appetite-sel:#D8B3BE; --g-appetite-ink:#6A3442;
+  --g-sleep-bg:#E0E2EC; --g-sleep-sel:#B6BBD3; --g-sleep-ink:#363C5E;
+  --g-physical-bg:#DDEAE3; --g-physical-sel:#AFCDBE; --g-physical-ink:#2F5545;
+  --g-impact-bg:#ECE8E0; --g-impact-sel:#CFC6B4; --g-impact-ink:#4D4636;
   color-scheme: light;
 }
 @media (prefers-color-scheme: dark){
@@ -29,7 +36,11 @@
     --accent:#8C98FF; --accent-ink:#11141B; --accent-soft:#262C48;
     --bleed:#E5698F; --spot:#7C4558; --warn-bg:#3A2F14; --warn-ink:#F3D58E;
     --s1:#262B38; --s2:#2F3966; --s3:#3E4C94; --s4:#5866C2; --s5:#7886E6; --s6:#A7B1FF;
-    --m1:#8B78F0; --m2:#5A4F9E; --m3:#4A4D5C; --m4:#3F8F6B; --m5:#5CD49A; --y0:#3B3529; --y1:#8C6B2C; --y2:#CC7630; --y3:#F4A35C;
+    --m1:#9C8AD6; --m2:#5E5385; --m3:#454852; --m4:#4E7A60; --m5:#7FC09B; --y0:#3A352C; --y1:#8C7744; --y2:#B07F55; --y3:#D59A80;
+    --g-mood-bg:#2A2638; --g-mood-sel:#4A3F6E; --g-mood-ink:#E3DBF7; --g-stress-bg:#33291F; --g-stress-sel:#6B4D33; --g-stress-ink:#F3DCC6;
+    --g-focus-bg:#1F2A35; --g-focus-sel:#3D5873; --g-focus-ink:#D6E6F5; --g-appetite-bg:#33242A; --g-appetite-sel:#6B4553; --g-appetite-ink:#F4D8E1;
+    --g-sleep-bg:#232637; --g-sleep-sel:#474E78; --g-sleep-ink:#DCDFF2; --g-physical-bg:#1F2D27; --g-physical-sel:#3E6455; --g-physical-ink:#D3EDE1;
+    --g-impact-bg:#2D2A24; --g-impact-sel:#5C5444; --g-impact-ink:#EDE6D6;
     color-scheme: dark;
   }
 }
@@ -38,7 +49,11 @@
   --accent:#8C98FF; --accent-ink:#11141B; --accent-soft:#262C48;
   --bleed:#E5698F; --spot:#7C4558; --warn-bg:#3A2F14; --warn-ink:#F3D58E;
   --s1:#262B38; --s2:#2F3966; --s3:#3E4C94; --s4:#5866C2; --s5:#7886E6; --s6:#A7B1FF;
-  --m1:#8B78F0; --m2:#5A4F9E; --m3:#4A4D5C; --m4:#3F8F6B; --m5:#5CD49A; --y0:#3B3529; --y1:#8C6B2C; --y2:#CC7630; --y3:#F4A35C;
+  --m1:#9C8AD6; --m2:#5E5385; --m3:#454852; --m4:#4E7A60; --m5:#7FC09B; --y0:#3A352C; --y1:#8C7744; --y2:#B07F55; --y3:#D59A80;
+    --g-mood-bg:#2A2638; --g-mood-sel:#4A3F6E; --g-mood-ink:#E3DBF7; --g-stress-bg:#33291F; --g-stress-sel:#6B4D33; --g-stress-ink:#F3DCC6;
+    --g-focus-bg:#1F2A35; --g-focus-sel:#3D5873; --g-focus-ink:#D6E6F5; --g-appetite-bg:#33242A; --g-appetite-sel:#6B4553; --g-appetite-ink:#F4D8E1;
+    --g-sleep-bg:#232637; --g-sleep-sel:#474E78; --g-sleep-ink:#DCDFF2; --g-physical-bg:#1F2D27; --g-physical-sel:#3E6455; --g-physical-ink:#D3EDE1;
+    --g-impact-bg:#2D2A24; --g-impact-sel:#5C5444; --g-impact-ink:#EDE6D6;
   color-scheme: dark;
 }
 :root{ box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px); }
@@ -239,6 +254,64 @@ h1, .save-state{ white-space:nowrap; }
 body.about-open main{ padding-top:10px; padding-bottom:10px; }
 body.about-open #backupBanner{ display:none !important; }
 .about-top{ display:flex; justify-content:space-between; align-items:baseline; gap:10px; }
+.tq{ font-size:1.12rem; margin:0 0 10px; }
+.menses button{ font-size:1rem; }
+.mood button{ border-width:2px; }
+.mood button[data-mood="1"]{ border-color:var(--m1); background:var(--bg); background:color-mix(in srgb, var(--m1) 28%, var(--surface)); }
+.mood button[data-mood="2"]{ border-color:var(--m2); background:var(--bg); background:color-mix(in srgb, var(--m2) 40%, var(--surface)); }
+.mood button[data-mood="3"]{ border-color:var(--m3); background:var(--bg); background:color-mix(in srgb, var(--m3) 55%, var(--surface)); }
+.mood button[data-mood="4"]{ border-color:var(--m4); background:var(--bg); background:color-mix(in srgb, var(--m4) 40%, var(--surface)); }
+.mood button[data-mood="5"]{ border-color:var(--m5); background:var(--bg); background:color-mix(in srgb, var(--m5) 30%, var(--surface)); }
+.mood button[aria-pressed="true"]{ color:#1A2030; box-shadow:inset 0 0 0 2px var(--ink); }
+.mood button[data-mood="1"][aria-pressed="true"]{ background:var(--m1); } .mood button[data-mood="2"][aria-pressed="true"]{ background:var(--m2); }
+.mood button[data-mood="3"][aria-pressed="true"]{ background:var(--m3); } .mood button[data-mood="4"][aria-pressed="true"]{ background:var(--m4); }
+.mood button[data-mood="5"][aria-pressed="true"]{ background:var(--m5); }
+.sy{ display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+.sy button{ height:50px; border-radius:12px; border:1px solid var(--line); background:var(--bg); font-weight:700; font-size:1.05rem; }
+.sy button[data-sy="no"][aria-pressed="true"]{ background:var(--ink); color:var(--surface); border-color:var(--ink); }
+.sy button[data-sy="yes"][aria-pressed="true"]{ background:var(--accent); color:var(--accent-ink); border-color:var(--accent); }
+.kind-h{ font-size:1rem; margin:14px 0 8px; }
+.tiles{ display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+.tile{ position:relative; display:flex; gap:9px; align-items:center; text-align:left; border-radius:14px; padding:10px 11px; border:2px solid var(--gbg); background:var(--gbg); color:var(--gink); min-height:64px; }
+.tile .em{ line-height:0; flex:none; } .tile .em svg{ display:block; }
+.gcard .hd svg{ flex:none; }
+.tile b{ display:block; font-size:.95rem; } .tile small{ display:block; font-size:.72rem; opacity:.78; line-height:1.2; margin-top:1px; }
+.tile[aria-pressed="true"]{ background:var(--gsel); border-color:var(--gsel); }
+.tile[aria-pressed="true"]::after{ content:"✓"; position:absolute; top:5px; right:9px; font-weight:800; font-size:.8rem; }
+.gcard{ background:var(--surface); border:1px solid var(--line); border-radius:14px; overflow:hidden; margin-bottom:14px; }
+.gcard .hd{ padding:9px 14px; font-weight:700; background:var(--gsel); color:var(--gink); display:flex; gap:8px; align-items:center; }
+.gcard .it{ padding:8px 14px 10px; border-top:1px solid var(--line); }
+.gcard .it:first-of-type{ border-top:0; }
+.gcard .it p{ margin:0 0 6px; font-size:.9rem; }
+.gcard .scale button[aria-pressed="true"]{ color:#1A2030; }
+.gcard .scale button.lv0[aria-pressed="true"]{ background:var(--ink); color:var(--surface); border-color:var(--ink); }
+.gcard .scale button.lv1[aria-pressed="true"]{ background:var(--y1); border-color:var(--y1); }
+.gcard .scale button.lv2[aria-pressed="true"]{ background:var(--y2); border-color:var(--y2); }
+.gcard .scale button.lv3[aria-pressed="true"]{ background:var(--y3); border-color:var(--y3); color:#fff; }
+.g-mood{ --gbg:var(--g-mood-bg); --gsel:var(--g-mood-sel); --gink:var(--g-mood-ink); }
+.g-stress{ --gbg:var(--g-stress-bg); --gsel:var(--g-stress-sel); --gink:var(--g-stress-ink); }
+.g-focus{ --gbg:var(--g-focus-bg); --gsel:var(--g-focus-sel); --gink:var(--g-focus-ink); }
+.g-appetite{ --gbg:var(--g-appetite-bg); --gsel:var(--g-appetite-sel); --gink:var(--g-appetite-ink); }
+.g-sleep{ --gbg:var(--g-sleep-bg); --gsel:var(--g-sleep-sel); --gink:var(--g-sleep-ink); }
+.g-physical{ --gbg:var(--g-physical-bg); --gsel:var(--g-physical-sel); --gink:var(--g-physical-ink); }
+.g-impact{ --gbg:var(--g-impact-bg); --gsel:var(--g-impact-sel); --gink:var(--g-impact-ink); }
+details.notes-d summary{ cursor:pointer; font-weight:700; padding:2px 0 10px; }
+details.notes-d textarea{ margin-top:2px; }
+.done-big{ width:100%; padding:15px; font-size:1.08rem; margin:4px 0 10px; }
+.done-card{ text-align:center; padding:24px 14px 20px; }
+.done-card .check{ width:62px; height:62px; border-radius:50%; background:var(--m5); color:#1A2030; font-size:30px; font-weight:800; display:flex; align-items:center; justify-content:center; margin:0 auto 10px; }
+.done-card .check.skip{ background:var(--line); }
+.done-card b{ display:block; font-size:1.25rem; }
+.done-card p{ color:var(--muted); margin:6px 0 0; }
+.week{ display:grid; grid-template-columns:repeat(7,1fr); gap:6px; text-align:center; font-size:.72rem; color:var(--muted); }
+.week button{ border:0; background:none; padding:0; color:inherit; font-size:inherit; }
+.week i{ display:block; height:34px; border-radius:8px; margin-top:4px; position:relative; overflow:hidden; box-shadow:inset 0 0 0 1px var(--line); }
+.week i.has{ box-shadow:none; } .week i.today{ outline:2px solid var(--ink); outline-offset:1px; }
+.week i .bl{ position:absolute; left:0; right:0; bottom:0; height:6px; background:var(--bleed); }
+.week i .sp{ position:absolute; left:0; right:0; bottom:0; height:6px; background:var(--spot); }
+.sumtxt{ font-size:.95rem; line-height:1.5; margin:0; }
+.center-links{ display:flex; justify-content:center; gap:22px; margin:6px 0 0; }
+.center-links .danger-link{ color:var(--bleed); }
 [hidden]{ display:none !important; }
 @media (prefers-reduced-motion: reduce){ *{ transition:none !important; } }
 </style>
@@ -254,10 +327,10 @@ body.about-open #backupBanner{ display:none !important; }
       </div>
     </div>
     <div class="tabs" role="tablist">
-      <button class="tab" role="tab" id="tab-log" aria-selected="true" data-view="log">Log</button>
+      <button class="tab" role="tab" id="tab-log" aria-selected="true" data-view="log">Today</button>
       <button class="tab" role="tab" id="tab-history" aria-selected="false" data-view="history">History</button>
       <button class='tab' role='tab' id='tab-periods' aria-selected='false' data-view='periods'>Periods</button>
-      <button class="tab" role="tab" id="tab-data" aria-selected="false" data-view="data">Your data</button>
+      <button class="tab" role="tab" id="tab-data" aria-selected="false" data-view="data">More</button>
     </div>
   </div>
 </header>
@@ -284,63 +357,78 @@ body.about-open #backupBanner{ display:none !important; }
       <button class="nav" id="nextDay" aria-label="Next day">›</button>
     </div>
     <p class="cycle-line" id="cycleLine"></p>
-    <p class="notlogged" id="notLogged" hidden>Not logged yet</p>
     <p class="gap-line" id="gapLine" hidden></p>
-    <p class="skipline" id="skipLine" hidden>Not up for it? <button id="skipBtn">Skip today</button></p>
-    <div class="block skipcard" id="skipCard" hidden>
-      <p><strong>Skipped.</strong> This day won’t count as missed, and reports treat it as not logged.</p>
-      <button class="linkbtn" id="unskipBtn">Undo skip</button>
-    </div>
 
-    <div class="block">
-      <h2>Period today</h2>
-      <div class="menses" role="group" aria-label="Menstrual bleeding today">
-        <button data-m="none" aria-pressed="false">None</button>
-        <button data-m="spotting" aria-pressed="false">Spotting</button>
-        <button data-m="bleeding" aria-pressed="false">Bleeding</button>
+    <div id="formView">
+      <div class="block skipcard" id="skipCard" hidden>
+        <p><strong>Skipped.</strong> This day won’t count as missed, and reports treat it as not logged.</p>
+        <button class="linkbtn" id="unskipBtn">Undo skip</button>
       </div>
-    </div>
 
-    <div class="block" id="moodBlock">
-      <h2>Overall mood today</h2>
-      <div class="mood" role="group" aria-label="Overall mood today">
-        <button data-mood="1" aria-pressed="false"><b>1</b>Very low</button>
-        <button data-mood="2" aria-pressed="false"><b>2</b>Low</button>
-        <button data-mood="3" aria-pressed="false"><b>3</b>Okay</button>
-        <button data-mood="4" aria-pressed="false"><b>4</b>Good</button>
-        <button data-mood="5" aria-pressed="false"><b>5</b>Very good</button>
-      </div>
-    </div>
-
-    <div class="block" id="itemsBlock">
-      <div class="sym-head">
-        <h2>Symptoms today</h2>
-        <div class="sym-btns" id="symBtns">
-          <button class="btn" id="allClear">No symptoms</button>
-          <button class="btn" id="justMood">Just mood today</button>
+      <div class="block" id="periodCard">
+        <h2 class="tq">Period today?</h2>
+        <div class="menses" role="group" aria-label="Period today">
+          <button data-m="none" aria-pressed="false">No</button>
+          <button data-m="spotting" aria-pressed="false">Spotting</button>
+          <button data-m="bleeding" aria-pressed="false">Bleeding</button>
         </div>
       </div>
-      <p class="collapsed" id="symCollapsed" hidden><span id="symCollapsedText"></span> <button class="linkbtn" id="symAnyway">Answer anyway</button></p>
-      <div id="symBody">
-        <p class="hint">Answer yes or no. Details open only when you answer yes. “No symptoms” records that you had none, so use it only when that’s true.</p>
-        <p class="hint" id="scaleNote" hidden></p>
-        <div id="items"></div>
+
+      <div class="block" id="moodBlock">
+        <h2 class="tq">How’s your mood?</h2>
+        <div class="mood" role="group" aria-label="Mood today">
+          <button data-mood="1" aria-pressed="false"><b>1</b>Very low</button>
+          <button data-mood="2" aria-pressed="false"><b>2</b>Low</button>
+          <button data-mood="3" aria-pressed="false"><b>3</b>Okay</button>
+          <button data-mood="4" aria-pressed="false"><b>4</b>Good</button>
+          <button data-mood="5" aria-pressed="false"><b>5</b>Great</button>
+        </div>
       </div>
+
+      <div class="block" id="itemsBlock">
+        <h2 class="tq">Any symptoms today?</h2>
+        <p class="collapsed" id="symCollapsed" hidden><span id="symCollapsedText"></span> <button class="linkbtn" id="symAnyway">Answer anyway</button></p>
+        <div id="symBody">
+          <div class="sy" role="group" aria-label="Any symptoms today">
+            <button data-sy="no" aria-pressed="false">No</button>
+            <button data-sy="yes" aria-pressed="false">Yes</button>
+          </div>
+          <div id="kindWrap" hidden>
+            <h3 class="kind-h">What kind?</h3>
+            <div class="tiles" id="tiles"></div>
+            <p class="hint" id="scaleNote" hidden style="margin-top:8px"></p>
+          </div>
+        </div>
+      </div>
+
+      <div id="groupCards"></div>
+
+      <details class="block notes-d" id="notesBox">
+        <summary>Add a note</summary>
+        <label class="sr" for="notes">Notes for this day</label>
+        <textarea id="notes" placeholder="Optional: medications, stressors, anything unusual"></textarea>
+      </details>
+
+      <button class="btn primary done-big" id="doneBtn">Done</button>
+      <p class="skipline" id="skipLine">Not up for it? <button id="skipBtn">Skip today</button></p>
+      <p class="done-msg" id="doneMsg" aria-live="polite"></p>
     </div>
 
-    <div class="block">
-      <h2>Notes</h2>
-      <label class="sr" for="notes">Notes for this day</label>
-      <textarea id="notes" placeholder="Optional: medications, stressors, anything unusual"></textarea>
-    </div>
-
-    <div class="row-actions">
-      <span class="progress" id="progress"></span>
-      <button class="btn danger" id="clearDay">Clear this day</button>
-    </div>
-    <div class="done-row">
-      <button class="btn primary" id="doneBtn">Done</button>
-      <p class="done-msg" id="doneMsg" aria-live="polite">Everything saves as you go.</p>
+    <div id="loggedView" hidden>
+      <div class="block done-card">
+        <div class="check" id="loggedCheck">✓</div>
+        <b id="loggedTitle"></b>
+        <p id="loggedSub"></p>
+      </div>
+      <div class="block">
+        <h2>This week</h2>
+        <div class="week" id="weekStrip"></div>
+      </div>
+      <div class="block"><p class="sumtxt" id="loggedSummary2"></p></div>
+      <div class="center-links">
+        <button class="linkbtn" id="editDay">Edit</button>
+        <button class="linkbtn danger-link" id="clearDay">Clear this day</button>
+      </div>
     </div>
   </section>
 
@@ -445,11 +533,11 @@ body.about-open #backupBanner{ display:none !important; }
       <div class="about-top"><h2>About Cycle log</h2><button class="linkbtn" id="aboutClose">Close</button></div>
       <p class="lede">A private daily log for mood, symptoms and periods. No account, and nothing leaves this phone.</p>
       <dl>
-        <dt>Log</dt><dd>Period, mood 1–5 and quick yes/no symptoms. Low-effort day? Tap <b>Just mood</b> or <b>Skip today</b>. Swipe to change days.</dd>
+        <dt>Today</dt><dd>Period, mood and “any symptoms?” If yes, pick the kind and rate it. Low-effort day? Answer just mood, or <b>Skip today</b>. Swipe to change days.</dd>
         <dt>History</dt><dd><b>Cycles</b>, <b>Year</b> or <b>Timeline</b>, colored by mood or symptoms. Tap a day to open it.</dd>
         <dt>Periods</dt><dd>Mark past periods on a calendar or paste them from a spreadsheet.</dd>
-        <dt>Settings</dt><dd><b>Your data → Questions</b>: Focus mode, Mood only, the full 1–6 scale, or an extra “got in the way” question.</dd>
-        <dt>Report</dt><dd><b>Your data → Report for your doctor</b> covers your last 2, 3 or 6 cycles.</dd>
+        <dt>Settings</dt><dd><b>More → Questions</b>: Focus mode, Mood only, the full 1–6 scale, or an extra “got in the way” question.</dd>
+        <dt>Report</dt><dd><b>More → Report for your doctor</b> covers your last 2, 3 or 6 cycles.</dd>
         <dt>Backup</dt><dd><b>Export CSV</b> every few weeks. <b>Import</b> restores it.</dd>
         <dt>Install</dt><dd>Android: Chrome ⋮ → Install app. iPhone: Safari → Share → Add to Home Screen.</dd>
       </dl>
@@ -578,18 +666,23 @@ body.about-open #backupBanner{ display:none !important; }
     "At least one of the problems above interfered with relationships with others"
   ];
   var DOMAINS = [
-    {q:"Low mood", sub:"Sad, hopeless, worthless or guilty", items:[0,1,2]},
-    {q:"Anxious or on edge", items:[3]},
-    {q:"Mood swings or extra sensitive", sub:"Suddenly tearful, feelings easily hurt", items:[4,5]},
-    {q:"Irritable or angry", sub:"Including conflicts with people", items:[6,7]},
-    {q:"Less interest in usual activities", items:[8]},
-    {q:"Trouble concentrating", items:[9]},
-    {q:"Tired or low energy", items:[10]},
-    {q:"Appetite changes or cravings", items:[11,12]},
-    {q:"Sleep problems", sub:"Sleeping more, or trouble sleeping", items:[13,14]},
-    {q:"Overwhelmed or out of control", items:[15,16]},
-    {q:"Physical symptoms", sub:"Breast tenderness, bloating, headache, aches", items:[17,18,19,20]}
+    {key:"mood", q:"Mood", sub:"sad, hopeless, sensitive", items:[0,1,2,4,5]},
+    {key:"stress", q:"Stress", sub:"anxious, irritable, overwhelmed", items:[3,6,7,15,16]},
+    {key:"focus", q:"Focus & energy", sub:"interest, focus, tiredness", items:[8,9,10]},
+    {key:"appetite", q:"Appetite", sub:"overeating, cravings", items:[11,12]},
+    {key:"sleep", q:"Sleep", sub:"too much or too little", items:[13,14]},
+    {key:"physical", q:"Physical", sub:"breasts, bloating, aches", items:[17,18,19,20]}
   ];
+  var ICONS = {
+    mood: '<circle cx="12" cy="12" r="9"/><circle cx="9" cy="10" r="0.6" fill="currentColor"/><circle cx="15" cy="10" r="0.6" fill="currentColor"/><path d="M8.5 15.5c1.9-1.4 5.1-1.4 7 0"/>',
+    stress: '<path d="M13 2.5 5 13.5h6l-1 8 8-11h-6l1-8z"/>',
+    focus: '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1" fill="currentColor"/>',
+    appetite: '<path d="M7 3v18M4.5 3v5a2.5 2.5 0 0 0 5 0V3"/><path d="M17.5 21V3c-2 1-3.5 3.6-3.5 7 0 1.6.8 2.6 3.5 2.6"/>',
+    sleep: '<path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5z"/>',
+    physical: '<circle cx="12" cy="4.5" r="2.6"/><path d="M12 7.6v7.6M5.5 10.6h13M8 22l4-6.8 4 6.8"/>',
+    impact: '<rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/>'
+  };
+  function icon(key, size){ return '<svg viewBox="0 0 24 24" width="'+(size||22)+'" height="'+(size||22)+'" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+(ICONS[key]||"")+'</svg>'; }
   var SEV = ["None","Mild","Moderate","Severe"];
   var KEY = "drsp-log-v1";
   var store = {entries:{}};
@@ -633,7 +726,7 @@ body.about-open #backupBanner{ display:none !important; }
   function blank(){ return {m:"none", r:ITEMS.map(function(){return null;}), n:"", mood:null, g:{}}; }
   function get(d){ return store.entries[d] || null; }
   function ensure(d){ if(!store.entries[d]) store.entries[d] = blank(); return store.entries[d]; }
-  function isEmpty(e){ return !e || (e.m==="none" && !e.mx && !e.skip && !e.jm && e.mood==null && e.r.every(function(v){return v==null;}) && !e.n); }
+  function isEmpty(e){ return !e || (e.m==="none" && !e.mx && !e.skip && !e.jm && !e.sy && e.mood==null && e.r.every(function(v){return v==null;}) && !e.n); }
   function tidy(d){ if(isEmpty(store.entries[d])) delete store.entries[d]; }
   function ratedCount(e){ return e ? e.r.filter(function(v){return v!=null;}).length : 0; }
   function hasRatings(e){ return !!e && e.r.some(function(v){ return v!=null; }); }
@@ -690,82 +783,75 @@ body.about-open #backupBanner{ display:none !important; }
     return {fwd:fwd, back:back};
   }
 
-  // ---------- build symptom questions once ----------
-  var itemsEl = document.getElementById("items");
-  var IMPAIR = {q:"Did symptoms get in the way today?", sub:"Work, hobbies, or relationships", items:[21,22,23]};
+  // ---------- today: symptom groups ----------
+  var IMPAIR = {key:"impact", q:"Daily life", sub:"work, hobbies, relationships", items:[21,22,23]};
   var SEV6 = ["Not at all","Minimal","Mild","Moderate","Severe","Extreme"], builtScale = 3;
-  function buildDomains(scale){
-  scale = scale || builtScale; builtScale = scale;
-  var vals = scale===6 ? [1,2,3,4,5,6] : [0,1,2,3];
-  itemsEl.innerHTML = "";
-  DOMAINS.forEach(function(dm, di){
-    var box = document.createElement("div"); box.className = "domain"; box.dataset.di = di;
-    var gate = document.createElement("div"); gate.className = "gate";
-    var gq = document.createElement("div"); gq.className = "gq"; gq.id = "g"+di;
-    gq.appendChild(document.createTextNode(dm.q));
-    if(dm.sub){ var sb = document.createElement("span"); sb.textContent = dm.sub; gq.appendChild(sb); }
-    var yn = document.createElement("div"); yn.className = "yn"; yn.setAttribute("role","group"); yn.setAttribute("aria-labelledby","g"+di);
-    [["no","No"],["yes","Yes"]].forEach(function(o){
-      var b = document.createElement("button"); b.dataset.g = o[0]; b.dataset.di = di; b.textContent = o[1];
-      b.setAttribute("aria-pressed","false"); yn.appendChild(b);
-    });
-    gate.appendChild(gq); gate.appendChild(yn); box.appendChild(gate);
-    var det = document.createElement("div"); det.className = "detail"; det.hidden = true;
-    dm.items.forEach(function(i){
-      var q = document.createElement("p"); q.className = "q"; q.id = "q"+i; q.textContent = ITEMS[i];
-      var sc = document.createElement("div"); sc.className = "scale" + (scale===6 ? " six" : ""); sc.setAttribute("role","group"); sc.setAttribute("aria-labelledby","q"+i);
-      vals.forEach(function(v){
-        var b = document.createElement("button"); b.textContent = scale===6 ? v + " " + SEV6[v-1] : SEV[v]; b.dataset.v = v; b.dataset.i = i;
-        b.setAttribute("aria-pressed","false"); sc.appendChild(b);
-      });
-      det.appendChild(q); det.appendChild(sc);
-    });
-    box.appendChild(det); itemsEl.appendChild(box);
-  });
-  }
+  var tilesEl = document.getElementById("tiles"), cardsEl = document.getElementById("groupCards");
+  var forceShow = {}, editing = {};
+  function buildDomains(scale){ builtScale = scale || builtScale; }
   function applyImpairSetting(){
     var on = !!(store.settings && store.settings.impair);
     var has = DOMAINS.indexOf(IMPAIR) >= 0;
     if(on && !has) DOMAINS.push(IMPAIR);
     if(!on && has) DOMAINS.splice(DOMAINS.indexOf(IMPAIR), 1);
     document.getElementById("impairToggle").checked = on;
-    buildDomains(builtScale);
   }
+  function symState(e){
+    if(!e) return null;
+    if(e.sy) return e.sy;
+    if(!hasRatings(e)) return null;
+    var b0 = baseVal(entryScale(e)), vals = e.r.slice(0,21).filter(function(v){ return v!=null; });
+    return vals.some(function(v){ return v>b0; }) ? "yes" : "no";
+  }
+  function groupOn(e, g){
+    if(!e) return false;
+    if(e.cg && e.cg[g.key]!=null) return !!e.cg[g.key];
+    var b0 = baseVal(entryScale(e));
+    return g.items.some(function(i){ return e.r[i]!=null && e.r[i]>b0; });
+  }
+  function levelClass(v, sc){ var n = norm(v, sc); return "lv" + (v===baseVal(sc) ? 0 : Math.max(1, Math.min(3, Math.round(n)))); }
+  function sevLabel(n){ return n==null ? "" : ["none","mild","moderate","severe"][Math.max(0,Math.min(3,Math.round(n)))]; }
 
-  itemsEl.addEventListener("click", function(ev){
-    var gb = ev.target.closest("button[data-g]");
-    if(gb){
-      var di = +gb.dataset.di, e0 = ensure(cur), st = gateState(e0, di), its = DOMAINS[di].items;
-      e0.g = e0.g || {};
-      if(gb.dataset.g==="no"){
-        if(st==="no"){ delete e0.g[di]; its.forEach(function(i){ e0.r[i] = null; }); }
-        else { e0.g[di] = "no"; e0.sc = builtScale; its.forEach(function(i){ e0.r[i] = baseVal(builtScale); }); }
-      } else if(st!=="yes"){
-        e0.g[di] = "yes"; its.forEach(function(i){ e0.r[i] = null; });
+  document.querySelectorAll(".sy button").forEach(function(b){
+    b.addEventListener("click", function(){
+      var e = ensure(cur), was = symState(e), want = b.dataset.sy;
+      e.sc = hasRatings(e) ? entryScale(e) : builtScale; e.jm = false;
+      if(was===want){
+        e.sy = null; e.cg = {};
+        DOMAINS.forEach(function(g){ g.items.forEach(function(i){ e.r[i] = null; }); });
+      } else if(want==="no"){
+        e.sy = "no"; e.cg = {};
+        DOMAINS.forEach(function(g){ g.items.forEach(function(i){ e.r[i] = baseVal(e.sc); }); });
+      } else {
+        e.sy = "yes"; e.cg = e.cg || {};
+        var b0 = baseVal(e.sc);
+        DOMAINS.forEach(function(g){ if(!groupOn(e,g)) g.items.forEach(function(i){ if(e.r[i]===b0) e.r[i] = null; }); });
       }
-      tidy(cur); persist(); renderLog(); return;
-    }
-    var b = ev.target.closest("button[data-v]"); if(!b) return;
-    var i = +b.dataset.i, v = +b.dataset.v;
-    var e = ensure(cur); e.sc = builtScale;
-    e.r[i] = (e.r[i]===v) ? null : v;
-    tidy(cur); persist(); renderLog();
+      tidy(cur); persist(); renderLog();
+    });
   });
-
+  tilesEl.addEventListener("click", function(ev){
+    var t = ev.target.closest(".tile"); if(!t) return;
+    var e = ensure(cur), g = DOMAINS.filter(function(x){ return x.key===t.dataset.g; })[0]; if(!g) return;
+    e.sc = hasRatings(e) ? entryScale(e) : builtScale; e.cg = e.cg || {}; e.sy = "yes";
+    var on = !groupOn(e, g), b0 = baseVal(e.sc);
+    e.cg[g.key] = on;
+    g.items.forEach(function(i){ if(on){ if(e.r[i]==null) e.r[i] = b0; } else e.r[i] = b0; });
+    persist(); renderLog();
+    if(on){ var card = document.getElementById("gc-"+g.key); if(card) setTimeout(function(){ card.scrollIntoView({behavior:"smooth", block:"nearest"}); }, 50); }
+  });
+  cardsEl.addEventListener("click", function(ev){
+    var b = ev.target.closest("button[data-v]"); if(!b) return;
+    var e = ensure(cur); e.sc = hasRatings(e) ? entryScale(e) : builtScale;
+    e.r[+b.dataset.i] = +b.dataset.v;
+    persist(); renderLog();
+  });
   document.querySelectorAll(".mood button").forEach(function(b){
     b.addEventListener("click", function(){
       var e = ensure(cur), v = +b.dataset.mood;
       e.mood = (e.mood===v) ? null : v; tidy(cur); persist(); renderLog();
     });
   });
-  document.getElementById("allClear").addEventListener("click", function(){
-    var e = ensure(cur); e.g = {};
-    DOMAINS.forEach(function(dm, di){ e.g[di] = "no"; });
-    e.sc = builtScale; e.jm = false;
-    DOMAINS.forEach(function(dm){ dm.items.forEach(function(i){ e.r[i] = baseVal(builtScale); }); });
-    persist(); renderLog();
-  });
-
   document.querySelectorAll(".menses button").forEach(function(b){
     b.addEventListener("click", function(){
       var e = ensure(cur), on = b.getAttribute("aria-pressed")==="true";
@@ -773,18 +859,34 @@ body.about-open #backupBanner{ display:none !important; }
       tidy(cur); persist(); renderLog();
     });
   });
-
   var notesEl = document.getElementById("notes");
   notesEl.addEventListener("input", function(){
     var e = ensure(cur); e.n = notesEl.value;
     clearTimeout(saveTimer);
-    saveTimer = setTimeout(function(){ tidy(cur); persist(); renderProgress(); }, 400);
+    saveTimer = setTimeout(function(){ tidy(cur); persist(); }, 400);
   });
-
   document.getElementById("clearDay").addEventListener("click", function(){
     if(!get(cur)) return;
     if(!confirm("Clear everything logged for this day?")) return;
-    delete store.entries[cur]; persist(); renderLog();
+    delete store.entries[cur]; editing[cur] = false; persist(); renderLog();
+  });
+  document.getElementById("editDay").addEventListener("click", function(){ editing[cur] = true; renderLog(); window.scrollTo(0,0); });
+  document.getElementById("skipBtn").addEventListener("click", function(){ var e = ensure(cur); e.skip = true; e.dn = true; editing[cur] = false; persist(); renderLog(); window.scrollTo(0,0); });
+  document.getElementById("unskipBtn").addEventListener("click", function(){ var e = get(cur); if(e){ e.skip = false; e.dn = false; tidy(cur); persist(); } renderLog(); });
+  document.getElementById("symAnyway").addEventListener("click", function(){ var e = get(cur); if(e && e.jm){ e.jm = false; tidy(cur); persist(); } forceShow[cur] = true; renderLog(); });
+  document.getElementById("doneBtn").addEventListener("click", function(){
+    flushNotes();
+    var e = get(cur), msg = document.getElementById("doneMsg");
+    if(!e || !(e.mood!=null || e.mx || e.m!=="none" || symState(e) || (e.n && e.n.trim()))){
+      msg.textContent = "Pick your mood first, or tap Skip today.";
+      setTimeout(function(){ msg.textContent = ""; }, 3500); return;
+    }
+    if(symState(e)==="yes"){
+      var b0 = baseVal(entryScale(e));
+      DOMAINS.forEach(function(g){ g.items.forEach(function(i){ if(e.r[i]==null) e.r[i] = b0; }); });
+    } else if(!symState(e) && symptomsAsked()) e.jm = true;
+    e.dn = true; editing[cur] = false; msg.textContent = "";
+    persist(); renderLog(); window.scrollTo({top:0, behavior:"smooth"});
   });
 
   // ---------- date nav ----------
@@ -830,14 +932,6 @@ body.about-open #backupBanner{ display:none !important; }
   document.getElementById("backupLater").addEventListener("click", function(){ store.backupSnooze = addDays(todayIso(), 7); persist(); renderBackup(); });
   function markBackedUp(){ store.lastBackup = todayIso(); delete store.backupSnooze; persist(); renderBackup(); }
 
-  // ---------- done + swipe ----------
-  document.getElementById("doneBtn").addEventListener("click", function(){
-    flushNotes(); persist();
-    var msg = document.getElementById("doneMsg");
-    msg.textContent = isLogged(get(cur)) ? "Saved. Nice work." : "Nothing logged for this day yet.";
-    setTimeout(function(){ msg.textContent = "Everything saves as you go."; }, 3000);
-    window.scrollTo({top:0, behavior:"smooth"});
-  });
   (function(){
     var sx = null, sy = null, logEl = document.getElementById("view-log");
     logEl.addEventListener("touchstart", function(ev){
@@ -853,12 +947,8 @@ body.about-open #backupBanner{ display:none !important; }
     }, {passive:true});
   })();
 
-  // ---------- skip / just mood / focus ----------
-  var forceShow = {};
-  document.getElementById("skipBtn").addEventListener("click", function(){ var e = ensure(cur); e.skip = true; persist(); renderLog(); });
-  document.getElementById("unskipBtn").addEventListener("click", function(){ var e = get(cur); if(e){ e.skip = false; tidy(cur); persist(); } renderLog(); });
-  document.getElementById("justMood").addEventListener("click", function(){ var e = ensure(cur); e.jm = true; persist(); renderLog(); });
-  document.getElementById("symAnyway").addEventListener("click", function(){ var e = get(cur); if(e && e.jm){ e.jm = false; tidy(cur); persist(); } forceShow[cur] = true; renderLog(); });
+
+  // ---------- focus / modes ----------
   function inFocusWindow(d){
     var ons = onsets(), lastOn = null, nextOn = null;
     for(var i=0;i<ons.length;i++){ if(ons[i]<=d) lastOn = ons[i]; else { nextOn = ons[i]; break; } }
@@ -870,84 +960,148 @@ body.about-open #backupBanner{ display:none !important; }
     var until = diffDays(d, addDays(lastOn, med));
     return until <= 7;
   }
-  function renderSymptomArea(){
+  function symptomsAsked(){
     var e = get(cur), mode = setting("mode","every"), rated = hasRatings(e);
-    var skipped = !!(e && e.skip);
-    document.getElementById("skipCard").hidden = !skipped;
-    document.getElementById("moodBlock").hidden = skipped;
-    document.getElementById("skipLine").hidden = skipped || !!(e && (e.mood!=null || rated));
-    var block = document.getElementById("itemsBlock"), body = document.getElementById("symBody");
-    var col = document.getElementById("symCollapsed"), colText = document.getElementById("symCollapsedText");
-    var btns = document.getElementById("symBtns");
-    if(skipped || (mode==="mood" && !rated && !forceShow[cur])){ block.hidden = true; return false; }
-    block.hidden = false;
-    var why = "";
-    if(e && e.jm && !rated) why = "Just mood today.";
-    else if(mode==="focus" && !rated && !forceShow[cur] && !inFocusWindow(cur)) why = "Focus mode: no symptom questions today. They’re asked the week before your period and days 4–10 after it starts.";
-    col.hidden = !why; colText.textContent = why; body.hidden = !!why; btns.hidden = !!why;
-    var dayScale = rated ? entryScale(e) : settingScale();
-    if(dayScale !== builtScale) buildDomains(dayScale);
-    var note = document.getElementById("scaleNote");
-    note.hidden = !(rated && entryScale(e) !== settingScale());
-    note.textContent = entryScale(e)===6 ? "This day was rated on the full 1–6 scale." : "This day was rated on the short None–Severe scale.";
-    return !why;
+    if(mode==="mood" && !rated && !forceShow[cur]) return false;
+    if(mode==="focus" && !rated && !forceShow[cur] && !inFocusWindow(cur)) return false;
+    return true;
   }
 
-  // ---------- render log ----------
-  function renderProgress(){
-    var e = get(cur), c = 0;
-    if(e) DOMAINS.forEach(function(dm, di){ if(domainDone(e, di)) c++; });
-    document.getElementById("progress").textContent = (c===DOMAINS.length ? "All " : c+" of ") + DOMAINS.length + " symptom questions answered";
-    document.getElementById("clearDay").disabled = !e;
+  // ---------- render today ----------
+  function renderGroups(e){
+    var st = symState(e), sc = hasRatings(e) ? entryScale(e) : settingScale();
+    builtScale = sc;
+    document.getElementById("kindWrap").hidden = st!=="yes";
+    tilesEl.innerHTML = ""; cardsEl.innerHTML = "";
+    if(st!=="yes") return;
+    var vals = sc===6 ? [1,2,3,4,5,6] : [0,1,2,3];
+    DOMAINS.forEach(function(g){
+      var on = groupOn(e, g);
+      var t = document.createElement("button"); t.className = "tile g-"+g.key; t.dataset.g = g.key; t.setAttribute("aria-pressed", String(on));
+      t.innerHTML = '<span class="em">'+icon(g.key, 24)+'</span><span><b></b><small></small></span>';
+      t.querySelector("b").textContent = g.q; t.querySelector("small").textContent = g.sub;
+      tilesEl.appendChild(t);
+      if(!on) return;
+      var card = document.createElement("div"); card.className = "gcard g-"+g.key; card.id = "gc-"+g.key;
+      var hd = document.createElement("div"); hd.className = "hd"; hd.innerHTML = icon(g.key, 18);
+      hd.appendChild(document.createTextNode(g.q)); card.appendChild(hd);
+      g.items.forEach(function(i){
+        var it = document.createElement("div"); it.className = "it";
+        var q = document.createElement("p"); q.id = "q"+i; q.textContent = ITEMS[i]; it.appendChild(q);
+        var row = document.createElement("div"); row.className = "scale" + (sc===6 ? " six" : ""); row.setAttribute("role","group"); row.setAttribute("aria-labelledby","q"+i);
+        vals.forEach(function(v){
+          var b = document.createElement("button"); b.className = levelClass(v, sc);
+          b.textContent = sc===6 ? v + " " + SEV6[v-1] : SEV[v]; b.dataset.v = v; b.dataset.i = i;
+          b.setAttribute("aria-pressed", String(e.r[i]===v)); row.appendChild(b);
+        });
+        it.appendChild(row); card.appendChild(it);
+      });
+      cardsEl.appendChild(card);
+    });
+    var note = document.getElementById("scaleNote");
+    note.hidden = !(hasRatings(e) && entryScale(e) !== settingScale());
+    note.textContent = entryScale(e)===6 ? "This day was rated on the full 1–6 scale." : "This day was rated on the short None–Severe scale.";
   }
+  function cycleText(d){
+    var t = todayIso(), info = cycleInfo(d, onsets()), cl = "";
+    if(info.fwd!=null) cl = "Cycle day " + info.fwd;
+    if(info.back!=null) cl += (cl ? ", " : "") + Math.abs(info.back) + (Math.abs(info.back)===1 ? " day" : " days") + " before next period";
+    var onsAll = onsets(), lastOn = null;
+    for(var oi=onsAll.length-1; oi>=0; oi--){ if(onsAll[oi]<=d){ lastOn = onsAll[oi]; break; } }
+    var med = medianCycle(onsAll);
+    if(info.back==null && lastOn && med && diffDays(lastOn, t) < 60){
+      var until = diffDays(d, addDays(lastOn, med));
+      if(until > 1) cl += ". Period expected in about " + until + " days";
+      else if(until === 1) cl += ". Period expected around tomorrow";
+      else if(until === 0) cl += ". Period expected around today";
+      else cl += ". Period is " + (-until) + (until===-1 ? " day" : " days") + " later than your typical cycle";
+    }
+    return cl;
+  }
+  function renderLogged(e){
+    var t = todayIso(), d = parse(cur);
+    var dayName = cur===t ? "today" : d.toLocaleDateString(undefined,{weekday:"long", month:"short", day:"numeric"});
+    document.getElementById("loggedTitle").textContent = e.skip ? "Skipped " + (cur===t ? "today" : dayName) : "Logged for " + dayName;
+    var chk = document.getElementById("loggedCheck"); chk.className = "check" + (e.skip ? " skip" : ""); chk.textContent = e.skip ? "–" : "✓";
+    var ct = cycleText(cur);
+    document.getElementById("loggedSub").textContent = ct ? ct + "." : "";
+    var ws = document.getElementById("weekStrip"); ws.innerHTML = "";
+    for(var k=6;k>=0;k--){
+      var dd = addDays(cur,-k), ee = store.entries[dd];
+      var b = document.createElement("button"); b.dataset.d = dd;
+      b.appendChild(document.createTextNode(parse(dd).toLocaleDateString(undefined,{weekday:"short"})));
+      var i2 = document.createElement("i");
+      if(ee && ee.mood!=null){ i2.style.background = "var(--m"+ee.mood+")"; i2.className = "has"; }
+      else if(ee && ee.skip){ i2.style.background = "var(--line)"; i2.className = "has"; }
+      if(dd===cur) i2.className += " today";
+      if(ee && ee.m==="bleeding"){ var bl = document.createElement("span"); bl.className = "bl"; i2.appendChild(bl); }
+      else if(ee && ee.m==="spotting"){ var sp = document.createElement("span"); sp.className = "sp"; i2.appendChild(sp); }
+      b.setAttribute("aria-label", fmt(dd) + (ee && ee.mood!=null ? ", mood " + ee.mood : ""));
+      b.appendChild(i2); ws.appendChild(b);
+    }
+    var parts = [];
+    if(e.skip) parts.push("Skipped.");
+    else {
+      if(e.mood!=null) parts.push("Mood " + e.mood + " (" + ["very low","low","okay","good","great"][e.mood-1] + ").");
+      parts.push(e.m==="bleeding" ? "Bleeding." : e.m==="spotting" ? "Spotting." : "No period.");
+      var st = symState(e);
+      if(st==="no") parts.push("No symptoms.");
+      else if(st==="yes"){
+        var sc = entryScale(e), list = [];
+        DOMAINS.forEach(function(g){
+          var vs = g.items.map(function(i){ return norm(e.r[i], sc); }).filter(function(x){ return x!=null; });
+          var mx = vs.length ? Math.max.apply(null, vs) : null;
+          if(mx!=null && mx>0) list.push(g.q + " (" + sevLabel(mx) + ")");
+        });
+        parts.push(list.length ? "Symptoms: " + list.join(", ") + "." : "No symptoms.");
+      } else if(e.jm) parts.push("Just mood, no symptom questions.");
+    }
+    if(e.n && e.n.trim()) parts.push("Note added.");
+    document.getElementById("loggedSummary2").textContent = parts.join(" ");
+  }
+  document.getElementById("weekStrip").addEventListener("click", function(ev){ var b = ev.target.closest("button[data-d]"); if(b) goTo(b.dataset.d); });
+
   function renderLog(){
-    var t = todayIso();
-    var d = parse(cur);
+    var t = todayIso(), d = parse(cur);
     var label = d.toLocaleDateString(undefined,{weekday:"long", month:"long", day:"numeric"});
     if(cur===t) label = "Today, " + d.toLocaleDateString(undefined,{month:"long", day:"numeric"});
     document.getElementById("dateLabel").textContent = label;
     dateInput.value = cur; dateInput.max = t;
     document.getElementById("nextDay").disabled = cur>=t;
-
-    var info = cycleInfo(cur, onsets());
-    var cl = "";
-    if(info.fwd!=null) cl = "Cycle day " + info.fwd;
-    if(info.back!=null) cl += (cl ? ", " : "") + Math.abs(info.back) + (Math.abs(info.back)===1 ? " day" : " days") + " before next period";
-    var onsAll = onsets(), lastOn = null;
-    for(var oi=onsAll.length-1; oi>=0; oi--){ if(onsAll[oi]<=cur){ lastOn = onsAll[oi]; break; } }
-    var med = medianCycle(onsAll);
-    if(info.back==null && lastOn && med && diffDays(lastOn, t) < 60){
-      var expect = addDays(lastOn, med), until = diffDays(cur, expect);
-      if(until > 1) cl += ". Next period expected in about " + until + " days";
-      else if(until === 1) cl += ". Next period expected around tomorrow";
-      else if(until === 0) cl += ". Next period expected around today";
-      else cl += ". Period is " + (-until) + (until===-1 ? " day" : " days") + " later than your typical cycle";
-    }
-    document.getElementById("cycleLine").textContent = cl || "Log a bleeding day to start counting cycle days";
-    document.getElementById("notLogged").hidden = isLogged(get(cur));
+    var ct = cycleText(cur);
+    document.getElementById("cycleLine").textContent = ct || "Log a bleeding day to start counting cycle days";
     renderGaps();
 
-    var e = get(cur) || blank();
+    var stored = get(cur), e = stored || blank();
+    var showLogged = !!(stored && stored.dn) && !editing[cur];
+    document.getElementById("formView").hidden = showLogged;
+    document.getElementById("loggedView").hidden = !showLogged;
+    document.getElementById("cycleLine").hidden = showLogged;
+    if(showLogged){ renderLogged(stored); return; }
+
+    var skipped = !!e.skip;
+    document.getElementById("skipCard").hidden = !skipped;
+    document.getElementById("moodBlock").hidden = skipped;
+    document.getElementById("skipLine").hidden = skipped || !!(stored && (stored.mood!=null || hasRatings(stored)));
     document.querySelectorAll(".menses button").forEach(function(b){
       var shown = (e.m!=="none" || e.mx) ? e.m : null;
       b.setAttribute("aria-pressed", String(b.dataset.m===shown));
     });
-    itemsEl.querySelectorAll("button[data-v]").forEach(function(b){
-      b.setAttribute("aria-pressed", String(e.r[+b.dataset.i]===+b.dataset.v));
-    });
-    var stored = get(cur);
-    itemsEl.querySelectorAll(".domain").forEach(function(box){
-      var di = +box.dataset.di, st = gateState(stored, di);
-      box.querySelectorAll("button[data-g]").forEach(function(b){ b.setAttribute("aria-pressed", String(b.dataset.g===st)); });
-      box.querySelector(".detail").hidden = st!=="yes";
-    });
-    document.querySelectorAll(".mood button").forEach(function(b){
-      b.setAttribute("aria-pressed", String(e.mood===+b.dataset.mood));
-    });
+    document.querySelectorAll(".mood button").forEach(function(b){ b.setAttribute("aria-pressed", String(e.mood===+b.dataset.mood)); });
+    var asked = symptomsAsked(), mode = setting("mode","every"), block = document.getElementById("itemsBlock");
+    var col = document.getElementById("symCollapsed"), body = document.getElementById("symBody");
+    if(skipped || (mode==="mood" && !hasRatings(stored) && !forceShow[cur])){ block.hidden = true; cardsEl.innerHTML = ""; }
+    else {
+      block.hidden = false;
+      var why = "";
+      if(e.jm && !hasRatings(stored)) why = "Just mood today.";
+      else if(!asked) why = "Focus mode: no symptom questions today. They’re asked the week before your period and days 4–10 after it starts.";
+      col.hidden = !why; document.getElementById("symCollapsedText").textContent = why; body.hidden = !!why;
+      document.querySelectorAll(".sy button").forEach(function(b){ b.setAttribute("aria-pressed", String(symState(stored)===b.dataset.sy)); });
+      if(why){ cardsEl.innerHTML = ""; } else renderGroups(e);
+    }
     if(document.activeElement!==notesEl) notesEl.value = e.n || "";
-    var symOn = renderSymptomArea();
-    renderProgress();
-    if(!symOn) document.getElementById("progress").textContent = "";
+    var nb = document.getElementById("notesBox"); if(e.n && e.n.trim()) nb.open = true;
   }
 
   // ---------- history ----------
@@ -1610,7 +1764,7 @@ body.about-open #backupBanner{ display:none !important; }
 
   // ---------- doctor report ----------
   var REPORT_CSS = [
-    ".rpt{ --ink:#1A2030; --muted:#5A6479; --line:#D3D9E4; --bleed:#B3335C; --spot:#E8A3B8; --m1:#3F2D8F; --m2:#8173D6; --m3:#CFCBE0; --m4:#86CBA8; --m5:#23935F; --y0:#EDE3CC; --y1:#F2C26B; --y2:#E5843A; --y3:#A9481A; background:#fff; color:var(--ink); font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif; font-size:14px; line-height:1.45; max-width:760px; margin:0 auto; padding:28px 28px 36px; border-radius:12px; }",
+    ".rpt{ --ink:#1A2030; --muted:#5A6479; --line:#D3D9E4; --bleed:#B3335C; --spot:#E8A3B8; --m1:#A796D4; --m2:#CFC4EB; --m3:#E4E2EA; --m4:#BCD7C6; --m5:#8DBFA1; --y0:#EEE8DC; --y1:#E8D3A4; --y2:#DCAC80; --y3:#B57C66; background:#fff; color:var(--ink); font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif; font-size:14px; line-height:1.45; max-width:760px; margin:0 auto; padding:28px 28px 36px; border-radius:12px; }",
     ".rpt h1{ font-size:22px; margin:0 0 4px; } .rpt h2{ font-size:15px; margin:24px 0 8px; } .rpt .sub{ color:var(--muted); margin:0; }",
     ".rpt .about{ font-size:12.5px; color:var(--muted); border-left:3px solid var(--line); padding:4px 0 4px 10px; margin:14px 0 0; }",
     ".rpt .kpis{ display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-top:16px; } .rpt .kpi{ border:1px solid var(--line); border-radius:8px; padding:8px 10px; } .rpt .kpi b{ display:block; font-size:18px; } .rpt .kpi span{ font-size:12px; color:var(--muted); }",

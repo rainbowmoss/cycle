@@ -1,5 +1,5 @@
 // Change this version whenever you upload a new index.html so phones pick up the update.
-const CACHE = "cycle-log-v11";
+const CACHE = "cycle-log-v13";
 const FILES = ["./", "./index.html", "./manifest.webmanifest", "./icon-192.png", "./icon-512.png"];
 
 self.addEventListener("install", (e) => {
