@@ -19,7 +19,7 @@
   --accent:#7A88CA; --accent-ink:#FFFFFF; --accent-soft:#E6E9F8; --accent-text:#5462A8;
   --bleed:#B3335C; --spot:#E8A3B8; --warn-bg:#FFF2D6; --warn-ink:#6B4A00;
   --s1:#DDE2EC; --s2:#C3CBF0; --s3:#9CA9EA; --s4:#6F7FDA; --s5:#4656C2; --s6:#283493;
-  --m1:#A796D4; --m2:#CFC4EB; --m3:#E4E2EA; --m4:#BCD7C6; --m5:#8DBFA1;
+  --m1:#8DB2D9; --m2:#C2D8EE; --m3:#E8EBEF; --m4:#F1E3A8; --m5:#E6CB6A;
   --y0:#EEE8DC; --y1:#E8D3A4; --y2:#DCAC80; --y3:#B57C66;
   --g-mood-bg:#EFEAF8; --g-mood-sel:#DCD1F0; --g-mood-ink:#4E4170;
   --g-stress-bg:#F3E4D7; --g-stress-sel:#DDBFA3; --g-stress-ink:#6B4526;
@@ -28,9 +28,12 @@
   --g-sleep-bg:#E0E2EC; --g-sleep-sel:#B6BBD3; --g-sleep-ink:#363C5E;
   --g-physical-bg:#DDEAE3; --g-physical-sel:#AFCDBE; --g-physical-ink:#2F5545;
   --g-impact-bg:#ECE8E0; --g-impact-sel:#CFC6B4; --g-impact-ink:#4D4636;
-  --t-period:#F8ECEF; --t-period-line:#EFD7DE; --t-period-ink:#7A3A4E; --t-mood:#F3F0FA; --t-mood-line:#E2DBF2; --t-mood-ink:#4E4170;
+  --t-period:#F8ECEF; --t-period-line:#EFD7DE; --t-period-ink:#7A3A4E; --t-mood:#EFF5FB; --t-mood-line:#D5E4F2; --t-mood-ink:#2F5577;
   --t-sym:#F8F2E9; --t-sym-line:#EEE0CC; --t-sym-ink:#6B4526; --t-move:#EEF5F1; --t-move-line:#D5E6DC; --t-move-ink:#2F5545;
-  --t-meds:#EEF2F7; --t-meds-line:#D8E1EC; --t-meds-ink:#2E4A63; --btnbg:#FFFFFF; --sel:#D6DCE6; --sel-ink:#252B3A; --sel-line:#C3CBD8; --t-sym-yes:#B88A5E; --t-move-yes:#6E9A82; --t-meds-yes:#7F96B4;
+  --t-meds:#F3F0FA; --t-meds-line:#E2DBF2; --t-meds-ink:#4E4170; --btnbg:#FFFFFF; --sel:#E6E9F8; --sel-ink:#3D4A8C; --sel-line:#CDD3F0; --t-sym-yes:#B88A5E; --t-move-yes:#6E9A82; --t-meds-yes:#8B7BC4; --t-tr-yes:#9C8F78;
+  --t-tr:#F2F1EE; --t-tr-line:#E3E0D9; --t-tr-ink:#4D4636; --no-tr:#E3DDD2; --no-tr-line:#D6CFC1;
+  --no-period:#EBC9D3; --no-period-line:#E2B8C5; --no-sym:#ECD9BE; --no-sym-line:#E3CBA9; --no-move:#C9DED2; --no-move-line:#B9D3C4; --no-ink:#1A2030;
+  --jcard:#FBFAF7; --jline:#ECE8DF;
   color-scheme: light;
 }
 @media (prefers-color-scheme: dark){
@@ -39,14 +42,17 @@
     --accent:#9AA6E8; --accent-ink:#11141B; --accent-soft:#262C48; --accent-text:#AEB8F0;
     --bleed:#E5698F; --spot:#7C4558; --warn-bg:#3A2F14; --warn-ink:#F3D58E;
     --s1:#262B38; --s2:#2F3966; --s3:#3E4C94; --s4:#5866C2; --s5:#7886E6; --s6:#A7B1FF;
-    --m1:#9C8AD6; --m2:#5E5385; --m3:#454852; --m4:#4E7A60; --m5:#7FC09B; --y0:#3A352C; --y1:#8C7744; --y2:#B07F55; --y3:#D59A80;
+    --m1:#6F97C4; --m2:#40597A; --m3:#474A55; --m4:#7D6E3C; --m5:#C9AE4E; --y0:#3A352C; --y1:#8C7744; --y2:#B07F55; --y3:#D59A80;
     --g-mood-bg:#2A2638; --g-mood-sel:#4A3F6E; --g-mood-ink:#E3DBF7; --g-stress-bg:#33291F; --g-stress-sel:#6B4D33; --g-stress-ink:#F3DCC6;
     --g-focus-bg:#1F2A35; --g-focus-sel:#3D5873; --g-focus-ink:#D6E6F5; --g-appetite-bg:#33242A; --g-appetite-sel:#6B4553; --g-appetite-ink:#F4D8E1;
     --g-sleep-bg:#232637; --g-sleep-sel:#474E78; --g-sleep-ink:#DCDFF2; --g-physical-bg:#1F2D27; --g-physical-sel:#3E6455; --g-physical-ink:#D3EDE1;
     --g-impact-bg:#2D2A24; --g-impact-sel:#5C5444; --g-impact-ink:#EDE6D6;
-    --t-period:#2B2026; --t-period-line:#3D2C33; --t-period-ink:#F0C9D5; --t-mood:#242133; --t-mood-line:#352F4A; --t-mood-ink:#DCD3F5;
+    --t-period:#2B2026; --t-period-line:#3D2C33; --t-period-ink:#F0C9D5; --t-mood:#1D2633; --t-mood-line:#2B3A4D; --t-mood-ink:#CFE0F2;
     --t-sym:#2A251D; --t-sym-line:#3D3428; --t-sym-ink:#F0D9BE; --t-move:#1D2924; --t-move-line:#2C3E35; --t-move-ink:#CBE6D8;
-    --t-meds:#1D2430; --t-meds-line:#2B3546; --t-meds-ink:#D3E1F0; --btnbg:#232836; --sel:#5E677C; --sel-ink:#FFFFFF; --sel-line:#5E677C; --t-sym-yes:#A97C50; --t-move-yes:#5E8A72; --t-meds-yes:#6C84A4;
+    --t-meds:#242133; --t-meds-line:#352F4A; --t-meds-ink:#DCD3F5; --btnbg:#232836; --sel:#2F3550; --sel-ink:#DDE2FF; --sel-line:#3D4466; --t-sym-yes:#A97C50; --t-move-yes:#5E8A72; --t-meds-yes:#7A6BB8; --t-tr-yes:#8A7E68;
+    --t-tr:#26241F; --t-tr-line:#38352E; --t-tr-ink:#EDE6D6; --no-tr:#4A453A; --no-tr-line:#4A453A;
+    --no-period:#5A3542; --no-period-line:#5A3542; --no-sym:#5A4A33; --no-sym-line:#5A4A33; --no-move:#36574A; --no-move-line:#36574A; --no-ink:#F2F3F7;
+    --jcard:#1F232D; --jline:#2E3442;
     color-scheme: dark;
   }
 }
@@ -55,14 +61,17 @@
   --accent:#9AA6E8; --accent-ink:#11141B; --accent-soft:#262C48; --accent-text:#AEB8F0;
   --bleed:#E5698F; --spot:#7C4558; --warn-bg:#3A2F14; --warn-ink:#F3D58E;
   --s1:#262B38; --s2:#2F3966; --s3:#3E4C94; --s4:#5866C2; --s5:#7886E6; --s6:#A7B1FF;
-  --m1:#9C8AD6; --m2:#5E5385; --m3:#454852; --m4:#4E7A60; --m5:#7FC09B; --y0:#3A352C; --y1:#8C7744; --y2:#B07F55; --y3:#D59A80;
+  --m1:#6F97C4; --m2:#40597A; --m3:#474A55; --m4:#7D6E3C; --m5:#C9AE4E; --y0:#3A352C; --y1:#8C7744; --y2:#B07F55; --y3:#D59A80;
     --g-mood-bg:#2A2638; --g-mood-sel:#4A3F6E; --g-mood-ink:#E3DBF7; --g-stress-bg:#33291F; --g-stress-sel:#6B4D33; --g-stress-ink:#F3DCC6;
     --g-focus-bg:#1F2A35; --g-focus-sel:#3D5873; --g-focus-ink:#D6E6F5; --g-appetite-bg:#33242A; --g-appetite-sel:#6B4553; --g-appetite-ink:#F4D8E1;
     --g-sleep-bg:#232637; --g-sleep-sel:#474E78; --g-sleep-ink:#DCDFF2; --g-physical-bg:#1F2D27; --g-physical-sel:#3E6455; --g-physical-ink:#D3EDE1;
     --g-impact-bg:#2D2A24; --g-impact-sel:#5C5444; --g-impact-ink:#EDE6D6;
-    --t-period:#2B2026; --t-period-line:#3D2C33; --t-period-ink:#F0C9D5; --t-mood:#242133; --t-mood-line:#352F4A; --t-mood-ink:#DCD3F5;
+    --t-period:#2B2026; --t-period-line:#3D2C33; --t-period-ink:#F0C9D5; --t-mood:#1D2633; --t-mood-line:#2B3A4D; --t-mood-ink:#CFE0F2;
     --t-sym:#2A251D; --t-sym-line:#3D3428; --t-sym-ink:#F0D9BE; --t-move:#1D2924; --t-move-line:#2C3E35; --t-move-ink:#CBE6D8;
-    --t-meds:#1D2430; --t-meds-line:#2B3546; --t-meds-ink:#D3E1F0; --btnbg:#232836; --sel:#5E677C; --sel-ink:#FFFFFF; --sel-line:#5E677C; --t-sym-yes:#A97C50; --t-move-yes:#5E8A72; --t-meds-yes:#6C84A4;
+    --t-meds:#242133; --t-meds-line:#352F4A; --t-meds-ink:#DCD3F5; --btnbg:#232836; --sel:#2F3550; --sel-ink:#DDE2FF; --sel-line:#3D4466; --t-sym-yes:#A97C50; --t-move-yes:#5E8A72; --t-meds-yes:#7A6BB8; --t-tr-yes:#8A7E68;
+    --t-tr:#26241F; --t-tr-line:#38352E; --t-tr-ink:#EDE6D6; --no-tr:#4A453A; --no-tr-line:#4A453A;
+    --no-period:#5A3542; --no-period-line:#5A3542; --no-sym:#5A4A33; --no-sym-line:#5A4A33; --no-move:#36574A; --no-move-line:#36574A; --no-ink:#F2F3F7;
+    --jcard:#1F232D; --jline:#2E3442;
   color-scheme: dark;
 }
 :root{ box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px); }
@@ -266,17 +275,6 @@ body.about-open #backupBanner{ display:none !important; }
 .tq{ font-size:1.12rem; margin:0 0 10px; }
 .menses button{ font-size:1rem; }
 .mood button{ border-width:1.5px; }
-.mood button[data-mood="1"]{ border-color:color-mix(in srgb, var(--m1) 55%, var(--surface)); background:var(--bg); background:color-mix(in srgb, var(--m1) 28%, var(--surface)); }
-.mood button[data-mood="2"]{ border-color:color-mix(in srgb, var(--m2) 60%, var(--surface)); background:var(--bg); background:color-mix(in srgb, var(--m2) 40%, var(--surface)); }
-.mood button[data-mood="3"]{ border-color:color-mix(in srgb, var(--m3) 70%, var(--surface)); background:var(--bg); background:color-mix(in srgb, var(--m3) 55%, var(--surface)); }
-.mood button[data-mood="4"]{ border-color:color-mix(in srgb, var(--m4) 60%, var(--surface)); background:var(--bg); background:color-mix(in srgb, var(--m4) 40%, var(--surface)); }
-.mood button[data-mood="5"]{ border-color:color-mix(in srgb, var(--m5) 55%, var(--surface)); background:var(--bg); background:color-mix(in srgb, var(--m5) 30%, var(--surface)); }
-.mood button[aria-pressed="true"]{ color:#fff; font-weight:700; }
-.mood button[data-mood="1"][aria-pressed="true"]{ background:#6E5CA8; background:color-mix(in srgb, var(--m1) 55%, #1A2030); border-color:transparent; }
-.mood button[data-mood="2"][aria-pressed="true"]{ background:#857AA8; background:color-mix(in srgb, var(--m2) 50%, #1A2030); border-color:transparent; }
-.mood button[data-mood="3"][aria-pressed="true"]{ background:#6E6D78; background:color-mix(in srgb, var(--m3) 45%, #1A2030); border-color:transparent; }
-.mood button[data-mood="4"][aria-pressed="true"]{ background:#6C8A78; background:color-mix(in srgb, var(--m4) 55%, #1A2030); border-color:transparent; }
-.mood button[data-mood="5"][aria-pressed="true"]{ background:#4F7D63; background:color-mix(in srgb, var(--m5) 60%, #1A2030); border-color:transparent; }
 .sy{ display:grid; grid-template-columns:1fr 1fr; gap:8px; }
 .sy button{ height:50px; border-radius:12px; border:1px solid var(--line); background:var(--bg); font-weight:700; font-size:1.05rem; }
 .sy button[data-sy="no"][aria-pressed="true"]{ background:var(--sel); color:var(--sel-ink); border-color:var(--sel-line); }
@@ -351,7 +349,9 @@ label.inline > input[type=radio]:first-child, label.inline > input[type=checkbox
 #moveCard{ background:var(--t-move); border-color:var(--t-move-line); } #moveCard .tq{ color:var(--t-move-ink); }
 #medsCard{ background:var(--t-meds); border-color:var(--t-meds-line); } #medsCard .tq{ color:var(--t-meds-ink); }
 #periodCard .menses button, #itemsBlock .sy button, #moveCard .sy button, #medsCard .medbtns button{ background:var(--btnbg); }
-#periodCard .menses button[aria-pressed="true"][data-m="none"], #itemsBlock .sy button[data-sy="no"][aria-pressed="true"], #moveCard .sy button[data-mv="no"][aria-pressed="true"]{ background:var(--sel); color:var(--sel-ink); border-color:var(--sel-line); }
+#periodCard .menses button[aria-pressed="true"][data-m="none"]{ background:var(--no-period); border-color:var(--no-period-line); color:var(--no-ink); }
+#itemsBlock .sy button[data-sy="no"][aria-pressed="true"], #itemsBlock .scale button.lv0[aria-pressed="true"]{ background:var(--no-sym); border-color:var(--no-sym-line); color:var(--no-ink); }
+#moveCard .sy button[data-mv="no"][aria-pressed="true"]{ background:var(--no-move); border-color:var(--no-move-line); color:var(--no-ink); }
 #periodCard .menses button[aria-pressed="true"][data-m="spotting"]{ background:var(--spot); border-color:var(--spot); }
 #periodCard .menses button[aria-pressed="true"][data-m="bleeding"]{ background:var(--bleed); border-color:var(--bleed); }
 #itemsBlock .sy button[data-sy="yes"][aria-pressed="true"]{ background:var(--t-sym-yes); color:#fff; border-color:var(--t-sym-yes); }
@@ -374,6 +374,82 @@ label.inline > input[type=radio]:first-child, label.inline > input[type=checkbox
 .kindlist .x{ background:none; border:0; color:var(--muted); font-size:1.3rem; line-height:1; padding:2px 8px; }
 .addrow{ display:flex; gap:8px; margin-top:8px; }
 .addrow input{ flex:1; border:1px solid var(--line); border-radius:10px; background:var(--bg); padding:9px 10px; color:var(--ink); font:inherit; min-width:0; }
+.mood button[data-mood="1"]{ background:var(--bg); background:color-mix(in srgb, var(--m1) 30%, var(--btnbg)); border-color:color-mix(in srgb, var(--m1) 75%, var(--btnbg)); }
+.mood button[data-mood="1"][aria-pressed="true"]{ background:var(--m1); border-color:var(--m1); }
+.mood button[data-mood="2"]{ background:var(--bg); background:color-mix(in srgb, var(--m2) 30%, var(--btnbg)); border-color:color-mix(in srgb, var(--m2) 75%, var(--btnbg)); }
+.mood button[data-mood="2"][aria-pressed="true"]{ background:var(--m2); border-color:var(--m2); }
+.mood button[data-mood="3"]{ background:var(--bg); background:color-mix(in srgb, var(--m3) 30%, var(--btnbg)); border-color:color-mix(in srgb, var(--m3) 75%, var(--btnbg)); }
+.mood button[data-mood="3"][aria-pressed="true"]{ background:var(--m3); border-color:var(--m3); }
+.mood button[data-mood="4"]{ background:var(--bg); background:color-mix(in srgb, var(--m4) 30%, var(--btnbg)); border-color:color-mix(in srgb, var(--m4) 75%, var(--btnbg)); }
+.mood button[data-mood="4"][aria-pressed="true"]{ background:var(--m4); border-color:var(--m4); }
+.mood button[data-mood="5"]{ background:var(--bg); background:color-mix(in srgb, var(--m5) 30%, var(--btnbg)); border-color:color-mix(in srgb, var(--m5) 75%, var(--btnbg)); }
+.mood button[data-mood="5"][aria-pressed="true"]{ background:var(--m5); border-color:var(--m5); }
+.mood button[aria-pressed="true"]{ color:#1A2030; font-weight:700; box-shadow:inset 0 0 0 2px rgba(26,32,48,.35); }
+/* bottom nav */
+.bnav{ position:fixed; left:0; right:0; bottom:0; z-index:20; background:var(--surface); border-top:1px solid var(--line); display:flex; justify-content:space-around; padding:6px 4px calc(8px + env(safe-area-inset-bottom,0px)); }
+.bnav .tab{ flex:1; display:flex; flex-direction:column; align-items:center; gap:2px; background:none; border:0; padding:4px 0; font-size:.7rem; font-weight:700; color:var(--muted); }
+.bnav .tab svg{ width:22px; height:22px; }
+.bnav .tab[aria-selected="true"]{ color:var(--accent-text); }
+main{ padding-bottom:calc(96px + env(safe-area-inset-bottom,0px)); }
+.bnav .tab, .bnav .tab[aria-selected="true"]{ border-bottom:0; padding:4px 0; }
+@media print{ .bnav{ display:none !important; } }
+/* symptom accordion */
+.grp{ border-top:1px solid var(--t-sym-line); }
+.grp:first-child{ border-top:0; }
+.gh{ width:100%; display:flex; align-items:center; gap:10px; background:none; border:0; padding:10px 0; text-align:left; color:var(--ink); }
+.gh svg{ flex:none; color:var(--gink); }
+.gh .n{ flex:1; min-width:0; } .gh .n b{ display:block; font-size:.95rem; } .gh .n span{ display:block; font-size:.75rem; color:var(--muted); }
+.gh .pill{ font-size:.7rem; font-weight:700; padding:3px 8px; border-radius:999px; background:var(--no-sym); color:var(--t-sym-ink); flex:none; }
+.gh .chev{ color:var(--muted); font-size:.8rem; flex:none; width:12px; text-align:center; }
+.gbody{ padding:0 0 10px; }
+.gbody .q{ margin:8px 0 6px; font-size:.88rem; }
+#itemsBlock .scale button{ background:var(--btnbg); }
+#itemsBlock .scale button.lv1[aria-pressed="true"]{ background:var(--y1); border-color:var(--y1); color:#1A2030; }
+#itemsBlock .scale button.lv2[aria-pressed="true"]{ background:var(--y2); border-color:var(--y2); color:#1A2030; }
+#itemsBlock .scale button.lv3[aria-pressed="true"]{ background:var(--y3); border-color:var(--y3); color:#fff; }
+/* trackers */
+#trackCard{ background:var(--t-tr); border-color:var(--t-tr-line); } #trackCard .tq{ color:var(--t-tr-ink); }
+.trow{ padding:6px 0; } .trow p{ margin:0 0 6px; font-weight:700; font-size:.92rem; }
+.trow .scale button{ background:var(--btnbg); }
+.trow .scale button[aria-pressed="true"]{ background:var(--t-tr-yes); border-color:var(--t-tr-yes); color:#fff; }
+.trow .scale button[data-v="0"][aria-pressed="true"]{ background:var(--no-tr); border-color:var(--no-tr-line); color:var(--no-ink); }
+.la{ font-size:.82rem; color:var(--t-meds-ink); background:var(--btnbg); border:1px dashed var(--t-meds-line); border-radius:9px; padding:7px 9px; margin-top:8px; }
+/* patterns */
+.segbar{ display:grid; grid-auto-flow:column; grid-auto-columns:1fr; background:var(--line); border-radius:12px; padding:3px; margin-bottom:12px; }
+.segbar button{ background:none; border:0; padding:8px 0; border-radius:10px; font-weight:700; color:var(--muted); }
+.segbar button[aria-pressed="true"]{ background:var(--surface); color:var(--ink); box-shadow:0 1px 2px rgba(0,0,0,.1); }
+.hrow{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin:0 0 10px; font-size:.85rem; color:var(--muted); }
+#colorSel button{ border-radius:999px; }
+#colorSel button[data-color="mood"][aria-pressed="true"]{ background:var(--t-mood); border-color:var(--t-mood-line); color:var(--t-mood-ink); }
+#colorSel button[data-color="sym"][aria-pressed="true"]{ background:var(--no-sym); border-color:var(--no-sym-line); color:var(--t-sym-ink); }
+#colorSel button[data-color="move"][aria-pressed="true"]{ background:var(--no-move); border-color:var(--no-move-line); color:var(--t-move-ink); }
+.pcard{ border-radius:14px; border:1px solid var(--line); background:var(--surface); padding:12px; margin-bottom:12px; }
+.pcard h3{ margin:0 0 6px; font-size:1rem; }
+.pcard.k-mood{ background:var(--t-mood); border-color:var(--t-mood-line); } .pcard.k-mood h3{ color:var(--t-mood-ink); }
+.pcard.k-sym{ background:var(--t-sym); border-color:var(--t-sym-line); } .pcard.k-sym h3{ color:var(--t-sym-ink); }
+.pcard.k-move{ background:var(--t-move); border-color:var(--t-move-line); } .pcard.k-move h3{ color:var(--t-move-ink); }
+.pstat{ display:flex; gap:8px; margin-top:8px; } .pstat div{ flex:1; background:var(--btnbg); border-radius:9px; padding:6px 9px; font-size:.75rem; color:var(--muted); } .pstat b{ display:block; font-size:1.05rem; color:var(--ink); }
+.mini-leg{ display:flex; flex-wrap:wrap; gap:10px; font-size:.72rem; color:var(--muted); margin-top:6px; }
+details.dtl{ padding:0; } details.dtl > summary{ list-style:none; cursor:pointer; padding:13px 14px; font-weight:700; display:flex; justify-content:space-between; align-items:center; }
+details.dtl > summary::-webkit-details-marker{ display:none; }
+details.dtl > summary::after{ content:"▸"; color:var(--muted); font-size:.8rem; margin-left:8px; }
+details.dtl[open] > summary::after{ content:"▾"; }
+details.dtl > summary small{ font-weight:400; color:var(--muted); margin-left:6px; flex:1; }
+details.dtl > .dbody{ padding:0 14px 12px; }
+/* journal */
+.jw{ background:var(--jcard); border:1px solid var(--jline); border-radius:14px; padding:12px; margin-bottom:12px; }
+.jh{ display:flex; justify-content:space-between; align-items:baseline; margin-bottom:8px; font-size:.82rem; color:var(--muted); } .jh b{ color:var(--ink); font-size:1rem; }
+.jw textarea{ background:var(--btnbg); border-color:var(--jline); min-height:110px; margin-bottom:8px; }
+.jrow{ display:flex; justify-content:space-between; align-items:center; gap:10px; }
+.jsearch{ width:100%; border:1px solid var(--jline); background:var(--jcard); border-radius:10px; padding:10px 12px; font:inherit; color:var(--ink); margin-bottom:6px; }
+.jmon{ font-size:.75rem; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:.05em; margin:14px 2px 6px; }
+.je{ display:block; width:100%; text-align:left; background:var(--jcard); border:1px solid var(--jline); border-radius:12px; padding:10px 12px 10px 15px; margin-bottom:8px; position:relative; overflow:hidden; color:var(--ink); font-size:.92rem; line-height:1.45; }
+.je::before{ content:""; position:absolute; left:0; top:0; bottom:0; width:4px; background:var(--mc, var(--line)); }
+.je .d{ display:flex; justify-content:space-between; font-size:.78rem; color:var(--muted); margin-bottom:3px; } .je .d b{ color:var(--ink); font-size:.86rem; }
+.je .tx{ display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden; white-space:pre-wrap; }
+.fld{ display:flex; flex-direction:column; gap:4px; font-size:.9rem; color:var(--muted); margin:8px 0; }
+.fld input{ border:1px solid var(--line); border-radius:10px; background:var(--bg); padding:9px 10px; color:var(--ink); font:inherit; }
+.backbar{ display:flex; align-items:center; justify-content:space-between; gap:8px; margin:0 0 10px; }
 [hidden]{ display:none !important; }
 @media (prefers-reduced-motion: reduce){ *{ transition:none !important; } }
 </style>
@@ -388,18 +464,12 @@ label.inline > input[type=radio]:first-child, label.inline > input[type=checkbox
         <button class="about-btn" id="aboutBtn" aria-label="About this app">?</button>
       </div>
     </div>
-    <div class="tabs" role="tablist">
-      <button class="tab" role="tab" id="tab-log" aria-selected="true" data-view="log">Today</button>
-      <button class="tab" role="tab" id="tab-history" aria-selected="false" data-view="history">History</button>
-      <button class='tab' role='tab' id='tab-periods' aria-selected='false' data-view='periods'>Periods</button>
-      <button class="tab" role="tab" id="tab-data" aria-selected="false" data-view="data">More</button>
-    </div>
   </div>
 </header>
 
 <main>
   <div class="banner" id="storageBanner" hidden>
-    This browser isn’t allowing the page to store anything, so entries will disappear when you close it. Export your data from “Your data” before leaving, or open the page in a regular (non-private) window.
+    This browser isn’t allowing the page to store anything, so entries will disappear when you close it. Make a backup from the Data tab before leaving, or open the page in a regular (non-private) window.
   </div>
 
   <div class="banner" id="backupBanner" hidden>
@@ -422,6 +492,7 @@ label.inline > input[type=radio]:first-child, label.inline > input[type=checkbox
     <p class="gap-line" id="gapLine" hidden></p>
 
     <div id="formView">
+      <p class="skipline" id="skipLine">Not up for it? <button id="skipBtn">Skip today</button></p>
       <div class="block skipcard" id="skipCard" hidden>
         <p><strong>Skipped.</strong> This day won’t count as missed, and reports treat it as not logged.</p>
         <button class="linkbtn" id="unskipBtn">Undo skip</button>
@@ -457,13 +528,18 @@ label.inline > input[type=radio]:first-child, label.inline > input[type=checkbox
           </div>
           <div id="kindWrap" hidden>
             <h3 class="kind-h">What kind?</h3>
-            <div class="tiles" id="tiles"></div>
+            <div class="grps" id="tiles"></div>
             <p class="hint" id="scaleNote" hidden style="margin-top:8px"></p>
           </div>
         </div>
       </div>
 
       <div id="groupCards"></div>
+
+      <div class="block" id="trackCard" hidden>
+        <h2 class="tq">My trackers</h2>
+        <div id="trackList"></div>
+      </div>
 
       <div class="block" id="moveCard" hidden>
         <h2 class="tq">Movement?</h2>
@@ -486,7 +562,6 @@ label.inline > input[type=radio]:first-child, label.inline > input[type=checkbox
       </details>
 
       <button class="btn primary done-big" id="doneBtn">Done</button>
-      <p class="skipline" id="skipLine">Not up for it? <button id="skipBtn">Skip today</button></p>
       <p class="done-msg" id="doneMsg" aria-live="polite"></p>
     </div>
 
@@ -510,51 +585,40 @@ label.inline > input[type=radio]:first-child, label.inline > input[type=checkbox
 
   <!-- HISTORY -->
   <section id="view-history" role="tabpanel" aria-labelledby="tab-history" hidden>
-    <div class="block">
-      <div class="hctl">
-        <div class="seg" id="viewSel" role="group" aria-label="Chart">
-          <button data-hv="cycles" aria-pressed="true">Cycles</button>
-          <button data-hv="year" aria-pressed="false">Year</button>
-          <button data-hv="timeline" aria-pressed="false">Timeline</button>
-        </div>
+    <div class="segbar" id="viewSel" role="group" aria-label="Chart">
+      <button data-hv="cycles" aria-pressed="true">Cycles</button>
+      <button data-hv="year" aria-pressed="false">Year</button>
+      <button data-hv="periods" aria-pressed="false">All periods</button>
+    </div>
+    <div class="hrow" data-for="cycles"><span>Show</span>
+      <div class="seg" id="cntSel" role="group" aria-label="Cycles to show">
+        <button data-n="3" aria-pressed="false">Last 3</button><button data-n="6" aria-pressed="true">Last 6</button><button data-n="12" aria-pressed="false">Last 12</button><button data-n="all" aria-pressed="false">All</button>
       </div>
-      <div class="hctl">
-        <div class="seg" id="colorSel" role="group" aria-label="Color by">
-          <button data-color="mood" aria-pressed="true">Mood</button>
-          <button data-color="sym" aria-pressed="false">Symptoms</button>
-          <button data-color="move" aria-pressed="false" id="colorMove" hidden>Movement</button>
-        </div>
-        <div class="seg" id="alignSel" data-for="cycles" role="group" aria-label="Line up rows">
-          <button data-align="start" aria-pressed="true">From period start</button>
-          <button data-align="end" aria-pressed="false">Up to next period</button>
-        </div>
-        <label class="inline small" data-for="cycles"><input type="checkbox" id="showAllCycles"> Show all cycles</label>
-        <div class="yearnav" data-for="year">
-          <button id="yPrev" aria-label="Previous year">‹</button><span id="yLabel"></span><button id="yNext" aria-label="Next year">›</button>
-        </div>
-        <div class="range" id="rangeSel" data-for="timeline" role="group" aria-label="Time range">
-          <button data-range="90" aria-pressed="true">3 mo</button>
-          <button data-range="365" aria-pressed="false">1 yr</button>
-          <button data-range="all" aria-pressed="false">All</button>
-        </div>
+    </div>
+    <div class="hrow" data-for="cycles"><span>Line up by</span>
+      <div class="seg" id="alignSel" role="group" aria-label="Line up rows">
+        <button data-align="end" aria-pressed="true">Next period</button><button data-align="start" aria-pressed="false">Period start</button>
       </div>
-      <p class="hint" id="histHint"></p>
-      <div id="chartArea"></div>
-      <div class="chart-legend" id="histLegend"></div>
     </div>
-    <div class="block">
-      <h2>Cycles</h2>
-      <p class="hint">A cycle starts on the first bleeding day after a day without bleeding. Spotting doesn’t count.</p>
-      <div id="cycleTable"></div>
+    <div class="hrow" data-for="year">
+      <div class="seg" id="colorSel" role="group" aria-label="Color by">
+        <button data-color="mood" aria-pressed="true">Mood</button>
+        <button data-color="sym" aria-pressed="false">Symptoms</button>
+        <button data-color="move" aria-pressed="false" id="colorMove" hidden>Movement</button>
+      </div>
+      <div class="yearnav"><button id="yPrev" aria-label="Previous year">‹</button><span id="yLabel"></span><button id="yNext" aria-label="Next year">›</button></div>
     </div>
-    <div class="block">
-      <h2>Days logged</h2>
-      <div id="loggedSummary"></div>
-    </div>
+    <p class="hint" id="histHint"></p>
+    <div id="chartArea"></div>
+    <div class="chart-legend" id="histLegend" hidden></div>
+    <details class="block dtl" id="dtlPeriods"><summary>Period list <small id="plCount"></small></summary><div class="dbody"><p class="hint">A cycle starts on the first bleeding day after a day without bleeding. Spotting doesn’t count.</p><div id="cycleTable"></div></div></details>
+    <details class="block dtl" id="dtlLogged"><summary>Days logged</summary><div class="dbody"><div id="loggedSummary"></div></div></details>
   </section>
 
   <!-- PERIODS -->
-  <section id='view-periods' role='tabpanel' aria-labelledby='tab-periods' hidden>
+  <section id='view-periods' hidden>
+    <div class='backbar'><button class='linkbtn' id='perBack'>‹ Data</button><button class='btn primary' id='pastDone'>Done adding past periods</button></div>
+    <p class='hint' style='margin:-2px 0 12px'>Add the periods you already know about. New periods are easiest to log from Today.</p>
     <div class='block prose'>
       <h2>Mark periods on the calendar</h2>
       <p class='hint'>Tap the first day, then the last day. Tap the same day twice for a one-day period.</p>
@@ -610,13 +674,12 @@ label.inline > input[type=radio]:first-child, label.inline > input[type=checkbox
       <div class="about-top"><h2>About Cycle log</h2><button class="linkbtn" id="aboutClose">Close</button></div>
       <p class="lede">A private daily log for mood, symptoms and periods. No account, and nothing leaves this phone.</p>
       <dl>
-        <dt>Today</dt><dd>Period, mood and any symptoms. Busy day? Just mood, or <b>Skip today</b>. Swipe to change days.</dd>
-        <dt>History</dt><dd><b>Cycles</b>, <b>Year</b> or <b>Timeline</b>, by mood or symptoms. Tap a day to open it.</dd>
-        <dt>Periods</dt><dd>Mark past periods on a calendar or paste them from a spreadsheet.</dd>
-        <dt>Meds</dt><dd><b>More → Medications</b>: add a schedule, then tick doses off on Today.</dd>
-        <dt>Settings</dt><dd><b>More → Questions</b>: Focus mode, Mood only, 1–6 scale, “Daily life” group.</dd>
-        <dt>Report</dt><dd><b>More → Report for your doctor</b>: your last 2, 3 or 6 cycles.</dd>
-        <dt>Backup</dt><dd><b>Export CSV</b> every few weeks. <b>Import</b> restores it.</dd>
+        <dt>Today</dt><dd>Period, mood, symptoms, movement and meds. Busy day? Just mood, or <b>Skip today</b>. Swipe to change days.</dd>
+        <dt>Patterns</dt><dd><b>Cycles</b>, <b>Year</b> or <b>All periods</b>. Tap a day to open it.</dd>
+        <dt>Journal</dt><dd>Write how today went and search past notes.</dd>
+        <dt>Settings</dt><dd>Questions, your own trackers, meds, movement.</dd>
+                <dt>Data</dt><dd>Summary report, encrypted backup, past periods, imports.</dd>
+        <dt>Backup</dt><dd>Make an encrypted backup every few weeks.</dd>
         <dt>Install</dt><dd>Android: Chrome ⋮ → Install app. iPhone: Safari → Share → Add to Home Screen.</dd>
       </dl>
       <p class="fine">Adapted from the DRSP (Endicott et al., 2006). For noticing your own patterns, not a diagnosis.</p>
@@ -635,65 +698,32 @@ label.inline > input[type=radio]:first-child, label.inline > input[type=checkbox
     <div id="rptBody"></div>
   </section>
 
-  <!-- DATA -->
-  <section id="view-data" role="tabpanel" aria-labelledby="tab-data" hidden>
-    <div class="block prose">
-      <h2>Report for your doctor</h2>
-      <p>A one-page summary of your recent cycles: mood and symptom patterns, the week before vs. after your period, and cycle lengths.</p>
-      <div class="opts">
-        <fieldset>
-          <legend>Cycles to include</legend>
-          <label class="inline"><input type="radio" name="rcyc" value="2"> Last 2</label>
-          <label class="inline"><input type="radio" name="rcyc" value="3" checked> Last 3</label>
-          <label class="inline"><input type="radio" name="rcyc" value="6"> Last 6</label>
-        </fieldset>
-        <label class="inline"><input type="checkbox" id="rptNotes"> Include my notes</label>
+  <!-- JOURNAL -->
+  <section id="view-journal" role="tabpanel" aria-labelledby="tab-journal" hidden>
+    <div id="jListView">
+      <div class="jw">
+        <div class="jh"><b id="jToday"></b><span id="jCd"></span></div>
+        <label class="sr" for="jText">How was today?</label>
+        <textarea id="jText" placeholder="How was today?"></textarea>
+        <div class="jrow"><span class="hint" id="jMsg" aria-live="polite"></span><button class="btn primary" id="jSave">Save</button></div>
       </div>
-      <div class="stack"><button class="btn primary" id="rptBtn">Create report</button></div>
+      <label class="sr" for="jSearch">Search notes</label>
+      <input type="search" id="jSearch" class="jsearch" placeholder="Search notes">
+      <div id="jEntries"></div>
     </div>
-
-    <div class="block prose" id="moveSetup">
-      <h2>Movement</h2>
-      <label class="inline"><input type="checkbox" id="moveToggle"> Track movement (adds a “Movement?” question to Today)</label>
-      <div id="moveKindsWrap">
-        <p class="hint" style="margin-top:10px">Your kinds of movement. Remove ones you never do; past days keep what you logged.</p>
-        <div class="kindlist" id="kindList"></div>
-        <div class="addrow"><label class="sr" for="kindNew">New kind of movement</label><input type="text" id="kindNew" maxlength="24" placeholder="e.g. Climbing" autocomplete="off"><button class="btn primary" id="kindAdd">Add</button></div>
+    <div id="jEditView" hidden>
+      <div class="backbar"><button class="linkbtn" id="jBack">‹ All notes</button></div>
+      <div class="jw">
+        <div class="jh"><b id="jEditDate"></b><span id="jEditCd"></span></div>
+        <label class="sr" for="jEditText">Note</label>
+        <textarea id="jEditText"></textarea>
+        <div class="jrow"><button class="linkbtn danger-link" id="jDel">Delete note</button><button class="btn primary" id="jEditSave">Save</button></div>
       </div>
     </div>
+  </section>
 
-    <div class="block prose" id="medsSetup">
-      <h2>Medications</h2>
-      <p class="hint">Meds you add appear on the Today screen on the days they’re due, so you can tick them off. Use a nickname if you’d rather the name not show on screen. The app can’t send reminders, so a phone alarm still helps.</p>
-      <div id="medsManage"></div>
-      <div class="stack"><button class="btn" id="medAdd">Add a medication</button></div>
-      <div class="medform" id="medForm" hidden>
-        <label>Name or nickname<input type="text" id="mfName" maxlength="40" autocomplete="off"></label>
-        <label>Dose (optional)<input type="text" id="mfDose" maxlength="30" placeholder="e.g. 50 mg" autocomplete="off"></label>
-        <fieldset>
-          <legend>When do you take it?</legend>
-          <label class="inline"><input type="radio" name="mfSched" value="daily" checked> Every day</label>
-          <label class="inline"><input type="radio" name="mfSched" value="weekdays"> Certain days of the week</label>
-          <label class="inline"><input type="radio" name="mfSched" value="luteal"> Only in the days before my period</label>
-          <label class="inline"><input type="radio" name="mfSched" value="prn"> As needed</label>
-        </fieldset>
-        <div class="daypick" id="mfDays" hidden></div>
-        <div id="mfLutWrap" hidden>
-          <label class="inline">Days before my period: <input type="number" id="mfLut" min="3" max="21" value="14" inputmode="numeric"></label>
-          <p class="hint" style="margin:4px 0 0">It shows up that many days before your period is due, and stays until your period starts.</p>
-        </div>
-        <fieldset id="mfTimeWrap">
-          <legend>Time of day</legend>
-          <label class="inline"><input type="radio" name="mfTime" value="am" checked> Morning</label>
-          <label class="inline"><input type="radio" name="mfTime" value="pm"> Evening</label>
-          <label class="inline"><input type="radio" name="mfTime" value="both"> Morning and evening</label>
-        </fieldset>
-        <label>Started<input type="date" id="mfStart"></label>
-        <div class="stack"><button class="btn primary" id="mfSave">Save</button><button class="btn" id="mfCancel">Cancel</button></div>
-        <p class="hint" id="mfMsg" aria-live="polite"></p>
-      </div>
-    </div>
-
+  <!-- SETTINGS -->
+  <section id="view-settings" role="tabpanel" aria-labelledby="tab-settings" hidden>
     <div class="block prose">
       <h2>Questions</h2>
       <div class="opts">
@@ -713,15 +743,97 @@ label.inline > input[type=radio]:first-child, label.inline > input[type=checkbox
       <p class="hint">Focus mode keeps the days a doctor’s report compares and roughly halves the symptom days. The full 1–6 scale matches the clinical DRSP form and can be scored with C-PASS. Pick a scale and stick with it: days rated on different scales can only be compared approximately.</p>
     </div>
 
-    <div class="block prose">
-      <h2>Where your entries live</h2>
-      <p>The website only delivers this page. Everything you enter is saved in this browser on this device and is never sent to the site or anyone else.</p>
-      <p>Install this page as an app and always open it from that icon. It works without an internet connection. Clearing your browser’s data for this site, removing the app, or switching browsers can erase entries. Export a backup regularly.</p>
+    <div class="block prose" id="trackSetup">
+      <h2>My trackers</h2>
+      <p class="hint">Add anything else you want to rate each day, like “Felt flat” or “Restless”. Each is rated None, Mild, Moderate or Severe.</p>
+      <div class="kindlist" id="trackListSet"></div>
+      <div class="addrow"><label class="sr" for="trackNew">New tracker</label><input type="text" id="trackNew" maxlength="30" placeholder="e.g. Felt flat" autocomplete="off"><button class="btn primary" id="trackAdd">Add</button></div>
     </div>
 
+    <div class="block prose" id="medsSetup">
+      <h2>Medications</h2>
+      <p class="hint">Daily and as-needed meds appear on Today so you can tick them off. Long-acting ones (like an IUD) are noted there and in your summary. Use a nickname if you’d rather the name not show on screen. The app can’t send reminders, so a phone alarm still helps.</p>
+      <div id="medsManage"></div>
+      <div class="stack"><button class="btn" id="medAdd">Add a medication</button></div>
+      <div class="medform" id="medForm" hidden>
+        <label>Name or nickname<input type="text" id="mfName" maxlength="40" autocomplete="off"></label>
+        <label>Dose (optional)<input type="text" id="mfDose" maxlength="30" placeholder="e.g. 50 mg" autocomplete="off"></label>
+        <fieldset>
+          <legend>When do you take it?</legend>
+          <label class="inline"><input type="radio" name="mfSched" value="daily" checked> Every day</label>
+          <label class="inline"><input type="radio" name="mfSched" value="weekdays"> Certain days of the week</label>
+          <label class="inline"><input type="radio" name="mfSched" value="luteal"> Only in the days before my period</label>
+          <label class="inline"><input type="radio" name="mfSched" value="prn"> As needed</label>
+          <label class="inline"><input type="radio" name="mfSched" value="long"> Long-acting (IUD, implant, injection, ring)</label>
+        </fieldset>
+        <div class="daypick" id="mfDays" hidden></div>
+        <div id="mfLutWrap" hidden>
+          <label class="inline">Days before my period: <input type="number" id="mfLut" min="3" max="21" value="14" inputmode="numeric"></label>
+          <p class="hint" style="margin:4px 0 0">It shows up that many days before your period is due, and stays until your period starts.</p>
+        </div>
+        <fieldset id="mfTimeWrap">
+          <legend>Time of day</legend>
+          <label class="inline"><input type="radio" name="mfTime" value="am" checked> Morning</label>
+          <label class="inline"><input type="radio" name="mfTime" value="pm"> Evening</label>
+          <label class="inline"><input type="radio" name="mfTime" value="both"> Morning and evening</label>
+        </fieldset>
+        <label>Started or inserted<input type="date" id="mfStart"></label>
+        <label id="mfReplaceWrap" hidden>Replace by (optional)<input type="date" id="mfReplace"></label>
+        <div class="stack"><button class="btn primary" id="mfSave">Save</button><button class="btn" id="mfCancel">Cancel</button></div>
+        <p class="hint" id="mfMsg" aria-live="polite"></p>
+      </div>
+    </div>
+
+    <details class="block dtl" id="moveDtl"><summary>Movement <small id="moveStatus"></small></summary><div class="dbody" id="moveSetup">
+      <label class="inline"><input type="checkbox" id="moveToggle"> Track movement (adds a “Movement?” question to Today)</label>
+      <div id="moveKindsWrap">
+        <p class="hint" style="margin-top:10px">Your kinds of movement. Remove ones you never do; past days keep what you logged.</p>
+        <div class="kindlist" id="kindList"></div>
+        <div class="addrow"><label class="sr" for="kindNew">New kind of movement</label><input type="text" id="kindNew" maxlength="24" placeholder="e.g. Climbing" autocomplete="off"><button class="btn primary" id="kindAdd">Add</button></div>
+      </div>
+    </div></details>
+
+    <details class="block dtl"><summary>Journal tab <small id="journalStatus"></small></summary><div class="dbody">
+      <label class="inline"><input type="checkbox" id="journalToggle"> Show the Journal tab</label>
+      <p class="hint">Your notes are kept either way; they also appear under “Add a note” on Today.</p>
+    </div></details>
+
+    <details class="block dtl"><summary>About and how to edit</summary><div class="dbody prose">
+      <p>Cycle log is a private daily log for period, mood, symptoms, movement and meds. Everything stays in this browser on this device.</p>
+      <p><b>To change the app yourself:</b> the whole app is the <code>index.html</code> file in your GitHub repo. On GitHub, open the file, tap the pencil icon, make your edit, and tap <b>Commit changes</b>. Then open <code>sw.js</code> the same way and raise the version number in <code>cycle-log-v…</code> by one, so phones load the update. Open the app twice to see it.</p>
+      <p>You can also paste <code>index.html</code> into Claude and describe the change you want. The repo’s README has more detail, including how friends can copy it with <b>Fork</b>.</p>
+      <p class="hint">Symptom items are adapted from the Daily Record of Severity of Problems (Endicott, Nee &amp; Harrison, 2006). This is a personal log, not a diagnosis.</p>
+    </div></details>
+  </section>
+
+  <!-- DATA -->
+  <section id="view-data" role="tabpanel" aria-labelledby="tab-data" hidden>
     <div class="block prose">
-      <h2>Export</h2>
+      <h2>Summary report</h2>
+      <p>A summary of your recent cycles: mood and symptom patterns, the week before vs. after your period, cycle lengths and meds. Print it, save it as a PDF, or share it with your doctor.</p>
+      <div class="opts">
+        <fieldset>
+          <legend>Include</legend>
+          <label class="inline"><input type="radio" name="rcyc" value="3"> Last 3 cycles</label>
+          <label class="inline"><input type="radio" name="rcyc" value="6" checked> Last 6 cycles</label>
+          <label class="inline"><input type="radio" name="rcyc" value="all"> Everything</label>
+        </fieldset>
+        <label class="inline"><input type="checkbox" id="rptNotes"> Include journal notes</label>
+      </div>
+      <div class="stack"><button class="btn primary" id="rptBtn">Create report</button></div>
+    </div>
+
+    <div class="block prose" id="backupBlock">
+      <h2>Backup and move devices</h2>
       <p><strong id="lastBackup"></strong></p>
+      <p class="hint">An encrypted backup is one file locked with a passphrase you choose. Keep it somewhere like Google Drive or iCloud, then restore it on your phone or computer. Without the passphrase nobody can open it, including you, so write it down somewhere safe.</p>
+      <label class="fld">Passphrase<input type="password" id="bkPass" autocomplete="new-password"></label>
+      <div class="stack"><button class="btn primary" id="bkMake">Create encrypted backup</button><label class="btn" for="bkFile" style="display:inline-block">Restore a backup</label><input type="file" id="bkFile" accept=".cyclelog,application/json" class="sr"></div>
+      <p class="hint" id="bkMsg" aria-live="polite"></p>
+    </div>
+
+    <details class="block dtl"><summary>Plain CSV export or import</summary><div class="dbody prose">
+      <h3>Export CSV</h3>
       <p>One row per logged day, with columns <code>date</code>, <code>cycle_day</code> (day 1 = first bleeding day), <code>days_to_next_period</code> (−1 = the day before), <code>menses</code>, <code>mood</code> (1–5), <code>scale</code> (0-3 or 1-6), <code>skipped</code>, <code>item01</code>–<code>item24</code> in DRSP order, <code>notes</code>, <code>movement</code>, and one <code>med:</code> column per medication. Ratings are stored on the scale shown in the <code>scale</code> column.</p>
       <div class="stack">
         <button class="btn primary" id="exportBtn">Export CSV</button>
@@ -730,10 +842,7 @@ label.inline > input[type=radio]:first-child, label.inline > input[type=checkbox
       <p class="hint" id="exportMsg" aria-live="polite"></p>
       <label class="sr" for="csvOut">CSV text</label>
       <textarea class="csv-out" id="csvOut" readonly hidden></textarea>
-    </div>
-
-    <div class="block prose">
-      <h2>Import a backup</h2>
+      <h3 style="margin-top:16px">Import CSV</h3>
       <p>Choose a CSV exported from this page, or paste its contents below. Imported days replace any days with the same date.</p>
       <div class="stack">
         <label class="btn" for="importFile" style="display:inline-block">Choose file</label>
@@ -743,19 +852,39 @@ label.inline > input[type=radio]:first-child, label.inline > input[type=checkbox
       <textarea class="csv-out" id="pasteIn" placeholder="Or paste CSV here"></textarea>
       <div class="stack"><button class="btn" id="importPasteBtn">Import pasted CSV</button></div>
       <p class="hint" id="importMsg" aria-live="polite"></p>
-    </div>
+    </div></details>
 
-    <div class="block prose">
-      <h2>Delete everything</h2>
-      <p>Removes every entry from this browser. Export first if you want a copy.</p>
+    <details class="block dtl" id="pastDtl"><summary>Add past periods <small id="pastStatus"></small></summary><div class="dbody prose">
+      <p>Mark periods from before you started using the app, on a calendar or by pasting dates from a spreadsheet.</p>
+      <div class="stack"><button class="btn primary" id="pastOpen">Open past periods</button></div>
+    </div></details>
+
+    <details class="block dtl"><summary>Import from another app</summary><div class="dbody prose">
+      <p><b>Apple Health (iPhone):</b> in the Health app, tap your profile picture, then <b>Export All Health Data</b>. Unzip the file and choose <code>export.xml</code> below. Only period and spotting days are read.</p>
+      <div class="stack"><label class="btn" for="ahFile" style="display:inline-block">Choose export.xml</label><input type="file" id="ahFile" accept=".xml,text/xml" class="sr"></div>
+      <p class="hint" id="ahMsg" aria-live="polite"></p>
+      <p class="hint">This hasn’t been tested with every iOS version yet. You can undo it under Add past periods.</p>
+      <p><b>Other apps (Clue, Flo and others):</b> export or request your data from the app, open it in a spreadsheet, then use the paste option in <b>Add past periods</b>.</p>
+    </div></details>
+
+    <details class="block dtl"><summary>Where your entries live</summary><div class="dbody prose">
+      <p>The website only delivers this page. Everything you enter is saved in this browser on this device and is never sent to the site or anyone else.</p>
+      <p>Always open the app from its icon. Clearing your browser’s data for this site, removing the app, or switching browsers can erase entries, so back up regularly.</p>
+    </div></details>
+
+    <details class="block dtl"><summary>Delete everything</summary><div class="dbody prose">
+      <p>Removes every entry and setting from this browser. Make a backup first if you want a copy.</p>
       <div class="stack"><button class="btn danger" id="deleteAll">Delete all entries</button></div>
-    </div>
-
-    <div class="block prose">
-      <p class="hint">Items follow the Daily Record of Severity of Problems (Endicott, Nee &amp; Harrison, 2006), rated None to Severe by default, or 1–6 if you choose the full scale. This page is a personal log, not a diagnosis.</p>
-    </div>
+    </div></details>
   </section>
 </main>
+<nav class="bnav" role="tablist" aria-label="Sections">
+  <button class="tab" role="tab" id="tab-log" aria-selected="true" data-view="log"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4 7 17M17 7l1.4-1.4"/></svg><span>Today</span></button>
+  <button class="tab" role="tab" id="tab-history" aria-selected="false" data-view="history"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M4 10h16M4 15h16M10 4v16"/></svg><span>Patterns</span></button>
+  <button class="tab" role="tab" id="tab-journal" aria-selected="false" data-view="journal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h11a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H6z"/><path d="M6 3v18M9 8h6M9 12h6"/></svg><span>Journal</span></button>
+  <button class="tab" role="tab" id="tab-settings" aria-selected="false" data-view="settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></svg><span>Settings</span></button>
+  <button class="tab" role="tab" id="tab-data" aria-selected="false" data-view="data"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg><span>Data</span></button>
+</nav>
 
 <script>
 (function(){
@@ -846,7 +975,7 @@ label.inline > input[type=radio]:first-child, label.inline > input[type=checkbox
   function blank(){ return {m:"none", r:ITEMS.map(function(){return null;}), n:"", mood:null, g:{}}; }
   function get(d){ return store.entries[d] || null; }
   function ensure(d){ if(!store.entries[d]) store.entries[d] = blank(); return store.entries[d]; }
-  function isEmpty(e){ return !e || (e.m==="none" && !e.mx && !e.skip && !e.jm && !e.sy && !e.mvy && !(e.md && Object.keys(e.md).length) && e.mood==null && e.r.every(function(v){return v==null;}) && !e.n); }
+  function isEmpty(e){ return !e || (e.m==="none" && !e.mx && !e.skip && !e.jm && !e.sy && !e.mvy && !(e.md && Object.keys(e.md).length) && !(e.tr && Object.keys(e.tr).length) && e.mood==null && e.r.every(function(v){return v==null;}) && !e.n); }
   function tidy(d){ if(isEmpty(store.entries[d])) delete store.entries[d]; }
   function ratedCount(e){ return e ? e.r.filter(function(v){return v!=null;}).length : 0; }
   function hasRatings(e){ return !!e && e.r.some(function(v){ return v!=null; }); }
@@ -951,14 +1080,17 @@ label.inline > input[type=radio]:first-child, label.inline > input[type=checkbox
     });
   });
   tilesEl.addEventListener("click", function(ev){
-    var t = ev.target.closest(".tile"); if(!t) return;
-    var e = ensure(cur), g = DOMAINS.filter(function(x){ return x.key===t.dataset.g; })[0]; if(!g) return;
-    e.sc = hasRatings(e) ? entryScale(e) : builtScale; e.cg = e.cg || {}; e.sy = "yes";
-    var on = !groupOn(e, g), b0 = baseVal(e.sc);
-    e.cg[g.key] = on;
-    g.items.forEach(function(i){ if(on){ if(e.r[i]==null) e.r[i] = b0; } else e.r[i] = b0; });
+    var vb = ev.target.closest("button[data-v]");
+    if(vb){ var e1 = ensure(cur); e1.sc = hasRatings(e1) ? entryScale(e1) : builtScale; e1.r[+vb.dataset.i] = +vb.dataset.v; persist(); renderLog(); return; }
+    var h = ev.target.closest(".gh"); if(!h) return;
+    var g = DOMAINS.filter(function(x){ return x.key===h.dataset.gk; })[0]; if(!g) return;
+    var key = cur + "|" + g.key;
+    if(openG[key]){ delete openG[key]; renderLog(); return; }
+    openG[key] = true;
+    var e = ensure(cur); e.sc = hasRatings(e) ? entryScale(e) : builtScale; e.cg = e.cg || {}; e.sy = "yes"; e.cg[g.key] = true;
+    var b0 = baseVal(e.sc); g.items.forEach(function(i){ if(e.r[i]==null) e.r[i] = b0; });
     persist(); renderLog();
-    if(on){ var card = document.getElementById("gc-"+g.key); if(card) setTimeout(function(){ card.scrollIntoView({behavior:"smooth", block:"nearest"}); }, 50); }
+    var hh = tilesEl.querySelector('.gh[data-gk="'+g.key+'"]'); if(hh) setTimeout(function(){ hh.scrollIntoView({behavior:"smooth", block:"nearest"}); }, 40);
   });
   cardsEl.addEventListener("click", function(ev){
     var b = ev.target.closest("button[data-v]"); if(!b) return;
@@ -1108,18 +1240,22 @@ label.inline > input[type=radio]:first-child, label.inline > input[type=checkbox
   var TLABEL = {am:"Morning", pm:"Evening", x:"Took it"};
   var WD = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
   function schedText(m){
-    var t = m.sched==="prn" ? "" : (m.time==="both" ? ", morning and evening" : m.time==="pm" ? ", evening" : ", morning");
+    var t = (m.sched==="prn" || m.sched==="long") ? "" : (m.time==="both" ? ", morning and evening" : m.time==="pm" ? ", evening" : ", morning");
     if(m.sched==="daily") return "Every day" + t;
     if(m.sched==="weekdays") return (m.days||[]).slice().sort().map(function(x){ return WD[x]; }).join(", ") + t;
     if(m.sched==="luteal") return "Last " + (m.lut||14) + " days before period" + t;
+    if(m.sched==="long") return "Long-acting" + (m.replace ? ", replace by " + fmt(m.replace) : "");
     return "As needed";
   }
-  function medsForDay(d){ return meds().filter(function(m){ return medActive(m, d) && (m.sched==="prn" || medDue(m, d)); }); }
+  function medsForDay(d){ return meds().filter(function(m){ return m.sched!=="long" && medActive(m, d) && (m.sched==="prn" || medDue(m, d)); }); }
+  function longMeds(d){ return meds().filter(function(m){ return m.sched==="long" && medActive(m, d); }); }
   function medTaken(e, m, t){ return !!(e && e.md && e.md[m.id] && e.md[m.id][t]); }
+  function prnTaken(e){ return !!(e && e.md && meds().some(function(m){ return m.sched==="prn" && e.md[m.id] && e.md[m.id].x; })); }
   function anyMedTaken(e){ return !!(e && e.md && Object.keys(e.md).some(function(k){ var o = e.md[k]; return o && Object.keys(o).some(function(t){ return o[t]; }); })); }
   function renderMedsCard(e){
     var list = medsForDay(cur), card = document.getElementById("medsCard"), box = document.getElementById("medsList");
-    card.hidden = !list.length; box.innerHTML = "";
+    var lm = longMeds(cur);
+    card.hidden = !list.length && !lm.length; box.innerHTML = "";
     list.forEach(function(m){
       var row = document.createElement("div"); row.className = "medrow";
       var mn = document.createElement("div"); mn.className = "mn";
@@ -1135,6 +1271,7 @@ label.inline > input[type=radio]:first-child, label.inline > input[type=checkbox
       });
       row.appendChild(mn); row.appendChild(bt); box.appendChild(row);
     });
+    lm.forEach(function(m){ var d = document.createElement("div"); d.className = "la"; d.textContent = "On long-acting: " + m.name + (m.dose ? " " + m.dose : "") + ", since " + parse(m.start).toLocaleDateString(undefined,{month:"short", year:"numeric"}); box.appendChild(d); });
   }
   document.getElementById("medsList").addEventListener("click", function(ev){
     var b = ev.target.closest("button[data-med]"); if(!b) return;
@@ -1152,7 +1289,8 @@ label.inline > input[type=radio]:first-child, label.inline > input[type=checkbox
     var sc = mfSched();
     document.getElementById("mfDays").hidden = sc!=="weekdays";
     document.getElementById("mfLutWrap").hidden = sc!=="luteal";
-    document.getElementById("mfTimeWrap").hidden = sc==="prn";
+    document.getElementById("mfTimeWrap").hidden = sc==="prn" || sc==="long";
+    document.getElementById("mfReplaceWrap").hidden = sc!=="long";
   }
   document.querySelectorAll("input[name=mfSched]").forEach(function(x){ x.addEventListener("change", syncMedForm); });
   function openMedForm(m){
@@ -1164,6 +1302,7 @@ label.inline > input[type=radio]:first-child, label.inline > input[type=checkbox
     document.getElementById("mfLut").value = m && m.lut ? m.lut : 14;
     document.querySelectorAll("input[name=mfTime]").forEach(function(x){ x.checked = x.value===(m && m.time ? m.time : "am"); });
     document.getElementById("mfStart").value = m ? m.start : todayIso();
+    document.getElementById("mfReplace").value = m && m.replace ? m.replace : "";
     document.getElementById("mfStart").max = todayIso();
     document.getElementById("mfMsg").textContent = "";
     document.getElementById("medForm").hidden = false; document.getElementById("medAdd").hidden = true;
@@ -1182,7 +1321,7 @@ label.inline > input[type=radio]:first-child, label.inline > input[type=checkbox
     var tm = (document.querySelector("input[name=mfTime]:checked")||{}).value || "am";
     var m = editingMed ? meds().filter(function(x){ return x.id===editingMed; })[0] : null;
     if(!m){ m = {id:"m" + Date.now().toString(36)}; meds().push(m); }
-    m.name = name; m.dose = document.getElementById("mfDose").value.trim(); m.sched = sc; m.days = days; m.lut = lut; m.time = tm; m.start = st;
+    m.name = name; m.dose = document.getElementById("mfDose").value.trim(); m.sched = sc; m.days = days; m.lut = lut; m.time = tm; m.start = st; m.replace = sc==="long" && validIso(document.getElementById("mfReplace").value) ? document.getElementById("mfReplace").value : null;
     persist(); closeMedForm(); renderMedsManage(); renderLog();
   });
   function renderMedsManage(){
@@ -1299,7 +1438,52 @@ label.inline > input[type=radio]:first-child, label.inline > input[type=checkbox
     store.settings = store.settings || {}; store.settings.move = ev.target.checked; kinds(); persist(); renderKinds(); renderLog();
   });
 
+  // ---------- my trackers ----------
+  function trackers(){ if(!store.trackers) store.trackers = []; return store.trackers; }
+  function addTracker(name){
+    name = String(name||"").trim().slice(0,30); if(!name) return null;
+    var ex = trackers().filter(function(x){ return x.name.toLowerCase()===name.toLowerCase(); })[0];
+    if(ex){ ex.off = false; return ex; }
+    var t = {id:"t" + Date.now().toString(36) + Math.floor(Math.random()*99), name:name}; trackers().push(t); return t;
+  }
+  function renderTrackCard(e){
+    var list = trackers().filter(function(x){ return !x.off; }), card = document.getElementById("trackCard"), box = document.getElementById("trackList");
+    card.hidden = !list.length || !!e.skip; box.innerHTML = "";
+    list.forEach(function(t){
+      var r = document.createElement("div"); r.className = "trow";
+      var p = document.createElement("p"); p.id = "tr-"+t.id; p.textContent = t.name; r.appendChild(p);
+      var sc = document.createElement("div"); sc.className = "scale"; sc.setAttribute("role","group"); sc.setAttribute("aria-labelledby","tr-"+t.id);
+      [0,1,2,3].forEach(function(v){ var b = document.createElement("button"); b.textContent = SEV[v]; b.dataset.tr = t.id; b.dataset.v = v; b.setAttribute("aria-pressed", String(!!(e.tr && e.tr[t.id]===v))); sc.appendChild(b); });
+      r.appendChild(sc); box.appendChild(r);
+    });
+  }
+  document.getElementById("trackList").addEventListener("click", function(ev){
+    var b = ev.target.closest("button[data-tr]"); if(!b) return;
+    var e = ensure(cur); e.tr = e.tr || {};
+    var v = +b.dataset.v; if(e.tr[b.dataset.tr]===v) delete e.tr[b.dataset.tr]; else e.tr[b.dataset.tr] = v;
+    if(!Object.keys(e.tr).length) delete e.tr;
+    tidy(cur); persist(); renderLog();
+  });
+  function renderTrackSettings(){
+    var box = document.getElementById("trackListSet"); box.innerHTML = "";
+    trackers().filter(function(x){ return !x.off; }).forEach(function(t){
+      var r = document.createElement("div"); r.className = "row2";
+      r.innerHTML = '<span class="nm"><span></span></span><button class="x">×</button>';
+      r.querySelector(".nm span").textContent = t.name; var x = r.querySelector(".x"); x.dataset.t = t.id; x.setAttribute("aria-label", "Remove " + t.name);
+      box.appendChild(r);
+    });
+  }
+  document.getElementById("trackListSet").addEventListener("click", function(ev){
+    var b = ev.target.closest(".x"); if(!b) return;
+    var t = trackers().filter(function(x){ return x.id===b.dataset.t; })[0]; if(t){ t.off = true; persist(); renderTrackSettings(); renderLog(); }
+  });
+  document.getElementById("trackAdd").addEventListener("click", function(){
+    var inp = document.getElementById("trackNew"); if(addTracker(inp.value)){ inp.value = ""; persist(); renderTrackSettings(); renderLog(); }
+  });
+  document.getElementById("trackNew").addEventListener("keydown", function(ev){ if(ev.key==="Enter") document.getElementById("trackAdd").click(); });
+
   // ---------- render today ----------
+  var openG = {};
   function renderGroups(e){
     var st = symState(e), sc = hasRatings(e) ? entryScale(e) : settingScale();
     builtScale = sc;
@@ -1308,27 +1492,30 @@ label.inline > input[type=radio]:first-child, label.inline > input[type=checkbox
     if(st!=="yes") return;
     var vals = sc===6 ? [1,2,3,4,5,6] : [0,1,2,3];
     DOMAINS.forEach(function(g){
-      var on = groupOn(e, g);
-      var t = document.createElement("button"); t.className = "tile g-"+g.key; t.dataset.g = g.key; t.setAttribute("aria-pressed", String(on));
-      t.innerHTML = '<span class="em">'+icon(g.key, 24)+'</span><span><b></b><small></small></span>';
-      t.querySelector("b").textContent = g.q; t.querySelector("small").textContent = g.sub;
-      tilesEl.appendChild(t);
-      if(!on) return;
-      var card = document.createElement("div"); card.className = "gcard g-"+g.key; card.id = "gc-"+g.key;
-      var hd = document.createElement("div"); hd.className = "hd"; hd.innerHTML = icon(g.key, 18);
-      hd.appendChild(document.createTextNode(g.q)); card.appendChild(hd);
-      g.items.forEach(function(i){
-        var it = document.createElement("div"); it.className = "it";
-        var q = document.createElement("p"); q.id = "q"+i; q.textContent = ITEMS[i]; it.appendChild(q);
-        var row = document.createElement("div"); row.className = "scale" + (sc===6 ? " six" : ""); row.setAttribute("role","group"); row.setAttribute("aria-labelledby","q"+i);
-        vals.forEach(function(v){
-          var b = document.createElement("button"); b.className = levelClass(v, sc);
-          b.textContent = sc===6 ? v + " " + SEV6[v-1] : SEV[v]; b.dataset.v = v; b.dataset.i = i;
-          b.setAttribute("aria-pressed", String(e.r[i]===v)); row.appendChild(b);
+      var key = cur + "|" + g.key, opened = !!openG[key];
+      var wrap = document.createElement("div"); wrap.className = "grp g-" + g.key;
+      var hd = document.createElement("button"); hd.className = "gh"; hd.dataset.gk = g.key; hd.setAttribute("aria-expanded", String(opened));
+      var ns = g.items.map(function(i){ return norm(e.r[i], sc); }).filter(function(x){ return x!=null; });
+      var pill = "";
+      if(ns.length){ var mx = Math.max.apply(null, ns); pill = mx>0 ? sevLabel(mx).replace(/^./, function(c){ return c.toUpperCase(); }) : "None"; }
+      hd.innerHTML = icon(g.key, 20) + '<span class="n"><b></b><span></span></span>' + (pill ? '<span class="pill">'+pill+'</span>' : '') + '<span class="chev" aria-hidden="true">'+(opened ? '▾' : '▸')+'</span>';
+      hd.querySelector("b").textContent = g.q; hd.querySelector(".n span").textContent = g.sub;
+      wrap.appendChild(hd);
+      if(opened){
+        var body = document.createElement("div"); body.className = "gbody";
+        g.items.forEach(function(i){
+          var q = document.createElement("p"); q.className = "q"; q.id = "q"+i; q.textContent = ITEMS[i]; body.appendChild(q);
+          var row = document.createElement("div"); row.className = "scale" + (sc===6 ? " six" : ""); row.setAttribute("role","group"); row.setAttribute("aria-labelledby","q"+i);
+          vals.forEach(function(v){
+            var b = document.createElement("button"); b.className = levelClass(v, sc);
+            b.textContent = sc===6 ? v + " " + SEV6[v-1] : SEV[v]; b.dataset.v = v; b.dataset.i = i;
+            b.setAttribute("aria-pressed", String(e.r[i]===v)); row.appendChild(b);
+          });
+          body.appendChild(row);
         });
-        it.appendChild(row); card.appendChild(it);
-      });
-      cardsEl.appendChild(card);
+        wrap.appendChild(body);
+      }
+      tilesEl.appendChild(wrap);
     });
     var note = document.getElementById("scaleNote");
     note.hidden = !(hasRatings(e) && entryScale(e) !== settingScale());
@@ -1388,6 +1575,7 @@ label.inline > input[type=radio]:first-child, label.inline > input[type=checkbox
         parts.push(list.length ? "Symptoms: " + list.join(", ") + "." : "No symptoms.");
       } else if(e.jm) parts.push("Just mood, no symptom questions.");
     }
+    if(e.tr){ var tl = trackers().filter(function(x){ return e.tr[x.id]!=null && e.tr[x.id]>0; }).map(function(x){ return x.name + " (" + sevLabel(e.tr[x.id]) + ")"; }); if(tl.length) parts.push(tl.join(", ") + "."); }
     if(e.mvy==="no") parts.push("No movement.");
     else if(e.mvy==="yes") parts.push((e.mvk && e.mvk.length) ? "Movement: " + e.mvk.map(function(id){ return kindName(id).toLowerCase(); }).join(", ") + "." : "Moved today.");
     var dueM = medsForDay(cur);
@@ -1395,6 +1583,7 @@ label.inline > input[type=radio]:first-child, label.inline > input[type=checkbox
       var mt = [];
       dueM.forEach(function(m){
         var ts = medTimes(m), got = ts.filter(function(t){ return medTaken(e, m, t); }).length;
+        if(m.sched==="long") return;
         if(m.sched==="prn"){ if(got) mt.push(m.name + " taken"); }
         else mt.push(m.name + (got===ts.length ? " taken" : got ? " partly taken" : " not ticked"));
       });
@@ -1444,6 +1633,7 @@ label.inline > input[type=radio]:first-child, label.inline > input[type=checkbox
       document.querySelectorAll("#itemsBlock .sy button").forEach(function(b){ b.setAttribute("aria-pressed", String(symState(stored)===b.dataset.sy)); });
       if(why){ cardsEl.innerHTML = ""; } else renderGroups(e);
     }
+    renderTrackCard(e);
     renderMoveCard(e);
     renderMedsCard(e);
     if(document.activeElement!==notesEl) notesEl.value = e.n || "";
@@ -1454,12 +1644,12 @@ label.inline > input[type=radio]:first-child, label.inline > input[type=checkbox
   function sevColor(m){
     return "var(--y"+Math.min(3, Math.max(0, Math.round(m)))+")";
   }
-  var histRange = "90", histView = "cycles", colorBy = "mood", alignEnd = false, showAllCycles = false, pixYear = new Date().getFullYear();
+  var histRange = "90", histView = "cycles", colorBy = "mood", alignEnd = true, histCount = "6", pixYear = new Date().getFullYear();
   function setPressed(groupSel, btn){ document.querySelectorAll(groupSel+" button").forEach(function(x){ x.setAttribute("aria-pressed", String(x===btn)); }); }
   document.querySelectorAll("#viewSel button").forEach(function(b){ b.addEventListener("click", function(){ histViewChosen = true; histView = b.dataset.hv; setPressed("#viewSel", b); renderHistory(); }); });
   document.querySelectorAll("#colorSel button").forEach(function(b){ b.addEventListener("click", function(){ colorBy = b.dataset.color; setPressed("#colorSel", b); renderHistory(); }); });
   document.querySelectorAll("#alignSel button").forEach(function(b){ b.addEventListener("click", function(){ alignEnd = b.dataset.align==="end"; setPressed("#alignSel", b); renderHistory(); }); });
-  document.getElementById("showAllCycles").addEventListener("change", function(ev){ showAllCycles = ev.target.checked; renderHistory(); });
+  document.querySelectorAll("#cntSel button").forEach(function(b){ b.addEventListener("click", function(){ histCount = b.dataset.n; setPressed("#cntSel", b); renderHistory(); }); });
   document.getElementById("yPrev").addEventListener("click", function(){ pixYear--; renderHistory(); });
   document.getElementById("yNext").addEventListener("click", function(){ pixYear++; renderHistory(); });
   var SVGNS = "http://www.w3.org/2000/svg";
@@ -1481,9 +1671,9 @@ label.inline > input[type=radio]:first-child, label.inline > input[type=checkbox
       var bh = Math.max(2, Math.round(hgt*0.25));
       g.appendChild(sv("rect",{x:x,y:y+hgt-bh,width:size,height:bh,fill:e.m==="bleeding"?"var(--bleed)":"var(--spot)"}));
     }
-    if(anyMedTaken(e)){ var rr = Math.max(1.5, Math.min(3, size*0.14)); g.appendChild(sv("circle",{cx:x+size-rr-1, cy:y+rr+1, r:rr, fill:"var(--ink)"})); }
+    if(prnTaken(e)){ var rr = Math.max(1.5, Math.min(3, size*0.14)); g.appendChild(sv("circle",{cx:x+size-rr-1, cy:y+rr+1, r:rr, fill:"var(--ink)"})); }
     var tt = sv("title",{});
-    tt.textContent = fmt(d) + (anyMedTaken(e) ? ", meds taken" : "") + (e && e.mood!=null ? ", mood " + e.mood : "") + (symptomMean(e)!=null ? ", symptoms " + symptomMean(e).toFixed(1) : "") + (e && e.m!=="none" ? ", " + e.m : "");
+    tt.textContent = fmt(d) + (prnTaken(e) ? ", as-needed med taken" : "") + (e && e.mood!=null ? ", mood " + e.mood : "") + (symptomMean(e)!=null ? ", symptoms " + symptomMean(e).toFixed(1) : "") + (e && e.m!=="none" ? ", " + e.m : "");
     g.appendChild(tt); svgEl.appendChild(g);
   }
   function openDayFromSvg(svgEl){
@@ -1494,29 +1684,138 @@ label.inline > input[type=radio]:first-child, label.inline > input[type=checkbox
   }
   function renderHistControls(){
     document.querySelectorAll("#view-history [data-for]").forEach(function(n){ n.hidden = n.dataset.for!==histView; });
-    document.getElementById("colorSel").hidden = histView==="timeline";
+    document.querySelectorAll("#viewSel button").forEach(function(x){ x.setAttribute("aria-pressed", String(x.dataset.hv===histView)); });
     var hint = "", leg = document.getElementById("histLegend");
-    if(histView==="cycles") hint = alignEnd ? "Each row ends the day before the next period starts, so premenstrual days line up on the right. Your current cycle appears once your next period starts." : "Each row is one cycle, newest at the top, starting on the first day of your period. Tap a square to open that day.";
-    else if(histView==="year") hint = "Each square is one day. Tap a square to open it.";
-    else hint = "Mood is 1 (very low) to 5 (very good). Symptoms are the day’s average, 0 (none) to 3 (severe). Tap a day to open it.";
-    if(colorBy==="move" && histView!=="timeline"){
+    if(histView==="cycles") hint = alignEnd ? "One row per cycle. Rows end the day before a period, so the days before it line up on the right." : "One row per cycle, starting on the first day of your period.";
+    else if(histView==="year") hint = "Each square is one day. Tap one to open it.";
+    else hint = "Every period you’ve logged, one row per year.";
+    if(histView==="year" && colorBy==="move"){
       var yes = 0, ans = 0, t0 = todayIso();
       for(var q=0;q<28;q++){ var eq = store.entries[addDays(t0,-q)]; if(eq && eq.mvy){ ans++; if(eq.mvy==="yes") yes++; } }
       hint += " Moved on " + yes + " of the last 28 days" + (ans<28 ? " (" + (28-ans) + " not answered)." : ".");
     }
     document.getElementById("histHint").textContent = hint;
-    var parts = [];
-    function sw(color, label, extra){ return '<span><span class="sw" style="background:'+color+(extra||'')+'"></span>'+label+'</span>'; }
-    if(histView==="timeline"){
-      parts = [sw("var(--accent)","Mood",";border-radius:50%"), sw("var(--y2)","Symptoms"), sw("var(--bleed)","Bleeding"), sw("var(--spot)","Spotting"), sw("var(--muted)","Period start",";width:2px")];
-    } else {
-      if(colorBy==="mood") parts = [sw("var(--m1)","1 Very low"), sw("var(--m2)","2 Low"), sw("var(--m3)","3 Okay"), sw("var(--m4)","4 Good"), sw("var(--m5)","5 Very good")];
-      else if(colorBy==="move") parts = [sw("var(--g-physical-sel)","Moved"), sw("var(--t-move)","No movement",";box-shadow:inset 0 0 0 1px var(--t-move-line)")];
-      else parts = [sw("var(--y0)","None"), sw("var(--y1)","Mild"), sw("var(--y2)","Moderate"), sw("var(--y3)","Severe")];
-      if(meds().length) parts.push(sw("var(--ink)","Med taken (dot)",";border-radius:50%;width:8px;height:8px"));
-      parts.push(sw("var(--bleed)","Bleeding (bar)"), sw("var(--spot)","Spotting"), sw("var(--line)","Skipped"), sw("transparent","No entry",";box-shadow:inset 0 0 0 1px var(--line)"));
+    leg.hidden = histView!=="year";
+    leg.innerHTML = legendFor(colorBy);
+  }
+  function swHtml(color, label, extra){ return '<span><span class="sw" style="background:'+color+(extra||'')+'"></span>'+label+'</span>'; }
+  function legendFor(kind){
+    var parts;
+    if(kind==="mood") parts = [swHtml("var(--m1)","Very low"), swHtml("var(--m2)","Low"), swHtml("var(--m3)","Okay"), swHtml("var(--m4)","Good"), swHtml("var(--m5)","Great")];
+    else if(kind==="move") parts = [swHtml("var(--g-physical-sel)","Moved"), swHtml("var(--t-move)","No movement",";box-shadow:inset 0 0 0 1px var(--t-move-line)")];
+    else parts = [swHtml("var(--y0)","None"), swHtml("var(--y1)","Mild"), swHtml("var(--y2)","Moderate"), swHtml("var(--y3)","Severe")];
+    parts.push(swHtml("var(--bleed)","Period"));
+    return parts.join("");
+  }
+  function cycleWindows(cycles){
+    var pre = [], post = [], t = todayIso();
+    cycles.forEach(function(c){
+      var next = addDays(c.end, 1);
+      if(next <= t) for(var k=1;k<=7;k++) pre.push(addDays(next,-k));
+      for(var k2=3;k2<=9;k2++){ var d = addDays(c.start,k2); if(d<=t && d<=c.end) post.push(d); }
+    });
+    return {pre:pre, post:post};
+  }
+  function statOf(kind, days){
+    var vals = [];
+    days.forEach(function(d){ var e = store.entries[d]; if(!e || e.skip) return;
+      if(kind==="mood"){ if(e.mood!=null) vals.push(e.mood); }
+      else if(kind==="sym"){ var m = symptomMean(e); if(m!=null) vals.push(m); }
+      else if(kind==="move"){ if(e.mvy) vals.push(e.mvy==="yes" ? 1 : 0); }
+      else if(kind.indexOf("tr:")===0){ var v = e.tr && e.tr[kind.slice(3)]; if(v!=null) vals.push(v); }
+    });
+    if(!vals.length) return "–";
+    var a = vals.reduce(function(x,y){ return x+y; },0)/vals.length;
+    return kind==="move" ? Math.round(a*100)+"%" : a.toFixed(1);
+  }
+  function cycleList(ons){
+    var t = todayIso(), cycles = [];
+    ons.forEach(function(o, i){
+      var next = ons[i+1];
+      if(next && diffDays(o,next) > 60) return;
+      if(!next && alignEnd) return;
+      var endD = next ? addDays(next,-1) : t;
+      var L = diffDays(o,endD)+1; if(!next && L > 60) return;
+      cycles.push({start:o, end:endD, len:L});
+    });
+    return histCount==="all" ? cycles : cycles.slice(-(+histCount));
+  }
+  function drawCycleCards(area, ons){
+    if(!ons.length){ area.innerHTML = '<p class="empty">Mark at least one period to see your cycles.</p>'; return; }
+    var cyc = cycleList(ons);
+    if(!cyc.length){ area.innerHTML = '<p class="empty">Not enough complete cycles yet. Rows appear once you have a period start followed by another.</p>'; return; }
+    var w = cycleWindows(cyc), saved = colorBy;
+    function card(kind, title, cls, stats){
+      var c = document.createElement("div"); c.className = "pcard " + cls;
+      var h = document.createElement("h3"); h.textContent = title; c.appendChild(h);
+      var body = document.createElement("div"); c.appendChild(body); area.appendChild(c);
+      colorBy = kind; drawCycleRows(body, ons);
+      var lg = document.createElement("div"); lg.className = "mini-leg"; lg.innerHTML = legendFor(kind); c.appendChild(lg);
+      if(stats){ var st = document.createElement("div"); st.className = "pstat";
+        st.innerHTML = '<div><b>'+statOf(kind, w.pre)+'</b>Week before period</div><div><b>'+statOf(kind, w.post)+'</b>Week after (days 4–10)</div>'; c.appendChild(st); }
     }
-    leg.innerHTML = parts.join("");
+    card("mood","Mood","k-mood",true);
+    if(setting("mode","every")!=="mood" || Object.keys(store.entries).some(function(k){ return hasRatings(store.entries[k]); })) card("sym","Symptoms","k-sym",true);
+    var trs = trackers().filter(function(x){ return !x.off; });
+    if(moveOn() || trs.length){
+      var d = document.createElement("details"); d.className = "block dtl";
+      d.innerHTML = '<summary>Movement and trackers</summary><div class="dbody"></div>';
+      area.appendChild(d); var db = d.querySelector(".dbody"); var holdArea = area; area = db;
+      if(moveOn()) card("move","Movement","k-move",true);
+      if(trs.length){
+        var tb = '<table><thead><tr><th>Tracker (0–3)</th><th class="num">Week before</th><th class="num">Week after</th></tr></thead><tbody>';
+        trs.forEach(function(x){ tb += '<tr><td>'+esc(x.name)+'</td><td class="num">'+statOf("tr:"+x.id, w.pre)+'</td><td class="num">'+statOf("tr:"+x.id, w.post)+'</td></tr>'; });
+        db.insertAdjacentHTML("beforeend", tb + '</tbody></table>');
+      }
+      area = holdArea;
+    }
+    colorBy = saved;
+  }
+  function drawAllPeriods(area){
+    var ons = onsets(), t = todayIso();
+    var bleedKeys = Object.keys(store.entries).filter(function(k){ var e = store.entries[k]; return e.m && e.m!=="none"; }).sort();
+    if(!bleedKeys.length){ area.innerHTML = '<p class="empty">No periods logged yet. Add past ones under Data → Add past periods.</p>'; return; }
+    var y0 = parse(bleedKeys[0]).getFullYear(), y1 = new Date().getFullYear();
+    var card = document.createElement("div"); card.className = "pcard";
+    card.innerHTML = '<h3>Period history, ' + y0 + (y1>y0 ? ' to ' + y1 : '') + '</h3>';
+    var avail = Math.max(260, (area.clientWidth || 340) - 26), labW = 38, W = avail - labW, rowH = 18, top = 14;
+    var years = []; for(var y=y1; y>=y0; y--) years.push(y);
+    var svgEl = sv("svg",{width:avail, height: top + years.length*(rowH+6), role:"img", "aria-label":"Period days by year"});
+    ["J","F","M","A","M","J","J","A","S","O","N","D"].forEach(function(m, i){ var tx = sv("text",{x: labW + (i+0.5)*W/12, y:10, "font-size":"10", fill:"var(--muted)", "text-anchor":"middle"}); tx.textContent = m; svgEl.appendChild(tx); });
+    years.forEach(function(y, r){
+      var yy = top + r*(rowH+6);
+      var lb = sv("text",{x:labW-6, y:yy+rowH/2+4, "font-size":"11", fill:"var(--muted)", "text-anchor":"end"}); lb.textContent = y; svgEl.appendChild(lb);
+      svgEl.appendChild(sv("rect",{x:labW, y:yy, width:W, height:rowH, rx:3, fill:"var(--t-period)", stroke:"var(--t-period-line)"}));
+      var days = (y%4===0 && (y%100!==0 || y%400===0)) ? 366 : 365, dw = W/days;
+      bleedKeys.forEach(function(k){ var dd = parse(k); if(dd.getFullYear()!==y) return;
+        var doy = diffDays(y+"-01-01", k), e = store.entries[k];
+        svgEl.appendChild(sv("rect",{x: labW + doy*dw, y: yy+2, width: Math.max(1.2, dw), height: rowH-4, fill: e.m==="bleeding" ? "var(--bleed)" : "var(--spot)"}));
+      });
+    });
+    card.appendChild(svgEl);
+    var L = []; for(var i=1;i<ons.length;i++){ var d = diffDays(ons[i-1], ons[i]); if(d>=15 && d<=60) L.push(d); }
+    var Ls = L.slice().sort(function(a,b){ return a-b; });
+    function pct(a, p){ return a.length ? a[Math.min(a.length-1, Math.max(0, Math.round((a.length-1)*p)))] : null; }
+    var pl = ons.map(function(o){ var n=0; for(var d2=o; store.entries[d2] && store.entries[d2].m==="bleeding"; d2=addDays(d2,1)) n++; return n; }).sort(function(a,b){ return a-b; });
+    var st = document.createElement("div"); st.className = "pstat";
+    st.innerHTML = '<div><b>'+(Ls.length ? pct(Ls,.5)+' days' : '–')+'</b>Median cycle</div><div><b>'+(Ls.length>2 ? pct(Ls,.1)+'–'+pct(Ls,.9) : '–')+'</b>Usual range</div><div><b>'+(pl.length ? pct(pl,.5)+' days' : '–')+'</b>Typical period</div>';
+    card.appendChild(st); area.appendChild(card);
+    if(L.length > 2){
+      var c2 = document.createElement("div"); c2.className = "pcard";
+      c2.innerHTML = '<h3>Cycle length over time</h3>';
+      var H = 120, padL = 26, padB = 16, Wc = avail - padL;
+      var g = sv("svg",{width:avail, height:H, role:"img", "aria-label":"Cycle length for each cycle over time"});
+      var lo = Math.min(20, Ls[0]), hi = Math.max(40, Ls[Ls.length-1]);
+      function yv(v){ return 6 + (hi - v)/(hi - lo)*(H - padB - 12); }
+      [21,28,35].forEach(function(v){ if(v<lo||v>hi) return; g.appendChild(sv("line",{x1:padL, x2:avail, y1:yv(v), y2:yv(v), stroke:"var(--line)"})); var tx = sv("text",{x:padL-4, y:yv(v)+4, "font-size":"10", fill:"var(--muted)", "text-anchor":"end"}); tx.textContent = v; g.appendChild(tx); });
+      var pts = []; for(var i2=1;i2<ons.length;i2++){ var d3 = diffDays(ons[i2-1], ons[i2]); if(d3>=15 && d3<=60) pts.push([ons[i2-1], d3]); }
+      var tA = parse(pts[0][0]).getTime(), tB = parse(t).getTime();
+      pts.forEach(function(pq){ var x = padL + 4 + (parse(pq[0]).getTime()-tA)/(tB-tA || 1)*(Wc-8); g.appendChild(sv("circle",{cx:x, cy:yv(pq[1]), r:3, fill:"var(--m1)"})); });
+      [y0, y1].forEach(function(yy, k){ var tx = sv("text",{x: k ? avail-2 : padL, y:H-2, "font-size":"10", fill:"var(--muted)", "text-anchor": k ? "end" : "start"}); tx.textContent = yy; g.appendChild(tx); });
+      c2.appendChild(g);
+      var p2 = document.createElement("p"); p2.className = "hint"; p2.style.margin = "6px 0 0"; p2.textContent = "Each dot is one cycle. Higher means longer. Gaps over 60 days are left out."; c2.appendChild(p2);
+      area.appendChild(c2);
+    }
   }
   function drawCycleRows(area, ons){
     var t = todayIso(), cycles = [];
@@ -1528,11 +1827,10 @@ label.inline > input[type=radio]:first-child, label.inline > input[type=checkbox
       var L = diffDays(o,endD)+1; if(!next && L > 60) return;
       cycles.push({start:o, end:endD, len:L});
     });
-    function hasData(c){ for(var d=c.start; d<=c.end; d=addDays(d,1)){ var e = store.entries[d]; if(e && (e.mood!=null || ratedCount(e)>0)) return true; } return false; }
-    var shown = showAllCycles ? cycles : cycles.filter(hasData);
+    var shown = histCount==="all" ? cycles : cycles.slice(-(+histCount));
     if(!ons.length){ area.innerHTML = '<p class="empty">Mark at least one period to see cycle rows.</p>'; return; }
     if(!shown.length){
-      area.innerHTML = '<p class="empty">' + (cycles.length ? 'No cycles with mood or symptom entries yet. As you log, one row per cycle appears here. Turn on “Show all cycles” to see your past periods.' : 'Not enough complete cycles yet. Rows appear once you have a period start followed by another.') + '</p>';
+      area.innerHTML = '<p class="empty">' + 'Not enough complete cycles yet. Rows appear once you have a period start followed by another.' + '</p>';
       return;
     }
     shown = shown.slice().reverse();
@@ -1605,7 +1903,7 @@ label.inline > input[type=radio]:first-child, label.inline > input[type=checkbox
   }
   function renderHistory(){
     if(!histViewChosen){
-      histView = cyclesHaveData() ? "cycles" : "year";
+      histView = cyclesHaveData() ? "cycles" : (onsets().length > 2 ? "periods" : "year");
       document.querySelectorAll("#viewSel button").forEach(function(x){ x.setAttribute("aria-pressed", String(x.dataset.hv===histView)); });
     }
     var keys = Object.keys(store.entries).sort();
@@ -1613,15 +1911,16 @@ label.inline > input[type=radio]:first-child, label.inline > input[type=checkbox
     var ons = onsets();
     if(!keys.length){
       renderHistControls();
-      area.innerHTML = '<p class="empty">Nothing logged yet. Entries you make on the Log tab show up here.</p>';
-      document.getElementById("cycleTable").innerHTML = '<p class="empty">No periods logged yet.</p>';
+      area.innerHTML = '<p class="empty">Nothing logged yet. Entries you make on Today show up here.</p>';
+      document.getElementById("cycleTable").innerHTML = '<p class="empty">No periods logged yet.</p>'; document.getElementById("plCount").textContent = "";
       document.getElementById("loggedSummary").innerHTML = '<p class="empty">0 days.</p>';
       return;
     }
     renderHistControls();
     area.innerHTML = "";
-    if(histView==="cycles"){ drawCycleRows(area, ons); }
-    else if(histView==="year"){ drawYear(area, keys); }
+    if(histView==="cycles"){ drawCycleCards(area, ons); }
+    else if(histView==="year"){ var yc = document.createElement("div"); yc.className = "pcard"; area.appendChild(yc); drawYear(yc, keys); }
+    else if(histView==="periods"){ drawAllPeriods(area); }
     else {
     var end = todayIso();
     if(keys[keys.length-1] > end) end = keys[keys.length-1];
@@ -1700,6 +1999,7 @@ label.inline > input[type=radio]:first-child, label.inline > input[type=checkbox
     }
 
     // cycles table
+    document.getElementById("plCount").textContent = ons.length ? "(" + ons.length + ")" : "";
     var ct = document.getElementById("cycleTable");
     if(!ons.length){ ct.innerHTML = '<p class="empty">No bleeding days logged yet.</p>'; }
     else{
@@ -1740,11 +2040,12 @@ label.inline > input[type=radio]:first-child, label.inline > input[type=checkbox
   function buildCsv(){
     var ons = onsets();
     var ml = meds();
-    var rows = [HEADER.concat(["movement"]).concat(ml.map(function(m){ return "med:" + m.name; })).map(q).join(",")];
+    var tl = trackers();
+    var rows = [HEADER.concat(["movement"]).concat(ml.map(function(m){ return "med:" + m.name; })).concat(tl.map(function(t){ return "tr:" + t.name; })).map(q).join(",")];
     Object.keys(store.entries).sort().forEach(function(d){
       var e = store.entries[d], ci = cycleInfo(d, ons);
       var mc = ml.map(function(m){ var o = e.md && e.md[m.id]; return o ? Object.keys(o).filter(function(k){ return o[k]; }).join("+") : ""; });
-      rows.push([d, ci.fwd, ci.back, e.m, e.mood, hasRatings(e) ? (entryScale(e)===6 ? "1-6" : "0-3") : "", e.skip ? 1 : ""].concat(e.r).concat([e.n]).concat([e.mvy==="no" ? "no" : e.mvy==="yes" ? ((e.mvk && e.mvk.length) ? e.mvk.map(kindName).join("+") : "yes") : ""]).concat(mc).map(q).join(","));
+      rows.push([d, ci.fwd, ci.back, e.m, e.mood, hasRatings(e) ? (entryScale(e)===6 ? "1-6" : "0-3") : "", e.skip ? 1 : ""].concat(e.r).concat([e.n]).concat([e.mvy==="no" ? "no" : e.mvy==="yes" ? ((e.mvk && e.mvk.length) ? e.mvk.map(kindName).join("+") : "yes") : ""]).concat(mc).concat(tl.map(function(t){ return e.tr && e.tr[t.id]!=null ? e.tr[t.id] : ""; })).map(q).join(","));
     });
     return rows.join("\n") + "\n";
   }
@@ -1790,6 +2091,7 @@ label.inline > input[type=radio]:first-child, label.inline > input[type=checkbox
       var mv = moi>=0 ? parseInt(r[moi],10) : NaN;
       var e = {m:m, r:vals, n: ni>=0 ? (r[ni]||"") : "", mood: (mv>=1 && mv<=5) ? mv : null, g:{}, sc:rsc, skip: ski>=0 && (r[ski]||"").trim()==="1"};
       if(m!=="none") e.mx = true;
+      h.forEach(function(name, ix){ if(name.indexOf("tr:")!==0) return; var tv = parseInt(r[ix],10); if(tv>=0 && tv<=3){ var tk = addTracker(name.slice(3)); if(tk){ e.tr = e.tr || {}; e.tr[tk.id] = tv; } } });
       var mvi = h.indexOf("movement");
       if(mvi>=0){ var mvv = (r[mvi]||"").trim();
         if(mvv==="no") e.mvy = "no";
@@ -1872,7 +2174,7 @@ label.inline > input[type=radio]:first-child, label.inline > input[type=checkbox
   document.getElementById("deleteAll").addEventListener("click", function(){
     if(!Object.keys(store.entries).length) return;
     if(!confirm("Delete every entry stored in this browser? This can’t be undone.")) return;
-    store = {entries:{}}; persist(); renderKinds(); renderMedsManage(); syncSettingsUI(); applyImpairSetting(); renderUndo(); renderLog();
+    store = {entries:{}}; persist(); applyJournalSetting(); renderTrackSettings(); renderKinds(); renderMedsManage(); syncSettingsUI(); applyImpairSetting(); renderUndo(); renderLog();
   });
 
   // ---------- past periods ----------
@@ -2096,16 +2398,173 @@ label.inline > input[type=radio]:first-child, label.inline > input[type=checkbox
     flushNotes();
     if(view!=="about") lastView = view;
     document.body.classList.toggle("about-open", view==="about");
-    ["log","history","periods","data","report","about"].forEach(function(v){
+    ["log","history","journal","settings","data","periods","report","about"].forEach(function(v){
       document.getElementById("view-"+v).hidden = v!==view;
       var tb = document.getElementById("tab-"+v);
-      if(tb) tb.setAttribute("aria-selected", String(v===view || (view==="report" && v==="data")));
+      if(tb) tb.setAttribute("aria-selected", String(v===view || ((view==="report" || view==="periods") && v==="data")));
     });
+    if(view==="journal") renderJournal();
+    if(view==="settings"){ renderTrackSettings(); renderKinds(); renderMedsManage(); renderSettingsStatus(); }
+    if(view==="data") renderDataStatus();
     if(view==="history") renderHistory();
     if(view==='periods'){ renderCal(); }
     if(view!=="data"){ csvOut.hidden = true; }
     renderBackup();
   }
+  // ---------- journal ----------
+  var jEditing = null;
+  function journalOn(){ return setting("journal", true) !== false; }
+  function renderJournal(){
+    var t = todayIso(), te = get(t);
+    document.getElementById("jToday").textContent = "Today, " + parse(t).toLocaleDateString(undefined,{month:"short", day:"numeric"});
+    var ci = cycleInfo(t, onsets()); document.getElementById("jCd").textContent = ci.fwd!=null ? "Cycle day " + ci.fwd : "";
+    var jt = document.getElementById("jText"); if(document.activeElement!==jt) jt.value = te && te.n ? te.n : "";
+    document.getElementById("jListView").hidden = !!jEditing; document.getElementById("jEditView").hidden = !jEditing;
+    var qy = document.getElementById("jSearch").value.trim().toLowerCase();
+    var ons = onsets(), box = document.getElementById("jEntries"); box.innerHTML = "";
+    var keys = Object.keys(store.entries).filter(function(k){ var e = store.entries[k]; return e.n && e.n.trim() && (!qy || e.n.toLowerCase().indexOf(qy)>=0); }).sort().reverse();
+    if(!keys.length){ box.innerHTML = '<p class="empty">' + (qy ? 'No notes match that search.' : 'No notes yet. What you write here, or under “Add a note” on Today, shows up in this list.') + '</p>'; return; }
+    var lastM = "";
+    keys.forEach(function(k){
+      var e = store.entries[k], dd = parse(k), mk = dd.toLocaleDateString(undefined,{month:"long", year:"numeric"});
+      if(mk!==lastM){ var h = document.createElement("div"); h.className = "jmon"; h.textContent = mk; box.appendChild(h); lastM = mk; }
+      var b = document.createElement("button"); b.className = "je"; b.dataset.d = k;
+      if(e.mood!=null) b.style.setProperty("--mc", "var(--m"+e.mood+")");
+      var ci2 = cycleInfo(k, ons);
+      b.innerHTML = '<span class="d"><b></b><span></span></span><span class="tx"></span>';
+      b.querySelector(".d b").textContent = dd.toLocaleDateString(undefined,{weekday:"short", month:"short", day:"numeric"});
+      b.querySelector(".d span").textContent = ci2.fwd!=null ? "Day " + ci2.fwd : "";
+      b.querySelector(".tx").textContent = e.n.trim();
+      box.appendChild(b);
+    });
+  }
+  document.getElementById("jSave").addEventListener("click", function(){
+    var t = todayIso(), e = ensure(t); e.n = document.getElementById("jText").value; tidy(t); persist();
+    var m = document.getElementById("jMsg"); m.textContent = "Saved."; setTimeout(function(){ m.textContent = ""; }, 2500);
+    renderJournal(); if(cur===t) renderLog();
+  });
+  document.getElementById("jSearch").addEventListener("input", renderJournal);
+  document.getElementById("jEntries").addEventListener("click", function(ev){
+    var b = ev.target.closest(".je"); if(!b) return;
+    jEditing = b.dataset.d; var e = get(jEditing);
+    document.getElementById("jEditDate").textContent = parse(jEditing).toLocaleDateString(undefined,{weekday:"long", month:"long", day:"numeric", year:"numeric"});
+    var ci = cycleInfo(jEditing, onsets()); document.getElementById("jEditCd").textContent = ci.fwd!=null ? "Cycle day " + ci.fwd : "";
+    document.getElementById("jEditText").value = e && e.n ? e.n : "";
+    renderJournal(); window.scrollTo(0,0);
+  });
+  document.getElementById("jBack").addEventListener("click", function(){ jEditing = null; renderJournal(); });
+  document.getElementById("jEditSave").addEventListener("click", function(){
+    if(!jEditing) return; var e = ensure(jEditing); e.n = document.getElementById("jEditText").value; tidy(jEditing); persist(); jEditing = null; renderJournal(); renderLog();
+  });
+  document.getElementById("jDel").addEventListener("click", function(){
+    if(!jEditing || !confirm("Delete this note?")) return; var e = get(jEditing); if(e){ e.n = ""; tidy(jEditing); persist(); } jEditing = null; renderJournal(); renderLog();
+  });
+  function applyJournalSetting(){
+    document.getElementById("tab-journal").hidden = !journalOn();
+    document.getElementById("journalToggle").checked = journalOn();
+  }
+  document.getElementById("journalToggle").addEventListener("change", function(ev){
+    store.settings = store.settings || {}; store.settings.journal = ev.target.checked; persist(); applyJournalSetting(); renderSettingsStatus();
+  });
+  function renderSettingsStatus(){
+    document.getElementById("journalStatus").textContent = journalOn() ? "On" : "Off";
+    document.getElementById("moveStatus").textContent = moveOn() ? "On, " + kinds().filter(function(k){ return !k.off; }).length + " kinds" : "Off";
+  }
+
+  // ---------- data tab ----------
+  function renderDataStatus(){
+    var n = onsets().length;
+    document.getElementById("pastStatus").textContent = setting("pastDone", false) ? "Done, " + n + " periods" : (n ? n + " periods so far" : "");
+    renderBackup();
+  }
+  document.getElementById("pastOpen").addEventListener("click", function(){ show("periods"); window.scrollTo(0,0); });
+  document.getElementById("perBack").addEventListener("click", function(){ show("data"); window.scrollTo(0,0); });
+  document.getElementById("pastDone").addEventListener("click", function(){ store.settings = store.settings || {}; store.settings.pastDone = true; persist(); show("data"); window.scrollTo(0,0); });
+
+  function saveBlob(name, data, type, msgEl, okText, after){
+    function nativeSave(){
+      try{
+        var blob = new Blob([data], {type:type}), a = document.createElement("a");
+        a.href = URL.createObjectURL(blob); a.download = name; document.body.appendChild(a); a.click(); a.remove();
+        setTimeout(function(){ URL.revokeObjectURL(a.href); }, 2000);
+        msgEl.textContent = okText; if(after) after();
+      }catch(err){ msgEl.textContent = "Your browser blocked the download."; }
+    }
+    if(downloads){ downloads.save({filename:name, data:data}).then(function(){ msgEl.textContent = okText; if(after) after(); }).catch(function(err){ if(err && err.code==="declined") msgEl.textContent = "Cancelled."; else nativeSave(); }); }
+    else nativeSave();
+  }
+  function b64(buf){ var b = new Uint8Array(buf), s2 = ""; for(var i=0;i<b.length;i++) s2 += String.fromCharCode(b[i]); return btoa(s2); }
+  function unb64(t){ var s2 = atob(t), b = new Uint8Array(s2.length); for(var i=0;i<s2.length;i++) b[i] = s2.charCodeAt(i); return b; }
+  function deriveKey(pass, salt){
+    var enc = new TextEncoder();
+    return crypto.subtle.importKey("raw", enc.encode(pass), "PBKDF2", false, ["deriveKey"]).then(function(base){
+      return crypto.subtle.deriveKey({name:"PBKDF2", salt:salt, iterations:250000, hash:"SHA-256"}, base, {name:"AES-GCM", length:256}, false, ["encrypt","decrypt"]);
+    });
+  }
+  document.getElementById("bkMake").addEventListener("click", function(){
+    var msg = document.getElementById("bkMsg"), pass = document.getElementById("bkPass").value;
+    if(!window.crypto || !crypto.subtle){ msg.textContent = "Encryption isn’t available here. Open the app from its installed icon (it needs a secure https page)."; return; }
+    if(pass.length < 8){ msg.textContent = "Use a passphrase of at least 8 characters."; return; }
+    flushNotes();
+    var salt = crypto.getRandomValues(new Uint8Array(16)), iv = crypto.getRandomValues(new Uint8Array(12));
+    msg.textContent = "Encrypting…";
+    deriveKey(pass, salt).then(function(key){
+      return crypto.subtle.encrypt({name:"AES-GCM", iv:iv}, key, new TextEncoder().encode(JSON.stringify(store)));
+    }).then(function(ct){
+      var file = JSON.stringify({app:"cycle-log", v:1, created:todayIso(), salt:b64(salt), iv:b64(iv), data:b64(ct)});
+      saveBlob("cycle-log-backup-" + todayIso() + ".cyclelog", file, "application/json", msg, "Saved. Keep the file and your passphrase somewhere safe.", markBackedUp);
+    }).catch(function(){ msg.textContent = "Something went wrong creating the backup."; });
+  });
+  document.getElementById("bkFile").addEventListener("change", function(ev){
+    var f = ev.target.files && ev.target.files[0]; ev.target.value = ""; if(!f) return;
+    var msg = document.getElementById("bkMsg"), pass = document.getElementById("bkPass").value;
+    if(!pass){ msg.textContent = "Type the backup’s passphrase above first, then choose the file."; return; }
+    if(!window.crypto || !crypto.subtle){ msg.textContent = "Encryption isn’t available here. Open the app from its installed icon."; return; }
+    var rd = new FileReader();
+    rd.onload = function(){
+      var obj; try{ obj = JSON.parse(String(rd.result)); }catch(e){ msg.textContent = "That isn’t a Cycle log backup file."; return; }
+      if(!obj || obj.app!=="cycle-log"){ msg.textContent = "That isn’t a Cycle log backup file."; return; }
+      msg.textContent = "Unlocking…";
+      deriveKey(pass, unb64(obj.salt)).then(function(key){
+        return crypto.subtle.decrypt({name:"AES-GCM", iv:unb64(obj.iv)}, key, unb64(obj.data));
+      }).then(function(pt){
+        var data = JSON.parse(new TextDecoder().decode(pt));
+        if(!data || !data.entries){ msg.textContent = "The backup is empty or damaged."; return; }
+        var n = Object.keys(data.entries).length;
+        if(!confirm("Replace everything on this device with the backup from " + (obj.created ? fmt(obj.created) : "that file") + " (" + n + " days)?")){ msg.textContent = "Restore cancelled."; return; }
+        store = data; persist(); syncSettingsUI(); applyImpairSetting(); applyJournalSetting(); renderKinds(); renderMedsManage(); renderTrackSettings(); renderUndo(); renderLog(); renderDataStatus();
+        msg.textContent = "Restored " + n + " days.";
+      }).catch(function(){ msg.textContent = "Couldn’t unlock it. Check the passphrase and try again."; });
+    };
+    rd.onerror = function(){ msg.textContent = "That file couldn’t be read."; };
+    rd.readAsText(f);
+  });
+
+  document.getElementById("ahFile").addEventListener("change", function(ev){
+    var f = ev.target.files && ev.target.files[0]; ev.target.value = ""; if(!f) return;
+    var msg = document.getElementById("ahMsg"); msg.textContent = "Reading the file…";
+    var rd = new FileReader();
+    rd.onload = function(){
+      var txt = String(rd.result), re = /<Record\b[^>]*type="HKCategoryTypeIdentifier(MenstrualFlow|IntermenstrualBleeding)"[^>]*>/g, m, days = {};
+      while((m = re.exec(txt))){
+        var tag = m[0], sd = /startDate="(\d{4}-\d{2}-\d{2})/.exec(tag), val = /value="([^"]*)"/.exec(tag);
+        if(!sd) continue;
+        if(m[1]==="MenstrualFlow"){ if(val && /None$/.test(val[1])) continue; days[sd[1]] = "bleeding"; }
+        else if(!days[sd[1]]) days[sd[1]] = "spotting";
+      }
+      var ks = Object.keys(days).sort();
+      if(!ks.length){ msg.textContent = "No period data found in that file."; return; }
+      if(!confirm("Found " + ks.filter(function(k){ return days[k]==="bleeding"; }).length + " period days and " + ks.filter(function(k){ return days[k]==="spotting"; }).length + " spotting days, from " + fmt(ks[0]) + " to " + fmt(ks[ks.length-1]) + ". Add them?")){ msg.textContent = "Nothing was added."; return; }
+      var undo = [];
+      ks.forEach(function(k){ if(k > todayIso()) return; undo.push([k, store.entries[k] ? store.entries[k].m : null]); var e = ensure(k); if(days[k]==="bleeding" || e.m!=="bleeding"){ e.m = days[k]; e.mx = true; } });
+      store.lastAdd = {count: onsets().length, undo: undo};
+      persist(); renderUndo(); renderLog(); renderDataStatus();
+      msg.textContent = "Added. See them under Patterns → All periods. Undo is under Add past periods.";
+    };
+    rd.onerror = function(){ msg.textContent = "That file couldn’t be read."; };
+    rd.readAsText(f);
+  });
+
   var lastView = "log";
   document.getElementById("aboutBtn").addEventListener("click", function(){ var back = lastView; show("about"); lastView = back; window.scrollTo(0,0); });
   document.getElementById("aboutClose").addEventListener("click", function(){ show(lastView || "log"); window.scrollTo(0,0); });
@@ -2141,7 +2600,7 @@ label.inline > input[type=radio]:first-child, label.inline > input[type=checkbox
 
   // ---------- doctor report ----------
   var REPORT_CSS = [
-    ".rpt{ --ink:#1A2030; --muted:#5A6479; --line:#D3D9E4; --bleed:#B3335C; --spot:#E8A3B8; --m1:#A796D4; --m2:#CFC4EB; --m3:#E4E2EA; --m4:#BCD7C6; --m5:#8DBFA1; --y0:#EEE8DC; --y1:#E8D3A4; --y2:#DCAC80; --y3:#B57C66; background:#fff; color:var(--ink); font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif; font-size:14px; line-height:1.45; max-width:760px; margin:0 auto; padding:28px 28px 36px; border-radius:12px; }",
+    ".rpt{ --ink:#1A2030; --muted:#5A6479; --line:#D3D9E4; --bleed:#B3335C; --spot:#E8A3B8; --m1:#8DB2D9; --m2:#C2D8EE; --m3:#E8EBEF; --m4:#F1E3A8; --m5:#E6CB6A; --y0:#EEE8DC; --y1:#E8D3A4; --y2:#DCAC80; --y3:#B57C66; background:#fff; color:var(--ink); font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif; font-size:14px; line-height:1.45; max-width:760px; margin:0 auto; padding:28px 28px 36px; border-radius:12px; }",
     ".rpt h1{ font-size:22px; margin:0 0 4px; } .rpt h2{ font-size:15px; margin:24px 0 8px; } .rpt .sub{ color:var(--muted); margin:0; }",
     ".rpt .about{ font-size:12.5px; color:var(--muted); border-left:3px solid var(--line); padding:4px 0 4px 10px; margin:14px 0 0; }",
     ".rpt .kpis{ display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-top:16px; } .rpt .kpi{ border:1px solid var(--line); border-radius:8px; padding:8px 10px; } .rpt .kpi b{ display:block; font-size:18px; } .rpt .kpi span{ font-size:12px; color:var(--muted); }",
@@ -2222,7 +2681,7 @@ label.inline > input[type=radio]:first-child, label.inline > input[type=checkbox
     var modeTxt = {every:"were asked every day", focus:"were asked in the week before each period and on days 4–10 after it starts", mood:"are currently not being asked (mood-only mode)"}[setting("mode","every")];
     var h = [];
     h.push('<div class="rpt">');
-    h.push('<h1>Cycle and mood report</h1>');
+    h.push('<h1>Cycle and mood summary</h1>');
     h.push('<p class="sub">'+esc(fmt(start))+' to '+esc(fmt(t))+(complete.length ? ' ('+complete.length+(complete.length===1?' complete cycle':' complete cycles')+')' : '')+'. Created '+esc(fmt(t))+'.</p>');
     h.push('<p class="about">Self-tracked daily on a phone. Mood is rated 1 (very low) to 5 (very good). Symptoms are adapted from the Daily Record of Severity of Problems (DRSP; Endicott, Nee &amp; Harrison, 2006) and '+esc(modeTxt)+'. Symptom averages below are on a 0 (none) to 3 (severe) scale'+(any6 ? '; days rated on the full 1–6 DRSP scale were converted, and the original ratings are in the exported data' : '')+'. This is a personal record, not a diagnosis.</p>');
     h.push('<div class="kpis">');
@@ -2248,7 +2707,13 @@ label.inline > input[type=radio]:first-child, label.inline > input[type=checkbox
     h.push('<tr'+(md!=null && md<=-1 ? ' class="flag"' : '')+'><td>Mood (1–5, higher is better)</td><td class="num">'+f1(A.mood)+'</td><td class="num">'+f1(B.mood)+'</td><td class="num">'+(md==null?'–':(md>0?'+':'')+md.toFixed(1))+'</td></tr>');
     doms.forEach(function(dm, j){
       var a = A.per[j], b = B.per[j], df = (a!=null && b!=null) ? a - b : null;
-      h.push('<tr'+(df!=null && df>=1 ? ' class="flag"' : '')+'><td>'+esc(dm.q.replace(/\?$/,""))+'</td><td class="num">'+f1(a)+'</td><td class="num">'+f1(b)+'</td><td class="num">'+(df==null?'–':(df>0?'+':'')+df.toFixed(1))+'</td></tr>');
+      h.push('<tr'+(df!=null && df>=1 ? ' class="flag"' : '')+'><td>'+esc(dm.key==="mood" ? "Mood symptoms" : dm.q.replace(/\?$/,""))+'</td><td class="num">'+f1(a)+'</td><td class="num">'+f1(b)+'</td><td class="num">'+(df==null?'–':(df>0?'+':'')+df.toFixed(1))+'</td></tr>');
+    });
+    trackers().forEach(function(tk){
+      function tav(days){ var v = []; Object.keys(days).forEach(function(dd){ var e4 = store.entries[dd]; if(e4 && e4.tr && e4.tr[tk.id]!=null) v.push(e4.tr[tk.id]); }); return avg(v); }
+      var a2 = tav(pre), b2 = tav(post); if(a2==null && b2==null) return;
+      var df2 = (a2!=null && b2!=null) ? a2 - b2 : null;
+      h.push('<tr'+(df2!=null && df2>=1 ? ' class="flag"' : '')+'><td>'+esc(tk.name)+' <small>(my tracker)</small></td><td class="num">'+f1(a2)+'</td><td class="num">'+f1(b2)+'</td><td class="num">'+(df2==null?'–':(df2>0?'+':'')+df2.toFixed(1))+'</td></tr>');
     });
     h.push('</tbody></table>');
     h.push('<p class="note">Averages across the cycles shown ('+A.n+' days before, '+B.n+' days after). Symptoms 0–3. Bold rows differ by 1 point or more. Day −1 is the day before bleeding starts; day 4 is the fourth day after it starts.</p>');
@@ -2280,7 +2745,7 @@ label.inline > input[type=radio]:first-child, label.inline > input[type=checkbox
           if(!medDue(m, dd)) continue;
           medTimes(m).forEach(function(tt2){ due++; if(medTaken(ee, m, tt2)) got++; });
         }
-        var takenTxt = m.sched==="prn" ? (prnDays + (prnDays===1 ? ' day' : ' days')) : (due ? Math.round(100*got/due) + '%<br><small>' + got + ' of ' + due + ' doses</small>' : '–');
+        var takenTxt = m.sched==="long" ? "In place" : m.sched==="prn" ? (prnDays + (prnDays===1 ? ' day' : ' days')) : (due ? Math.round(100*got/due) + '%<br><small>' + got + ' of ' + due + ' doses</small>' : '–');
         var dates = 'Since ' + fmt(m.start) + (m.stop ? ', last dose ' + fmt(addDays(m.stop,-1)) : '');
         h.push('<tr><td><b>'+esc(m.name + (m.dose ? ' ' + m.dose : ''))+'</b><br><small>'+esc(dates)+'</small></td><td>'+esc(schedText(m))+'</td><td class="num">'+takenTxt+'</td></tr>');
       });
@@ -2298,7 +2763,8 @@ label.inline > input[type=radio]:first-child, label.inline > input[type=checkbox
   var lastReport = "";
   document.getElementById("rptBtn").addEventListener("click", function(){
     flushNotes();
-    var n = +((document.querySelector("input[name=rcyc]:checked")||{}).value || 3);
+    var rv = (document.querySelector("input[name=rcyc]:checked")||{}).value || "6";
+    var n = rv==="all" ? 9999 : +rv;
     lastReport = buildReport(n, document.getElementById("rptNotes").checked);
     document.getElementById("rptBody").innerHTML = lastReport;
     document.getElementById("rptMsg").textContent = "";
@@ -2309,8 +2775,8 @@ label.inline > input[type=radio]:first-child, label.inline > input[type=checkbox
     try{ window.print(); }catch(err){ document.getElementById("rptMsg").textContent = "Printing isn’t available here. Use Download file instead."; }
   });
   document.getElementById("rptDl").addEventListener("click", function(){
-    var docHtml = '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Cycle and mood report</title><style>body{margin:0;background:#f4f5f8;padding:16px;} @media print{ body{ background:#fff; padding:0; } *{ -webkit-print-color-adjust:exact; print-color-adjust:exact; } }\n' + REPORT_CSS + '</style></head><body>' + lastReport + '</body></html>';
-    var name = "cycle-report-" + todayIso() + ".html", msg = document.getElementById("rptMsg");
+    var docHtml = '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Cycle and mood summary</title><style>body{margin:0;background:#f4f5f8;padding:16px;} @media print{ body{ background:#fff; padding:0; } *{ -webkit-print-color-adjust:exact; print-color-adjust:exact; } }\n' + REPORT_CSS + '</style></head><body>' + lastReport + '</body></html>';
+    var name = "cycle-summary-" + todayIso() + ".html", msg = document.getElementById("rptMsg");
     function nativeSave(){
       try{
         var blob = new Blob([docHtml], {type:"text/html"}), a = document.createElement("a");
@@ -2329,6 +2795,8 @@ label.inline > input[type=radio]:first-child, label.inline > input[type=checkbox
   });
 
   load();
+  applyJournalSetting();
+  renderTrackSettings();
   renderKinds();
   renderMedsManage();
   syncSettingsUI();
