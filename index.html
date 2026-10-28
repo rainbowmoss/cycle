@@ -501,7 +501,6 @@ label.inline > input[type=radio]:first-child, label.inline > input[type=checkbox
         <div class="week" id="weekStrip"></div>
       </div>
       <div class="block"><p class="sumtxt" id="loggedSummary2"></p></div>
-      <div class="block" id="mvMonthCard" hidden><h2>Movement, last 4 weeks</h2><div class="mvmonth" id="mvMonth"></div><p class="hint" id="mvMonthTxt" style="margin-top:8px"></p></div>
       <div class="center-links">
         <button class="linkbtn" id="editDay">Edit</button>
         <button class="linkbtn danger-link" id="clearDay">Clear this day</button>
@@ -1391,14 +1390,6 @@ label.inline > input[type=radio]:first-child, label.inline > input[type=checkbox
     }
     if(e.mvy==="no") parts.push("No movement.");
     else if(e.mvy==="yes") parts.push((e.mvk && e.mvk.length) ? "Movement: " + e.mvk.map(function(id){ return kindName(id).toLowerCase(); }).join(", ") + "." : "Moved today.");
-    var mc2 = document.getElementById("mvMonthCard"); mc2.hidden = !moveOn();
-    if(moveOn()){
-      var mm = document.getElementById("mvMonth"); mm.innerHTML = ""; var yes = 0, ans = 0;
-      for(var q2=27;q2>=0;q2--){ var dq = addDays(cur,-q2), eq = store.entries[dq], ii = document.createElement("i");
-        if(eq && eq.mvy==="yes"){ ii.className = "y"; yes++; ans++; } else if(eq && eq.mvy==="no"){ ii.className = "n"; ans++; }
-        ii.title = fmt(dq); mm.appendChild(ii); }
-      document.getElementById("mvMonthTxt").textContent = "Moved on " + yes + " of the last 28 days" + (ans<28 ? " (" + (28-ans) + " not answered)." : ".");
-    }
     var dueM = medsForDay(cur);
     if(dueM.length){
       var mt = [];
@@ -1508,6 +1499,11 @@ label.inline > input[type=radio]:first-child, label.inline > input[type=checkbox
     if(histView==="cycles") hint = alignEnd ? "Each row ends the day before the next period starts, so premenstrual days line up on the right. Your current cycle appears once your next period starts." : "Each row is one cycle, newest at the top, starting on the first day of your period. Tap a square to open that day.";
     else if(histView==="year") hint = "Each square is one day. Tap a square to open it.";
     else hint = "Mood is 1 (very low) to 5 (very good). Symptoms are the day’s average, 0 (none) to 3 (severe). Tap a day to open it.";
+    if(colorBy==="move" && histView!=="timeline"){
+      var yes = 0, ans = 0, t0 = todayIso();
+      for(var q=0;q<28;q++){ var eq = store.entries[addDays(t0,-q)]; if(eq && eq.mvy){ ans++; if(eq.mvy==="yes") yes++; } }
+      hint += " Moved on " + yes + " of the last 28 days" + (ans<28 ? " (" + (28-ans) + " not answered)." : ".");
+    }
     document.getElementById("histHint").textContent = hint;
     var parts = [];
     function sw(color, label, extra){ return '<span><span class="sw" style="background:'+color+(extra||'')+'"></span>'+label+'</span>'; }
