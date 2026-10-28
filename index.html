@@ -16,7 +16,7 @@
 <style>
 :root{
   --bg:#ECEFF5; --surface:#FFFFFF; --ink:#1A2030; --muted:#5A6479; --line:#D3D9E4;
-  --accent:#3B4BC4; --accent-ink:#FFFFFF; --accent-soft:#E2E6FA;
+  --accent:#7A88CA; --accent-ink:#FFFFFF; --accent-soft:#E6E9F8; --accent-text:#5462A8;
   --bleed:#B3335C; --spot:#E8A3B8; --warn-bg:#FFF2D6; --warn-ink:#6B4A00;
   --s1:#DDE2EC; --s2:#C3CBF0; --s3:#9CA9EA; --s4:#6F7FDA; --s5:#4656C2; --s6:#283493;
   --m1:#A796D4; --m2:#CFC4EB; --m3:#E4E2EA; --m4:#BCD7C6; --m5:#8DBFA1;
@@ -28,12 +28,15 @@
   --g-sleep-bg:#E0E2EC; --g-sleep-sel:#B6BBD3; --g-sleep-ink:#363C5E;
   --g-physical-bg:#DDEAE3; --g-physical-sel:#AFCDBE; --g-physical-ink:#2F5545;
   --g-impact-bg:#ECE8E0; --g-impact-sel:#CFC6B4; --g-impact-ink:#4D4636;
+  --t-period:#F8ECEF; --t-period-line:#EFD7DE; --t-period-ink:#7A3A4E; --t-mood:#F3F0FA; --t-mood-line:#E2DBF2; --t-mood-ink:#4E4170;
+  --t-sym:#F8F2E9; --t-sym-line:#EEE0CC; --t-sym-ink:#6B4526; --t-move:#EEF5F1; --t-move-line:#D5E6DC; --t-move-ink:#2F5545;
+  --t-meds:#EEF2F7; --t-meds-line:#D8E1EC; --t-meds-ink:#2E4A63; --btnbg:#FFFFFF; --sel:#D6DCE6; --sel-ink:#252B3A; --sel-line:#C3CBD8; --t-sym-yes:#B88A5E; --t-move-yes:#6E9A82; --t-meds-yes:#7F96B4;
   color-scheme: light;
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
     --bg:#11141B; --surface:#1A1E28; --ink:#E6E9F1; --muted:#9AA3B8; --line:#2C3242;
-    --accent:#8C98FF; --accent-ink:#11141B; --accent-soft:#262C48;
+    --accent:#9AA6E8; --accent-ink:#11141B; --accent-soft:#262C48; --accent-text:#AEB8F0;
     --bleed:#E5698F; --spot:#7C4558; --warn-bg:#3A2F14; --warn-ink:#F3D58E;
     --s1:#262B38; --s2:#2F3966; --s3:#3E4C94; --s4:#5866C2; --s5:#7886E6; --s6:#A7B1FF;
     --m1:#9C8AD6; --m2:#5E5385; --m3:#454852; --m4:#4E7A60; --m5:#7FC09B; --y0:#3A352C; --y1:#8C7744; --y2:#B07F55; --y3:#D59A80;
@@ -41,12 +44,15 @@
     --g-focus-bg:#1F2A35; --g-focus-sel:#3D5873; --g-focus-ink:#D6E6F5; --g-appetite-bg:#33242A; --g-appetite-sel:#6B4553; --g-appetite-ink:#F4D8E1;
     --g-sleep-bg:#232637; --g-sleep-sel:#474E78; --g-sleep-ink:#DCDFF2; --g-physical-bg:#1F2D27; --g-physical-sel:#3E6455; --g-physical-ink:#D3EDE1;
     --g-impact-bg:#2D2A24; --g-impact-sel:#5C5444; --g-impact-ink:#EDE6D6;
+    --t-period:#2B2026; --t-period-line:#3D2C33; --t-period-ink:#F0C9D5; --t-mood:#242133; --t-mood-line:#352F4A; --t-mood-ink:#DCD3F5;
+    --t-sym:#2A251D; --t-sym-line:#3D3428; --t-sym-ink:#F0D9BE; --t-move:#1D2924; --t-move-line:#2C3E35; --t-move-ink:#CBE6D8;
+    --t-meds:#1D2430; --t-meds-line:#2B3546; --t-meds-ink:#D3E1F0; --btnbg:#232836; --sel:#5E677C; --sel-ink:#FFFFFF; --sel-line:#5E677C; --t-sym-yes:#A97C50; --t-move-yes:#5E8A72; --t-meds-yes:#6C84A4;
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"]{
   --bg:#11141B; --surface:#1A1E28; --ink:#E6E9F1; --muted:#9AA3B8; --line:#2C3242;
-  --accent:#8C98FF; --accent-ink:#11141B; --accent-soft:#262C48;
+  --accent:#9AA6E8; --accent-ink:#11141B; --accent-soft:#262C48; --accent-text:#AEB8F0;
   --bleed:#E5698F; --spot:#7C4558; --warn-bg:#3A2F14; --warn-ink:#F3D58E;
   --s1:#262B38; --s2:#2F3966; --s3:#3E4C94; --s4:#5866C2; --s5:#7886E6; --s6:#A7B1FF;
   --m1:#9C8AD6; --m2:#5E5385; --m3:#454852; --m4:#4E7A60; --m5:#7FC09B; --y0:#3A352C; --y1:#8C7744; --y2:#B07F55; --y3:#D59A80;
@@ -54,6 +60,9 @@
     --g-focus-bg:#1F2A35; --g-focus-sel:#3D5873; --g-focus-ink:#D6E6F5; --g-appetite-bg:#33242A; --g-appetite-sel:#6B4553; --g-appetite-ink:#F4D8E1;
     --g-sleep-bg:#232637; --g-sleep-sel:#474E78; --g-sleep-ink:#DCDFF2; --g-physical-bg:#1F2D27; --g-physical-sel:#3E6455; --g-physical-ink:#D3EDE1;
     --g-impact-bg:#2D2A24; --g-impact-sel:#5C5444; --g-impact-ink:#EDE6D6;
+    --t-period:#2B2026; --t-period-line:#3D2C33; --t-period-ink:#F0C9D5; --t-mood:#242133; --t-mood-line:#352F4A; --t-mood-ink:#DCD3F5;
+    --t-sym:#2A251D; --t-sym-line:#3D3428; --t-sym-ink:#F0D9BE; --t-move:#1D2924; --t-move-line:#2C3E35; --t-move-ink:#CBE6D8;
+    --t-meds:#1D2430; --t-meds-line:#2B3546; --t-meds-ink:#D3E1F0; --btnbg:#232836; --sel:#5E677C; --sel-ink:#FFFFFF; --sel-line:#5E677C; --t-sym-yes:#A97C50; --t-move-yes:#5E8A72; --t-meds-yes:#6C84A4;
   color-scheme: dark;
 }
 :root{ box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px); }
@@ -111,7 +120,7 @@ main{ max-width:720px; margin:0 auto; padding:16px 16px 48px; }
 .menses button{
   border:1px solid var(--line); background:var(--bg); border-radius:10px; padding:10px 6px; font-weight:700;
 }
-.menses button[aria-pressed="true"][data-m="none"]{ background:var(--ink); color:var(--surface); border-color:var(--ink); }
+.menses button[aria-pressed="true"][data-m="none"]{ background:var(--sel); color:var(--sel-ink); border-color:var(--sel-line); }
 .menses button[aria-pressed="true"][data-m="spotting"]{ background:var(--spot); border-color:var(--spot); color:var(--ink); }
 .menses button[aria-pressed="true"][data-m="bleeding"]{ background:var(--bleed); border-color:var(--bleed); color:#fff; }
 
@@ -142,7 +151,7 @@ textarea{
 .done-row .btn.primary{ padding:14px; font-size:1.05rem; }
 .done-msg{ text-align:center; color:var(--muted); font-size:.92rem; min-height:1.3em; }
 .gap-line{ text-align:center; font-size:.9rem; margin:-10px 0 16px; }
-.gap-line button{ background:none; border:0; color:var(--accent); font-weight:700; text-decoration:underline; padding:0 2px; }
+.gap-line button{ background:none; border:0; color:var(--accent-text); font-weight:700; text-decoration:underline; padding:0 2px; }
 .notlogged{ text-align:center; color:var(--muted); font-size:.85rem; margin:-12px 0 14px; }
 .banner .stack{ margin:8px 0 0; }
 .banner .btn{ padding:7px 12px; font-size:.9rem; }
@@ -195,20 +204,20 @@ th{ color:var(--muted); font-weight:700; border-top:0; }
 .gate .gq span{ display:block; color:var(--muted); font-size:.85rem; }
 .yn{ display:flex; gap:6px; flex:none; }
 .yn button{ min-width:52px; height:40px; border-radius:9px; border:1px solid var(--line); background:var(--bg); font-weight:700; }
-.yn button[aria-pressed="true"][data-g="no"]{ background:var(--ink); color:var(--surface); border-color:var(--ink); }
+.yn button[aria-pressed="true"][data-g="no"]{ background:var(--sel); color:var(--sel-ink); border-color:var(--sel-line); }
 .yn button[aria-pressed="true"][data-g="yes"]{ background:var(--accent); color:var(--accent-ink); border-color:var(--accent); }
 .detail{ margin:10px 0 2px; padding-left:12px; border-left:3px solid var(--accent-soft); }
 .detail .q{ font-size:.92rem; margin:8px 0 6px; }
 .range,.seg{ display:flex; gap:4px; flex-wrap:wrap; }
 .seg button{ border:1px solid var(--line); background:var(--bg); border-radius:8px; padding:5px 10px; font-size:.85rem; font-weight:700; }
-.seg button[aria-pressed="true"]{ background:var(--ink); color:var(--surface); border-color:var(--ink); }
+.seg button[aria-pressed="true"]{ background:var(--sel); color:var(--sel-ink); border-color:var(--sel-line); }
 .hctl{ display:flex; flex-wrap:wrap; align-items:center; gap:8px 12px; margin:0 0 10px; }
 .hctl .small{ font-size:.88rem; }
 .yearnav{ display:flex; align-items:center; gap:8px; font-weight:700; }
 .yearnav button{ width:34px; height:34px; border-radius:50%; border:1px solid var(--line); background:var(--surface); font-size:1.1rem; line-height:1; }
 .yearnav button:disabled{ opacity:.35; cursor:default; }
 .range button{ border:1px solid var(--line); background:var(--bg); border-radius:8px; padding:5px 10px; font-size:.85rem; font-weight:700; }
-.range button[aria-pressed="true"]{ background:var(--ink); color:var(--surface); border-color:var(--ink); }
+.range button[aria-pressed="true"]{ background:var(--sel); color:var(--sel-ink); border-color:var(--sel-line); }
 .yaxis{ width:34px !important; }
 .cal-nav{ display:flex; align-items:center; gap:8px; margin:6px 0 8px; }
 .cal-nav .nav{ width:40px; height:40px; flex:none; border-radius:50%; border:1px solid var(--line); background:var(--surface); font-size:1.2rem; line-height:1; }
@@ -229,7 +238,7 @@ th{ color:var(--muted); font-weight:700; border-top:0; }
 .cal-key{ display:flex; gap:14px; flex-wrap:wrap; font-size:.82rem; color:var(--muted); margin:10px 0 0; }
 .scale.six{ grid-template-columns:repeat(3,1fr); }
 .skipline{ text-align:center; font-size:.9rem; color:var(--muted); margin:-8px 0 16px; }
-.skipline button, .linkbtn{ background:none; border:0; color:var(--accent); font-weight:700; text-decoration:underline; padding:0 2px; font-size:inherit; }
+.skipline button, .linkbtn{ background:none; border:0; color:var(--accent-text); font-weight:700; text-decoration:underline; padding:0 2px; font-size:inherit; }
 .collapsed{ color:var(--muted); font-size:.95rem; margin:4px 0 8px; }
 .skipcard{ text-align:center; padding:18px 14px; }
 .skipcard p{ margin:0 0 8px; }
@@ -256,19 +265,21 @@ body.about-open #backupBanner{ display:none !important; }
 .about-top{ display:flex; justify-content:space-between; align-items:baseline; gap:10px; }
 .tq{ font-size:1.12rem; margin:0 0 10px; }
 .menses button{ font-size:1rem; }
-.mood button{ border-width:2px; }
-.mood button[data-mood="1"]{ border-color:var(--m1); background:var(--bg); background:color-mix(in srgb, var(--m1) 28%, var(--surface)); }
-.mood button[data-mood="2"]{ border-color:var(--m2); background:var(--bg); background:color-mix(in srgb, var(--m2) 40%, var(--surface)); }
-.mood button[data-mood="3"]{ border-color:var(--m3); background:var(--bg); background:color-mix(in srgb, var(--m3) 55%, var(--surface)); }
-.mood button[data-mood="4"]{ border-color:var(--m4); background:var(--bg); background:color-mix(in srgb, var(--m4) 40%, var(--surface)); }
-.mood button[data-mood="5"]{ border-color:var(--m5); background:var(--bg); background:color-mix(in srgb, var(--m5) 30%, var(--surface)); }
-.mood button[aria-pressed="true"]{ color:#1A2030; box-shadow:inset 0 0 0 2px var(--ink); }
-.mood button[data-mood="1"][aria-pressed="true"]{ background:var(--m1); } .mood button[data-mood="2"][aria-pressed="true"]{ background:var(--m2); }
-.mood button[data-mood="3"][aria-pressed="true"]{ background:var(--m3); } .mood button[data-mood="4"][aria-pressed="true"]{ background:var(--m4); }
-.mood button[data-mood="5"][aria-pressed="true"]{ background:var(--m5); }
+.mood button{ border-width:1.5px; }
+.mood button[data-mood="1"]{ border-color:color-mix(in srgb, var(--m1) 55%, var(--surface)); background:var(--bg); background:color-mix(in srgb, var(--m1) 28%, var(--surface)); }
+.mood button[data-mood="2"]{ border-color:color-mix(in srgb, var(--m2) 60%, var(--surface)); background:var(--bg); background:color-mix(in srgb, var(--m2) 40%, var(--surface)); }
+.mood button[data-mood="3"]{ border-color:color-mix(in srgb, var(--m3) 70%, var(--surface)); background:var(--bg); background:color-mix(in srgb, var(--m3) 55%, var(--surface)); }
+.mood button[data-mood="4"]{ border-color:color-mix(in srgb, var(--m4) 60%, var(--surface)); background:var(--bg); background:color-mix(in srgb, var(--m4) 40%, var(--surface)); }
+.mood button[data-mood="5"]{ border-color:color-mix(in srgb, var(--m5) 55%, var(--surface)); background:var(--bg); background:color-mix(in srgb, var(--m5) 30%, var(--surface)); }
+.mood button[aria-pressed="true"]{ color:#fff; font-weight:700; }
+.mood button[data-mood="1"][aria-pressed="true"]{ background:#6E5CA8; background:color-mix(in srgb, var(--m1) 55%, #1A2030); border-color:transparent; }
+.mood button[data-mood="2"][aria-pressed="true"]{ background:#857AA8; background:color-mix(in srgb, var(--m2) 50%, #1A2030); border-color:transparent; }
+.mood button[data-mood="3"][aria-pressed="true"]{ background:#6E6D78; background:color-mix(in srgb, var(--m3) 45%, #1A2030); border-color:transparent; }
+.mood button[data-mood="4"][aria-pressed="true"]{ background:#6C8A78; background:color-mix(in srgb, var(--m4) 55%, #1A2030); border-color:transparent; }
+.mood button[data-mood="5"][aria-pressed="true"]{ background:#4F7D63; background:color-mix(in srgb, var(--m5) 60%, #1A2030); border-color:transparent; }
 .sy{ display:grid; grid-template-columns:1fr 1fr; gap:8px; }
 .sy button{ height:50px; border-radius:12px; border:1px solid var(--line); background:var(--bg); font-weight:700; font-size:1.05rem; }
-.sy button[data-sy="no"][aria-pressed="true"]{ background:var(--ink); color:var(--surface); border-color:var(--ink); }
+.sy button[data-sy="no"][aria-pressed="true"]{ background:var(--sel); color:var(--sel-ink); border-color:var(--sel-line); }
 .sy button[data-sy="yes"][aria-pressed="true"]{ background:var(--accent); color:var(--accent-ink); border-color:var(--accent); }
 .kind-h{ font-size:1rem; margin:14px 0 8px; }
 .tiles{ display:grid; grid-template-columns:1fr 1fr; gap:8px; }
@@ -284,7 +295,7 @@ body.about-open #backupBanner{ display:none !important; }
 .gcard .it:first-of-type{ border-top:0; }
 .gcard .it p{ margin:0 0 6px; font-size:.9rem; }
 .gcard .scale button[aria-pressed="true"]{ color:#1A2030; }
-.gcard .scale button.lv0[aria-pressed="true"]{ background:var(--ink); color:var(--surface); border-color:var(--ink); }
+.gcard .scale button.lv0[aria-pressed="true"]{ background:var(--sel); color:var(--sel-ink); border-color:var(--sel-line); }
 .gcard .scale button.lv1[aria-pressed="true"]{ background:var(--y1); border-color:var(--y1); }
 .gcard .scale button.lv2[aria-pressed="true"]{ background:var(--y2); border-color:var(--y2); }
 .gcard .scale button.lv3[aria-pressed="true"]{ background:var(--y3); border-color:var(--y3); color:#fff; }
@@ -334,6 +345,35 @@ label.inline:has(> input[type=radio]:first-child), label.inline:has(> input[type
 label.inline > input[type=radio]:first-child, label.inline > input[type=checkbox]:first-child{ flex:none; margin:.22em 0 0; }
 .medform label.inline{ flex-direction:row; align-items:center; flex-wrap:wrap; gap:8px; color:var(--ink); font-size:.95rem; }
 .opts fieldset{ flex-direction:column; align-items:flex-start; }
+#periodCard{ background:var(--t-period); border-color:var(--t-period-line); } #periodCard .tq{ color:var(--t-period-ink); }
+#moodBlock{ background:var(--t-mood); border-color:var(--t-mood-line); } #moodBlock .tq{ color:var(--t-mood-ink); }
+#itemsBlock{ background:var(--t-sym); border-color:var(--t-sym-line); } #itemsBlock .tq, #itemsBlock .kind-h{ color:var(--t-sym-ink); }
+#moveCard{ background:var(--t-move); border-color:var(--t-move-line); } #moveCard .tq{ color:var(--t-move-ink); }
+#medsCard{ background:var(--t-meds); border-color:var(--t-meds-line); } #medsCard .tq{ color:var(--t-meds-ink); }
+#periodCard .menses button, #itemsBlock .sy button, #moveCard .sy button, #medsCard .medbtns button{ background:var(--btnbg); }
+#periodCard .menses button[aria-pressed="true"][data-m="none"], #itemsBlock .sy button[data-sy="no"][aria-pressed="true"], #moveCard .sy button[data-mv="no"][aria-pressed="true"]{ background:var(--sel); color:var(--sel-ink); border-color:var(--sel-line); }
+#periodCard .menses button[aria-pressed="true"][data-m="spotting"]{ background:var(--spot); border-color:var(--spot); }
+#periodCard .menses button[aria-pressed="true"][data-m="bleeding"]{ background:var(--bleed); border-color:var(--bleed); }
+#itemsBlock .sy button[data-sy="yes"][aria-pressed="true"]{ background:var(--t-sym-yes); color:#fff; border-color:var(--t-sym-yes); }
+#moveCard .sy button[data-mv="yes"][aria-pressed="true"]{ background:var(--t-move-yes); color:#fff; border-color:var(--t-move-yes); }
+#medsCard .medbtns button[aria-pressed="true"]{ background:var(--t-meds-yes); border-color:var(--t-meds-yes); color:#fff; }
+.mvgrid{ display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:12px; }
+.mvk{ position:relative; display:flex; align-items:center; gap:8px; text-align:left; min-height:46px; padding:9px 12px; border-radius:12px; border:2px solid var(--t-move-line); background:var(--btnbg); color:var(--t-move-ink); font-weight:700; font-size:.92rem; }
+.mvk svg{ flex:none; }
+.mvk span{ overflow:hidden; text-overflow:ellipsis; }
+.mvk[aria-pressed="true"]{ background:var(--g-physical-sel); border-color:var(--g-physical-sel); color:var(--g-physical-ink); padding-right:26px; }
+.mvk[aria-pressed="true"]::after{ content:"✓"; position:absolute; right:10px; font-weight:800; }
+.mvk.add{ border-style:dashed; color:var(--muted); background:transparent; border-color:var(--line); font-weight:600; }
+.mvmonth{ display:grid; grid-template-columns:repeat(10,1fr); gap:5px; }
+.mvmonth i{ display:block; height:22px; border-radius:5px; background:var(--t-move); box-shadow:inset 0 0 0 1px var(--t-move-line); }
+.mvmonth i.y{ background:var(--g-physical-sel); box-shadow:none; }
+.mvmonth i.n{ background:var(--t-move); box-shadow:none; }
+.kindlist .row2{ display:flex; justify-content:space-between; align-items:center; padding:9px 0; border-top:1px solid var(--line); }
+.kindlist .row2:first-child{ border-top:0; }
+.kindlist .nm{ display:flex; gap:10px; align-items:center; color:var(--g-physical-ink); } .kindlist .nm span{ color:var(--ink); }
+.kindlist .x{ background:none; border:0; color:var(--muted); font-size:1.3rem; line-height:1; padding:2px 8px; }
+.addrow{ display:flex; gap:8px; margin-top:8px; }
+.addrow input{ flex:1; border:1px solid var(--line); border-radius:10px; background:var(--bg); padding:9px 10px; color:var(--ink); font:inherit; min-width:0; }
 [hidden]{ display:none !important; }
 @media (prefers-reduced-motion: reduce){ *{ transition:none !important; } }
 </style>
@@ -425,6 +465,15 @@ label.inline > input[type=radio]:first-child, label.inline > input[type=checkbox
 
       <div id="groupCards"></div>
 
+      <div class="block" id="moveCard" hidden>
+        <h2 class="tq">Movement?</h2>
+        <div class="sy" role="group" aria-label="Movement today">
+          <button data-mv="no" aria-pressed="false">No</button>
+          <button data-mv="yes" aria-pressed="false">Yes</button>
+        </div>
+        <div class="mvgrid" id="mvGrid" hidden></div>
+      </div>
+
       <div class="block" id="medsCard" hidden>
         <h2 class="tq">Meds</h2>
         <div id="medsList"></div>
@@ -452,6 +501,7 @@ label.inline > input[type=radio]:first-child, label.inline > input[type=checkbox
         <div class="week" id="weekStrip"></div>
       </div>
       <div class="block"><p class="sumtxt" id="loggedSummary2"></p></div>
+      <div class="block" id="mvMonthCard" hidden><h2>Movement, last 4 weeks</h2><div class="mvmonth" id="mvMonth"></div><p class="hint" id="mvMonthTxt" style="margin-top:8px"></p></div>
       <div class="center-links">
         <button class="linkbtn" id="editDay">Edit</button>
         <button class="linkbtn danger-link" id="clearDay">Clear this day</button>
@@ -473,6 +523,7 @@ label.inline > input[type=radio]:first-child, label.inline > input[type=checkbox
         <div class="seg" id="colorSel" role="group" aria-label="Color by">
           <button data-color="mood" aria-pressed="true">Mood</button>
           <button data-color="sym" aria-pressed="false">Symptoms</button>
+          <button data-color="move" aria-pressed="false" id="colorMove" hidden>Movement</button>
         </div>
         <div class="seg" id="alignSel" data-for="cycles" role="group" aria-label="Line up rows">
           <button data-align="start" aria-pressed="true">From period start</button>
@@ -602,6 +653,16 @@ label.inline > input[type=radio]:first-child, label.inline > input[type=checkbox
       <div class="stack"><button class="btn primary" id="rptBtn">Create report</button></div>
     </div>
 
+    <div class="block prose" id="moveSetup">
+      <h2>Movement</h2>
+      <label class="inline"><input type="checkbox" id="moveToggle"> Track movement (adds a “Movement?” question to Today)</label>
+      <div id="moveKindsWrap">
+        <p class="hint" style="margin-top:10px">Your kinds of movement. Remove ones you never do; past days keep what you logged.</p>
+        <div class="kindlist" id="kindList"></div>
+        <div class="addrow"><label class="sr" for="kindNew">New kind of movement</label><input type="text" id="kindNew" maxlength="24" placeholder="e.g. Climbing" autocomplete="off"><button class="btn primary" id="kindAdd">Add</button></div>
+      </div>
+    </div>
+
     <div class="block prose" id="medsSetup">
       <h2>Medications</h2>
       <p class="hint">Meds you add appear on the Today screen on the days they’re due, so you can tick them off. Use a nickname if you’d rather the name not show on screen. The app can’t send reminders, so a phone alarm still helps.</p>
@@ -662,7 +723,7 @@ label.inline > input[type=radio]:first-child, label.inline > input[type=checkbox
     <div class="block prose">
       <h2>Export</h2>
       <p><strong id="lastBackup"></strong></p>
-      <p>One row per logged day, with columns <code>date</code>, <code>cycle_day</code> (day 1 = first bleeding day), <code>days_to_next_period</code> (−1 = the day before), <code>menses</code>, <code>mood</code> (1–5), <code>scale</code> (0-3 or 1-6), <code>skipped</code>, <code>item01</code>–<code>item24</code> in DRSP order, <code>notes</code>, and one <code>med:</code> column per medication. Ratings are stored on the scale shown in the <code>scale</code> column.</p>
+      <p>One row per logged day, with columns <code>date</code>, <code>cycle_day</code> (day 1 = first bleeding day), <code>days_to_next_period</code> (−1 = the day before), <code>menses</code>, <code>mood</code> (1–5), <code>scale</code> (0-3 or 1-6), <code>skipped</code>, <code>item01</code>–<code>item24</code> in DRSP order, <code>notes</code>, <code>movement</code>, and one <code>med:</code> column per medication. Ratings are stored on the scale shown in the <code>scale</code> column.</p>
       <div class="stack">
         <button class="btn primary" id="exportBtn">Export CSV</button>
         <button class="btn" id="showCsvBtn">Show CSV to copy</button>
@@ -786,7 +847,7 @@ label.inline > input[type=radio]:first-child, label.inline > input[type=checkbox
   function blank(){ return {m:"none", r:ITEMS.map(function(){return null;}), n:"", mood:null, g:{}}; }
   function get(d){ return store.entries[d] || null; }
   function ensure(d){ if(!store.entries[d]) store.entries[d] = blank(); return store.entries[d]; }
-  function isEmpty(e){ return !e || (e.m==="none" && !e.mx && !e.skip && !e.jm && !e.sy && !(e.md && Object.keys(e.md).length) && e.mood==null && e.r.every(function(v){return v==null;}) && !e.n); }
+  function isEmpty(e){ return !e || (e.m==="none" && !e.mx && !e.skip && !e.jm && !e.sy && !e.mvy && !(e.md && Object.keys(e.md).length) && e.mood==null && e.r.every(function(v){return v==null;}) && !e.n); }
   function tidy(d){ if(isEmpty(store.entries[d])) delete store.entries[d]; }
   function ratedCount(e){ return e ? e.r.filter(function(v){return v!=null;}).length : 0; }
   function hasRatings(e){ return !!e && e.r.some(function(v){ return v!=null; }); }
@@ -872,7 +933,7 @@ label.inline > input[type=radio]:first-child, label.inline > input[type=checkbox
   function levelClass(v, sc){ var n = norm(v, sc); return "lv" + (v===baseVal(sc) ? 0 : Math.max(1, Math.min(3, Math.round(n)))); }
   function sevLabel(n){ return n==null ? "" : ["none","mild","moderate","severe"][Math.max(0,Math.min(3,Math.round(n)))]; }
 
-  document.querySelectorAll(".sy button").forEach(function(b){
+  document.querySelectorAll("#itemsBlock .sy button").forEach(function(b){
     b.addEventListener("click", function(){
       var e = ensure(cur), was = symState(e), want = b.dataset.sy;
       e.sc = hasRatings(e) ? entryScale(e) : builtScale; e.jm = false;
@@ -1154,6 +1215,91 @@ label.inline > input[type=radio]:first-child, label.inline > input[type=checkbox
     renderMedsManage(); renderLog();
   });
 
+  // ---------- movement ----------
+  var MV_ICONS = {
+    walking:'<circle cx="13" cy="4" r="2"/><path d="M11 21l2-6-3-3 1-5 4 3 3 1M9 12l-2 4"/>',
+    yoga:'<circle cx="12" cy="5" r="2"/><path d="M12 7v6M5 10l7 3 7-3M8 21l4-8 4 8"/>',
+    running:'<circle cx="14" cy="4" r="2"/><path d="M6 20l4-5 3 2 1-6-3-2-4 2M14 11l3 3h3"/>',
+    cycling:'<circle cx="6" cy="17" r="3.5"/><circle cx="18" cy="17" r="3.5"/><path d="M6 17l4-7h5l3 7M10 10l2 7M14 6h2"/>',
+    swimming:'<path d="M2 18c2 0 2-1.5 4-1.5S8 18 10 18s2-1.5 4-1.5 2 1.5 4 1.5 2-1.5 4-1.5"/><circle cx="16" cy="7" r="2"/><path d="M5 14l5-4 3 2 3-2"/>',
+    pilates:'<path d="M3 19h18"/><circle cx="7" cy="12" r="2"/><path d="M9 13l5 2 4-4"/>',
+    strength:'<path d="M6 8v8M18 8v8M3 10v4M21 10v4M6 12h12"/>',
+    dance:'<circle cx="12" cy="4" r="2"/><path d="M12 6l-1 6 3 3-1 6M11 12l-4-2M14 8l4-3"/>',
+    other:'<circle cx="12" cy="12" r="8"/><path d="M8 12h8M12 8v8"/>'
+  };
+  function mvIcon(ic){ return '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+(MV_ICONS[ic]||MV_ICONS.other)+'</svg>'; }
+  function kinds(){
+    if(!store.moveKinds) store.moveKinds = [["walking","Walking"],["yoga","Yoga"],["running","Running"],["cycling","Cycling"],["swimming","Swimming"],["pilates","Pilates"],["strength","Strength"],["dance","Dance"]].map(function(k){ return {id:k[0], name:k[1], ic:k[0]}; });
+    return store.moveKinds;
+  }
+  function kindName(id){ var k = kinds().filter(function(x){ return x.id===id; })[0]; return k ? k.name : id; }
+  function moveOn(){ return !!setting("move", false); }
+  function addKind(name){
+    name = String(name||"").trim().slice(0,24); if(!name) return null;
+    var ex = kinds().filter(function(x){ return x.name.toLowerCase()===name.toLowerCase(); })[0];
+    if(ex){ ex.off = false; return ex; }
+    var k = {id:"k" + Date.now().toString(36), name:name, ic:"other"}; kinds().push(k); return k;
+  }
+  function renderMoveCard(e){
+    var card = document.getElementById("moveCard"), grid = document.getElementById("mvGrid");
+    card.hidden = !moveOn() || !!e.skip;
+    if(card.hidden) return;
+    document.querySelectorAll("#moveCard .sy button").forEach(function(b){ b.setAttribute("aria-pressed", String(e.mvy===b.dataset.mv)); });
+    grid.hidden = e.mvy!=="yes"; grid.innerHTML = "";
+    if(e.mvy!=="yes") return;
+    var picked = e.mvk || [];
+    kinds().filter(function(k){ return !k.off || picked.indexOf(k.id)>=0; }).forEach(function(k){
+      var b = document.createElement("button"); b.className = "mvk"; b.dataset.k = k.id; b.setAttribute("aria-pressed", String(picked.indexOf(k.id)>=0));
+      b.innerHTML = mvIcon(k.ic) + "<span></span>"; b.querySelector("span").textContent = k.name; grid.appendChild(b);
+    });
+    var add = document.createElement("button"); add.className = "mvk add"; add.dataset.add = "1"; add.textContent = "+ Add your own"; grid.appendChild(add);
+  }
+  document.querySelectorAll("#moveCard .sy button").forEach(function(b){
+    b.addEventListener("click", function(){
+      var e = ensure(cur);
+      if(e.mvy===b.dataset.mv){ e.mvy = null; e.mvk = []; } else { e.mvy = b.dataset.mv; if(e.mvy==="no") e.mvk = []; }
+      tidy(cur); persist(); renderLog();
+    });
+  });
+  document.getElementById("mvGrid").addEventListener("click", function(ev){
+    var b = ev.target.closest("button"); if(!b) return;
+    var e = ensure(cur); e.mvk = e.mvk || []; e.mvy = "yes";
+    if(b.dataset.add){
+      var nm = window.prompt("New kind of movement (it will be saved for next time):", "");
+      var k = addKind(nm); if(!k) return;
+      if(e.mvk.indexOf(k.id)<0) e.mvk.push(k.id);
+      renderKinds();
+    } else {
+      var i = e.mvk.indexOf(b.dataset.k);
+      if(i>=0) e.mvk.splice(i,1); else e.mvk.push(b.dataset.k);
+    }
+    persist(); renderLog();
+  });
+  function renderKinds(){
+    document.getElementById("moveToggle").checked = moveOn();
+    document.getElementById("moveKindsWrap").hidden = !moveOn();
+    document.getElementById("colorMove").hidden = !moveOn();
+    var list = document.getElementById("kindList"); list.innerHTML = "";
+    kinds().filter(function(k){ return !k.off; }).forEach(function(k){
+      var r = document.createElement("div"); r.className = "row2";
+      r.innerHTML = '<span class="nm">'+mvIcon(k.ic)+'<span></span></span><button class="x" aria-label="Remove">×</button>';
+      r.querySelector(".nm span").textContent = k.name; r.querySelector(".x").dataset.k = k.id;
+      r.querySelector(".x").setAttribute("aria-label", "Remove " + k.name);
+      list.appendChild(r);
+    });
+  }
+  document.getElementById("kindList").addEventListener("click", function(ev){
+    var b = ev.target.closest(".x"); if(!b) return;
+    var k = kinds().filter(function(x){ return x.id===b.dataset.k; })[0]; if(k){ k.off = true; persist(); renderKinds(); renderLog(); }
+  });
+  document.getElementById("kindAdd").addEventListener("click", function(){
+    var inp = document.getElementById("kindNew"); if(addKind(inp.value)){ inp.value = ""; persist(); renderKinds(); renderLog(); }
+  });
+  document.getElementById("kindNew").addEventListener("keydown", function(ev){ if(ev.key==="Enter") document.getElementById("kindAdd").click(); });
+  document.getElementById("moveToggle").addEventListener("change", function(ev){
+    store.settings = store.settings || {}; store.settings.move = ev.target.checked; kinds(); persist(); renderKinds(); renderLog();
+  });
+
   // ---------- render today ----------
   function renderGroups(e){
     var st = symState(e), sc = hasRatings(e) ? entryScale(e) : settingScale();
@@ -1243,6 +1389,16 @@ label.inline > input[type=radio]:first-child, label.inline > input[type=checkbox
         parts.push(list.length ? "Symptoms: " + list.join(", ") + "." : "No symptoms.");
       } else if(e.jm) parts.push("Just mood, no symptom questions.");
     }
+    if(e.mvy==="no") parts.push("No movement.");
+    else if(e.mvy==="yes") parts.push((e.mvk && e.mvk.length) ? "Movement: " + e.mvk.map(function(id){ return kindName(id).toLowerCase(); }).join(", ") + "." : "Moved today.");
+    var mc2 = document.getElementById("mvMonthCard"); mc2.hidden = !moveOn();
+    if(moveOn()){
+      var mm = document.getElementById("mvMonth"); mm.innerHTML = ""; var yes = 0, ans = 0;
+      for(var q2=27;q2>=0;q2--){ var dq = addDays(cur,-q2), eq = store.entries[dq], ii = document.createElement("i");
+        if(eq && eq.mvy==="yes"){ ii.className = "y"; yes++; ans++; } else if(eq && eq.mvy==="no"){ ii.className = "n"; ans++; }
+        ii.title = fmt(dq); mm.appendChild(ii); }
+      document.getElementById("mvMonthTxt").textContent = "Moved on " + yes + " of the last 28 days" + (ans<28 ? " (" + (28-ans) + " not answered)." : ".");
+    }
     var dueM = medsForDay(cur);
     if(dueM.length){
       var mt = [];
@@ -1294,9 +1450,10 @@ label.inline > input[type=radio]:first-child, label.inline > input[type=checkbox
       if(e.jm && !hasRatings(stored)) why = "Just mood today.";
       else if(!asked) why = "Focus mode: no symptom questions today. They’re asked the week before your period and days 4–10 after it starts.";
       col.hidden = !why; document.getElementById("symCollapsedText").textContent = why; body.hidden = !!why;
-      document.querySelectorAll(".sy button").forEach(function(b){ b.setAttribute("aria-pressed", String(symState(stored)===b.dataset.sy)); });
+      document.querySelectorAll("#itemsBlock .sy button").forEach(function(b){ b.setAttribute("aria-pressed", String(symState(stored)===b.dataset.sy)); });
       if(why){ cardsEl.innerHTML = ""; } else renderGroups(e);
     }
+    renderMoveCard(e);
     renderMedsCard(e);
     if(document.activeElement!==notesEl) notesEl.value = e.n || "";
     var nb = document.getElementById("notesBox"); if(e.n && e.n.trim()) nb.open = true;
@@ -1319,6 +1476,7 @@ label.inline > input[type=radio]:first-child, label.inline > input[type=checkbox
   function cellFill(e){
     if(!e) return null;
     if(colorBy==="mood") return e.mood!=null ? "var(--m"+e.mood+")" : null;
+    if(colorBy==="move") return e.mvy==="yes" ? "var(--g-physical-sel)" : e.mvy==="no" ? "var(--t-move)" : null;
     var m = symptomMean(e); return m!=null ? sevColor(m) : null;
   }
   function drawCell(svgEl, x, y, size, d, hgt){
@@ -1357,6 +1515,7 @@ label.inline > input[type=radio]:first-child, label.inline > input[type=checkbox
       parts = [sw("var(--accent)","Mood",";border-radius:50%"), sw("var(--y2)","Symptoms"), sw("var(--bleed)","Bleeding"), sw("var(--spot)","Spotting"), sw("var(--muted)","Period start",";width:2px")];
     } else {
       if(colorBy==="mood") parts = [sw("var(--m1)","1 Very low"), sw("var(--m2)","2 Low"), sw("var(--m3)","3 Okay"), sw("var(--m4)","4 Good"), sw("var(--m5)","5 Very good")];
+      else if(colorBy==="move") parts = [sw("var(--g-physical-sel)","Moved"), sw("var(--t-move)","No movement",";box-shadow:inset 0 0 0 1px var(--t-move-line)")];
       else parts = [sw("var(--y0)","None"), sw("var(--y1)","Mild"), sw("var(--y2)","Moderate"), sw("var(--y3)","Severe")];
       if(meds().length) parts.push(sw("var(--ink)","Med taken (dot)",";border-radius:50%;width:8px;height:8px"));
       parts.push(sw("var(--bleed)","Bleeding (bar)"), sw("var(--spot)","Spotting"), sw("var(--line)","Skipped"), sw("transparent","No entry",";box-shadow:inset 0 0 0 1px var(--line)"));
@@ -1585,11 +1744,11 @@ label.inline > input[type=radio]:first-child, label.inline > input[type=checkbox
   function buildCsv(){
     var ons = onsets();
     var ml = meds();
-    var rows = [HEADER.concat(ml.map(function(m){ return "med:" + m.name; })).map(q).join(",")];
+    var rows = [HEADER.concat(["movement"]).concat(ml.map(function(m){ return "med:" + m.name; })).map(q).join(",")];
     Object.keys(store.entries).sort().forEach(function(d){
       var e = store.entries[d], ci = cycleInfo(d, ons);
       var mc = ml.map(function(m){ var o = e.md && e.md[m.id]; return o ? Object.keys(o).filter(function(k){ return o[k]; }).join("+") : ""; });
-      rows.push([d, ci.fwd, ci.back, e.m, e.mood, hasRatings(e) ? (entryScale(e)===6 ? "1-6" : "0-3") : "", e.skip ? 1 : ""].concat(e.r).concat([e.n]).concat(mc).map(q).join(","));
+      rows.push([d, ci.fwd, ci.back, e.m, e.mood, hasRatings(e) ? (entryScale(e)===6 ? "1-6" : "0-3") : "", e.skip ? 1 : ""].concat(e.r).concat([e.n]).concat([e.mvy==="no" ? "no" : e.mvy==="yes" ? ((e.mvk && e.mvk.length) ? e.mvk.map(kindName).join("+") : "yes") : ""]).concat(mc).map(q).join(","));
     });
     return rows.join("\n") + "\n";
   }
@@ -1635,6 +1794,11 @@ label.inline > input[type=radio]:first-child, label.inline > input[type=checkbox
       var mv = moi>=0 ? parseInt(r[moi],10) : NaN;
       var e = {m:m, r:vals, n: ni>=0 ? (r[ni]||"") : "", mood: (mv>=1 && mv<=5) ? mv : null, g:{}, sc:rsc, skip: ski>=0 && (r[ski]||"").trim()==="1"};
       if(m!=="none") e.mx = true;
+      var mvi = h.indexOf("movement");
+      if(mvi>=0){ var mvv = (r[mvi]||"").trim();
+        if(mvv==="no") e.mvy = "no";
+        else if(mvv){ e.mvy = "yes"; e.mvk = mvv==="yes" ? [] : mvv.split("+").map(function(nm){ var k = addKind(nm); return k ? k.id : null; }).filter(Boolean); }
+      }
       medCols.forEach(function(mc){
         var v = (r[mc[0]]||"").trim(); if(!v) return;
         var o = {}; v.split("+").forEach(function(t){ t = t.trim(); if(t==="am"||t==="pm"||t==="x") o[t] = true; });
@@ -1712,7 +1876,7 @@ label.inline > input[type=radio]:first-child, label.inline > input[type=checkbox
   document.getElementById("deleteAll").addEventListener("click", function(){
     if(!Object.keys(store.entries).length) return;
     if(!confirm("Delete every entry stored in this browser? This can’t be undone.")) return;
-    store = {entries:{}}; persist(); renderMedsManage(); syncSettingsUI(); applyImpairSetting(); renderUndo(); renderLog();
+    store = {entries:{}}; persist(); renderKinds(); renderMedsManage(); syncSettingsUI(); applyImpairSetting(); renderUndo(); renderLog();
   });
 
   // ---------- past periods ----------
@@ -2098,6 +2262,16 @@ label.inline > input[type=radio]:first-child, label.inline > input[type=checkbox
       h.push('<tr><td>'+esc(fmt(o))+'</td><td class="num">'+periodLen(o)+'</td><td class="num">'+(L==null ? 'In progress' : (L>60 ? 'Gap in records' : L+' days'))+'</td></tr>');
     });
     h.push('</tbody></table>');
+    if(moveOn() || Object.keys(store.entries).some(function(k){ return store.entries[k].mvy; })){
+      var mvPre = [0,0], mvPost = [0,0], moodY = [], moodN = [];
+      Object.keys(pre).forEach(function(dd){ var e2 = store.entries[dd]; if(e2 && e2.mvy){ mvPre[1]++; if(e2.mvy==="yes") mvPre[0]++; } });
+      Object.keys(post).forEach(function(dd){ var e2 = store.entries[dd]; if(e2 && e2.mvy){ mvPost[1]++; if(e2.mvy==="yes") mvPost[0]++; } });
+      for(var dm2=start; dm2<=t; dm2=addDays(dm2,1)){ var e3 = store.entries[dm2]; if(e3 && e3.mood!=null && e3.mvy){ (e3.mvy==="yes" ? moodY : moodN).push(e3.mood); } }
+      function pct(a){ return a[1] ? Math.round(100*a[0]/a[1]) + '% <small>(' + a[0] + ' of ' + a[1] + ' days)</small>' : '–'; }
+      h.push('<h2>Movement</h2><table><thead><tr><th>Measure</th><th class="num">Before (days −7 to −1)</th><th class="num">After (days 4–10)</th></tr></thead><tbody>');
+      h.push('<tr><td>Days with movement</td><td class="num">'+pct(mvPre)+'</td><td class="num">'+pct(mvPost)+'</td></tr></tbody></table>');
+      h.push('<p class="note">Average mood on days with movement: '+f1(avg(moodY))+' ('+moodY.length+' days); without: '+f1(avg(moodN))+' ('+moodN.length+' days). This shows a pattern only, not cause and effect.</p>');
+    }
     var rmeds = meds().filter(function(m){ return m.start <= t && (!m.stop || m.stop > start); });
     if(rmeds.length){
       h.push('<h2>Medications</h2><table><thead><tr><th>Medication</th><th>Schedule</th><th class="num">Taken</th></tr></thead><tbody>');
@@ -2159,6 +2333,7 @@ label.inline > input[type=radio]:first-child, label.inline > input[type=checkbox
   });
 
   load();
+  renderKinds();
   renderMedsManage();
   syncSettingsUI();
   applyImpairSetting();
