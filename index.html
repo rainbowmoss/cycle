@@ -450,6 +450,44 @@ details.dtl > .dbody{ padding:0 14px 12px; }
 .fld{ display:flex; flex-direction:column; gap:4px; font-size:.9rem; color:var(--muted); margin:8px 0; }
 .fld input{ border:1px solid var(--line); border-radius:10px; background:var(--bg); padding:9px 10px; color:var(--ink); font:inherit; }
 .backbar{ display:flex; align-items:center; justify-content:space-between; gap:8px; margin:0 0 10px; }
+.ctr{ display:flex; align-items:center; gap:10px; }
+.ctr button.pm{ width:46px; height:42px; border-radius:10px; border:1px solid var(--line); background:var(--btnbg); font-size:1.3rem; font-weight:700; }
+.ctr .v{ min-width:52px; text-align:center; font-size:1.4rem; font-weight:800; background:none; border:0; color:var(--ink); }
+.ctr .u{ color:var(--muted); font-size:.9rem; }
+.trow .yn2, .fu .yn2{ display:grid; grid-template-columns:1fr 1fr; gap:6px; }
+.trow .opts, .fu .opts{ display:grid; grid-template-columns:repeat(auto-fit, minmax(90px,1fr)); gap:6px; }
+.trow .yn2 button, .trow .opts button, .fu .yn2 button, .fu .opts button{ height:40px; border-radius:9px; border:1px solid var(--line); background:var(--btnbg); font-weight:700; }
+.trow button[aria-pressed="true"], .fu button[aria-pressed="true"]{ background:var(--t-tr-yes); border-color:var(--t-tr-yes); color:#fff; }
+.fu{ margin:8px 0 4px; padding:9px 10px; border-radius:10px; background:var(--btnbg); border:1px dashed var(--t-sym-line); }
+.fu p{ margin:0 0 6px; font-weight:700; font-size:.88rem; }
+.selectbox{ border:1px solid var(--line); border-radius:10px; background:var(--bg); padding:9px 10px; color:var(--ink); font:inherit; }
+#trackListSet .row2 .nm{ flex-direction:column; align-items:flex-start; gap:0; }
+#trackListSet .row2 small{ color:var(--muted); font-size:.8rem; }
+#trackListSet .acts2{ display:flex; gap:14px; align-items:center; }
+.pcard.k-meds{ background:var(--t-meds); border-color:var(--t-meds-line); } .pcard.k-meds h3{ color:var(--t-meds-ink); }
+.medsum{ border-top:1px solid var(--t-meds-line); padding:8px 0; } .medsum:first-of-type{ border-top:0; }
+.medsum b{ display:block; } .medsum span{ display:block; font-size:.82rem; color:var(--muted); }
+.mbar{ height:8px; background:var(--btnbg); border:1px solid var(--t-meds-line); border-radius:999px; overflow:hidden; margin-top:6px; } .mbar i{ display:block; height:100%; background:var(--t-meds-yes); }
+.medflags{ display:flex; flex-direction:column; gap:4px; margin-top:8px; font-size:.82rem; font-weight:700; color:var(--t-meds-ink); }
+.medflags div{ display:flex; align-items:center; gap:7px; } .medflags i{ width:11px; height:11px; border-radius:3px; border:2.2px solid var(--t-meds-yes); flex:none; }
+.medhead{ display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:6px; } .medhead .tq{ margin:0; }
+.medall{ padding:7px 12px; border-radius:9px; border:1px solid var(--t-meds-line); background:var(--btnbg); color:var(--t-meds-ink); font-weight:700; font-size:.82rem; }
+.medall[aria-pressed="true"]{ background:var(--t-meds-yes); border-color:var(--t-meds-yes); color:#fff; }
+.stag{ font-style:normal; font-size:.66rem; font-weight:700; padding:2px 6px; border-radius:6px; background:var(--btnbg); color:var(--t-meds-ink); border:1px solid var(--t-meds-line); margin-left:6px; vertical-align:2px; }
+.fubox{ margin-top:8px; padding:10px; border-radius:11px; background:var(--t-tr); border:1px solid var(--t-tr-line); }
+.tfu{ margin-top:8px; padding:9px 10px; border-radius:10px; background:var(--btnbg); border:1px dashed var(--t-tr-line); }
+.tfu > p{ margin:0 0 6px; font-weight:700; font-size:.86rem; } .tfu > p small{ font-weight:400; color:var(--muted); }
+.tchips{ display:flex; flex-wrap:wrap; gap:6px; }
+.tchips button{ padding:7px 12px; border-radius:999px; border:1.5px solid var(--t-tr-line); background:var(--t-tr); font-weight:700; font-size:.82rem; color:var(--t-tr-ink); }
+.tchips button[aria-pressed="true"]{ background:var(--t-tr-yes); border-color:var(--t-tr-yes); color:#fff; }
+.tfu input[type=text], .tnote textarea{ width:100%; margin-top:8px; border:1px solid var(--line); border-radius:9px; background:var(--bg); padding:8px 10px; font:inherit; color:var(--ink); }
+.tnote textarea{ min-height:56px; margin:6px 0 0; }
+.tnlink{ background:none; border:0; padding:0; margin-top:7px; color:var(--accent-text); font-weight:700; font-size:.82rem; text-decoration:underline; }
+.trig{ margin-top:10px; } .trig h4{ margin:0 0 4px; font-size:.95rem; }
+.trow2{ display:grid; grid-template-columns:96px 1fr 26px; gap:8px; align-items:center; font-size:.82rem; margin:5px 0; }
+.trow2 .bar{ height:10px; border-radius:6px; background:var(--btnbg); border:1px solid var(--t-tr-line); overflow:hidden; } .trow2 .bar i{ display:block; height:100%; background:var(--t-tr-yes); }
+.jsub{ display:block; margin-top:4px; font-size:.82rem; color:var(--muted); }
+.copybox{ font-family:ui-monospace,Menlo,monospace; font-size:.78rem; background:var(--t-tr); border:1px solid var(--t-tr-line); border-radius:10px; padding:10px 12px; line-height:1.5; margin:10px 0; }
 [hidden]{ display:none !important; }
 @media (prefers-reduced-motion: reduce){ *{ transition:none !important; } }
 </style>
@@ -507,6 +545,11 @@ details.dtl > .dbody{ padding:0 14px 12px; }
         </div>
       </div>
 
+      <div class="block" id="medsCard" hidden>
+        <div class="medhead"><h2 class="tq" id="medsTitle">Meds</h2><button class="medall" id="medsAll" aria-pressed="false" hidden>All taken</button></div>
+        <div id="medsList"></div>
+      </div>
+
       <div class="block" id="moodBlock">
         <h2 class="tq">How’s your mood?</h2>
         <div class="mood" role="group" aria-label="Mood today">
@@ -548,11 +591,6 @@ details.dtl > .dbody{ padding:0 14px 12px; }
           <button data-mv="yes" aria-pressed="false">Yes</button>
         </div>
         <div class="mvgrid" id="mvGrid" hidden></div>
-      </div>
-
-      <div class="block" id="medsCard" hidden>
-        <h2 class="tq">Meds</h2>
-        <div id="medsList"></div>
       </div>
 
       <details class="block notes-d" id="notesBox">
@@ -731,7 +769,7 @@ details.dtl > .dbody{ padding:0 14px 12px; }
           <legend>Symptom questions</legend>
           <label class="inline"><input type="radio" name="qmode" value="every"> Every day</label>
           <label class="inline"><input type="radio" name="qmode" value="focus"> Focus mode: only the week before my period and days 4–10 after it starts</label>
-          <label class="inline"><input type="radio" name="qmode" value="mood"> Mood only: don’t ask about symptoms</label>
+          <label class="inline"><input type="radio" name="qmode" value="mood"> <span><b>Skip the symptom questionnaire</b><br><span class="hint">Keeps period, mood, my trackers, movement and meds. Follow-up questions tied to a symptom won’t appear.</span></span></label>
         </fieldset>
         <fieldset>
           <legend>Rating scale</legend>
@@ -745,24 +783,63 @@ details.dtl > .dbody{ padding:0 14px 12px; }
 
     <div class="block prose" id="trackSetup">
       <h2>My trackers</h2>
-      <p class="hint">Add anything else you want to rate each day, like “Felt flat” or “Restless”. Each is rated None, Mild, Moderate or Severe.</p>
+      <p class="hint">Add your own questions: how much (None to Severe), yes/no, a number (like coffees), or pick one of your own options (like Left / Right / Both). A question can show every day, or only after a specific symptom is rated.</p>
       <div class="kindlist" id="trackListSet"></div>
-      <div class="addrow"><label class="sr" for="trackNew">New tracker</label><input type="text" id="trackNew" maxlength="30" placeholder="e.g. Felt flat" autocomplete="off"><button class="btn primary" id="trackAdd">Add</button></div>
+      <div class="stack"><button class="btn" id="trackAddOpen">Add a question</button></div>
+      <div class="medform" id="trForm" hidden>
+        <label>Question<input type="text" id="tfName" maxlength="40" placeholder="e.g. Which side?" autocomplete="off"></label>
+        <fieldset id="tfTypeWrap">
+          <legend>Type of answer</legend>
+          <label class="inline"><input type="radio" name="tfType" value="sev" checked> How much (None to Severe)</label>
+          <label class="inline"><input type="radio" name="tfType" value="yn"> Yes / No</label>
+          <label class="inline"><input type="radio" name="tfType" value="num"> Number</label>
+          <label class="inline"><input type="radio" name="tfType" value="pick"> Pick one of my options</label>
+        </fieldset>
+        <p class="hint" id="tfTypeLocked" hidden>The type can’t change once answers are saved. To use a different type, add a new question.</p>
+        <label id="tfUnitWrap" hidden>Unit (optional)<input type="text" id="tfUnit" maxlength="15" placeholder="e.g. cups" autocomplete="off"></label>
+        <label id="tfOptsWrap" hidden>Options, separated by commas<input type="text" id="tfOpts" maxlength="120" placeholder="e.g. Left, Right, Both" autocomplete="off"></label>
+        <fieldset>
+          <legend>Show it</legend>
+          <label class="inline"><input type="radio" name="tfPlace" value="daily" checked> Every day, in My trackers</label>
+          <label class="inline"><input type="radio" name="tfPlace" value="item"> Only after a symptom is rated above None</label>
+        </fieldset>
+        <label id="tfItemWrap" hidden>Show after<select id="tfItem" class="selectbox"></select></label>
+        <div>
+          <button class="linkbtn" id="tfFuAdd" type="button">+ Add a follow-up question</button>
+          <div class="fubox" id="tfFuBox" hidden>
+            <label class="fld">Follow-up question<input type="text" id="tfFuQ" maxlength="40" placeholder="e.g. Trigger?" autocomplete="off"></label>
+            <label class="fld">Options, separated by commas<input type="text" id="tfFuOpts" maxlength="200" placeholder="e.g. Red wine, Run, Poor sleep, Unknown" autocomplete="off"></label>
+            <label class="inline"><input type="checkbox" id="tfFuMulti" checked> Allow picking more than one</label>
+            <label class="inline"><input type="checkbox" id="tfFuOther" checked> Add “Other” with a text box</label>
+            <p class="hint" style="margin:6px 0 4px">Shows only when the answer is Yes, above None, or more than 0. Answering it is always optional.</p>
+            <button class="linkbtn danger-link" id="tfFuRemove" type="button">Remove follow-up</button>
+          </div>
+        </div>
+        <label class="inline"><input type="checkbox" id="tfNote"> Allow a note on this question</label>
+        <div class="stack"><button class="btn primary" id="tfSave">Save question</button><button class="btn" id="tfCancel">Cancel</button></div>
+        <p class="hint" id="tfMsg" aria-live="polite"></p>
+      </div>
     </div>
 
     <div class="block prose" id="medsSetup">
-      <h2>Medications</h2>
-      <p class="hint">Daily and as-needed meds appear on Today so you can tick them off. Long-acting ones (like an IUD) are noted there and in your summary. Use a nickname if you’d rather the name not show on screen. The app can’t send reminders, so a phone alarm still helps.</p>
+      <h2>Meds and supplements</h2>
+      <p class="hint">Meds and supplements appear on Today on the days they’re due, so you can tick them off. Long-acting ones (like an IUD) are noted there and in your summary. Use a nickname if you’d rather the name not show on screen. The app can’t send reminders, so a phone alarm still helps.</p>
       <div id="medsManage"></div>
-      <div class="stack"><button class="btn" id="medAdd">Add a medication</button></div>
+      <div class="stack"><button class="btn" id="medAdd">Add a med or supplement</button></div>
       <div class="medform" id="medForm" hidden>
         <label>Name or nickname<input type="text" id="mfName" maxlength="40" autocomplete="off"></label>
         <label>Dose (optional)<input type="text" id="mfDose" maxlength="30" placeholder="e.g. 50 mg" autocomplete="off"></label>
+        <fieldset>
+          <legend>Kind</legend>
+          <label class="inline"><input type="radio" name="mfKind" value="med" checked> Medication</label>
+          <label class="inline"><input type="radio" name="mfKind" value="supp"> Vitamin or supplement</label>
+        </fieldset>
         <fieldset>
           <legend>When do you take it?</legend>
           <label class="inline"><input type="radio" name="mfSched" value="daily" checked> Every day</label>
           <label class="inline"><input type="radio" name="mfSched" value="weekdays"> Certain days of the week</label>
           <label class="inline"><input type="radio" name="mfSched" value="luteal"> Only in the days before my period</label>
+          <label class="inline"><input type="radio" name="mfSched" value="cycle"> On/off cycle (like a pill pack)</label>
           <label class="inline"><input type="radio" name="mfSched" value="prn"> As needed</label>
           <label class="inline"><input type="radio" name="mfSched" value="long"> Long-acting (IUD, implant, injection, ring)</label>
         </fieldset>
@@ -771,7 +848,11 @@ details.dtl > .dbody{ padding:0 14px 12px; }
           <label class="inline">Days before my period: <input type="number" id="mfLut" min="3" max="21" value="14" inputmode="numeric"></label>
           <p class="hint" style="margin:4px 0 0">It shows up that many days before your period is due, and stays until your period starts.</p>
         </div>
-        <fieldset id="mfTimeWrap">
+        <div id="mfCycWrap" hidden>
+          <label class="inline"><input type="number" id="mfOn" min="1" max="90" value="21" inputmode="numeric"> days on, then <input type="number" id="mfOff" min="1" max="60" value="7" inputmode="numeric"> days off</label>
+          <p class="hint" style="margin:4px 0 0">The cycle counts from the start date below (your first “on” day).</p>
+        </div>
+        <fieldset id="mfTimeWrap" hidden>
           <legend>Time of day</legend>
           <label class="inline"><input type="radio" name="mfTime" value="am" checked> Morning</label>
           <label class="inline"><input type="radio" name="mfTime" value="pm"> Evening</label>
@@ -800,8 +881,14 @@ details.dtl > .dbody{ padding:0 14px 12px; }
 
     <details class="block dtl"><summary>About and how to edit</summary><div class="dbody prose">
       <p>Cycle log is a private daily log for period, mood, symptoms, movement and meds. Everything stays in this browser on this device.</p>
-      <p><b>To change the app yourself:</b> the whole app is the <code>index.html</code> file in your GitHub repo. On GitHub, open the file, tap the pencil icon, make your edit, and tap <b>Commit changes</b>. Then open <code>sw.js</code> the same way and raise the version number in <code>cycle-log-v…</code> by one, so phones load the update. Open the app twice to see it.</p>
-      <p>You can also paste <code>index.html</code> into Claude and describe the change you want. The repo’s README has more detail, including how friends can copy it with <b>Fork</b>.</p>
+      <h3 style="font-size:1rem;margin:14px 0 6px">Make your own version</h3>
+      <p>The whole app is one file. Download it, attach it to an AI assistant like Claude or ChatGPT, and describe the change you want.</p>
+      <div class="stack"><button class="btn primary" id="dlApp">Download the app file</button><button class="btn" id="copyReq">Copy a sample request</button></div>
+      <p class="hint" style="margin-top:8px"><b>This downloads the app only, not your entries.</b> Your log stays on this device. To save a copy of your entries, use Data → Backup.</p>
+      <div class="copybox" id="reqText">This is my Cycle log app (index.html). Please [describe your change]. Keep the storage key “drsp-log-v1” and the data format the same so my backups still restore. Give me the full updated index.html.</div>
+      <p class="hint" id="dlMsg" aria-live="polite"></p>
+      <p class="hint">To use your edited version you need somewhere to run it. A free GitHub Pages copy installs on your phone and works offline; a link from an AI chat opens in a browser only.</p>
+      <p class="hint"><b>Your entries stay with this link.</b> To move them, make a backup in Data → Backup here, then restore it in your new version.</p>
       <p class="hint">Symptom items are adapted from the Daily Record of Severity of Problems (Endicott, Nee &amp; Harrison, 2006). This is a personal log, not a diagnosis.</p>
     </div></details>
   </section>
@@ -819,6 +906,7 @@ details.dtl > .dbody{ padding:0 14px 12px; }
           <label class="inline"><input type="radio" name="rcyc" value="all"> Everything</label>
         </fieldset>
         <label class="inline"><input type="checkbox" id="rptNotes"> Include journal notes</label>
+        <label class="inline"><input type="checkbox" id="rptSupp" checked> Include supplements</label>
       </div>
       <div class="stack"><button class="btn primary" id="rptBtn">Create report</button></div>
     </div>
@@ -975,7 +1063,7 @@ details.dtl > .dbody{ padding:0 14px 12px; }
   function blank(){ return {m:"none", r:ITEMS.map(function(){return null;}), n:"", mood:null, g:{}}; }
   function get(d){ return store.entries[d] || null; }
   function ensure(d){ if(!store.entries[d]) store.entries[d] = blank(); return store.entries[d]; }
-  function isEmpty(e){ return !e || (e.m==="none" && !e.mx && !e.skip && !e.jm && !e.sy && !e.mvy && !(e.md && Object.keys(e.md).length) && !(e.tr && Object.keys(e.tr).length) && e.mood==null && e.r.every(function(v){return v==null;}) && !e.n); }
+  function isEmpty(e){ return !e || (e.m==="none" && !e.mx && !e.skip && !e.jm && !e.sy && !e.mvy && !(e.md && Object.keys(e.md).length) && !(e.tr && Object.keys(e.tr).length) && !(e.tf && Object.keys(e.tf).length) && !(e.tn && Object.keys(e.tn).length) && e.mood==null && e.r.every(function(v){return v==null;}) && !e.n); }
   function tidy(d){ if(isEmpty(store.entries[d])) delete store.entries[d]; }
   function ratedCount(e){ return e ? e.r.filter(function(v){return v!=null;}).length : 0; }
   function hasRatings(e){ return !!e && e.r.some(function(v){ return v!=null; }); }
@@ -1080,6 +1168,8 @@ details.dtl > .dbody{ padding:0 14px 12px; }
     });
   });
   tilesEl.addEventListener("click", function(ev){
+    if(handleTrExtra(ev)) return;
+    var tb = ev.target.closest("button[data-tr]"); if(tb){ handleTrClick(tb); return; }
     var vb = ev.target.closest("button[data-v]");
     if(vb){ var e1 = ensure(cur); e1.sc = hasRatings(e1) ? entryScale(e1) : builtScale; e1.r[+vb.dataset.i] = +vb.dataset.v; persist(); renderLog(); return; }
     var h = ev.target.closest(".gh"); if(!h) return;
@@ -1226,6 +1316,7 @@ details.dtl > .dbody{ padding:0 14px 12px; }
     if(!medActive(m, d)) return false;
     if(m.sched==="daily") return true;
     if(m.sched==="weekdays") return (m.days||[]).indexOf(parse(d).getDay()) >= 0;
+    if(m.sched==="cycle"){ var on = m.on||21, off = m.off||7, idx = diffDays(m.start, d) % (on+off); return idx < on; }
     if(m.sched==="luteal"){
       var ons = onsets(), lastOn = null, nextOn = null, N = m.lut || 14;
       for(var i=0;i<ons.length;i++){ if(ons[i]<=d) lastOn = ons[i]; else { nextOn = ons[i]; break; } }
@@ -1240,18 +1331,43 @@ details.dtl > .dbody{ padding:0 14px 12px; }
   var TLABEL = {am:"Morning", pm:"Evening", x:"Took it"};
   var WD = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
   function schedText(m){
-    var t = (m.sched==="prn" || m.sched==="long") ? "" : (m.time==="both" ? ", morning and evening" : m.time==="pm" ? ", evening" : ", morning");
+    var t = m.time==="both" ? ", twice a day" : "";
     if(m.sched==="daily") return "Every day" + t;
     if(m.sched==="weekdays") return (m.days||[]).slice().sort().map(function(x){ return WD[x]; }).join(", ") + t;
     if(m.sched==="luteal") return "Last " + (m.lut||14) + " days before period" + t;
     if(m.sched==="long") return "Long-acting" + (m.replace ? ", replace by " + fmt(m.replace) : "");
+    if(m.sched==="cycle") return "On/off: " + (m.on||21) + " days on, " + (m.off||7) + " off";
     return "As needed";
+  }
+  function medEvents(){
+    var ev = [];
+    meds().forEach(function(m){
+      if(m.sched==="prn") return;
+      if(m.start) ev.push({d:m.start, m:m, kind: m.sched==="long" ? "inserted" : "started"});
+      if(m.stop){ var last = addDays(m.stop,-1); ev.push({d:last, m:m, kind: m.sched==="long" ? "removed" : "stopped"}); }
+    });
+    return ev.sort(function(a,b){ return a.d < b.d ? -1 : 1; });
   }
   function medsForDay(d){ return meds().filter(function(m){ return m.sched!=="long" && medActive(m, d) && (m.sched==="prn" || medDue(m, d)); }); }
   function longMeds(d){ return meds().filter(function(m){ return m.sched==="long" && medActive(m, d); }); }
   function medTaken(e, m, t){ return !!(e && e.md && e.md[m.id] && e.md[m.id][t]); }
   function prnTaken(e){ return !!(e && e.md && meds().some(function(m){ return m.sched==="prn" && e.md[m.id] && e.md[m.id].x; })); }
   function anyMedTaken(e){ return !!(e && e.md && Object.keys(e.md).some(function(k){ var o = e.md[k]; return o && Object.keys(o).some(function(t){ return o[t]; }); })); }
+  function medCounter(m, d){
+    if(m.sched==="cycle"){ var on = m.on||21, off = m.off||7, idx = diffDays(m.start, d) % (on+off); return "Day " + (idx+1) + " of " + on + " on"; }
+    if(m.sched==="luteal"){
+      var ons = onsets(), N = m.lut||14, lastOn = null, nextOn = null;
+      for(var i=0;i<ons.length;i++){ if(ons[i]<=d) lastOn = ons[i]; else { nextOn = ons[i]; break; } }
+      var until = null;
+      if(nextOn) until = diffDays(d, nextOn);
+      else { var mc = medianCycle(ons); if(lastOn && mc) until = diffDays(d, addDays(lastOn, mc)); }
+      if(until==null) return "Before your period";
+      return until >= 1 ? "Before-period dose, day " + (N - until + 1) + " of " + N : "Before-period dose, until your period starts";
+    }
+    if(m.sched==="weekdays") return (m.days||[]).slice().sort().map(function(x){ return WD[x]; }).join(", ");
+    if(m.sched==="prn") return "As needed";
+    return m.time==="both" ? "Twice a day" : "";
+  }
   function renderMedsCard(e){
     var list = medsForDay(cur), card = document.getElementById("medsCard"), box = document.getElementById("medsList");
     var lm = longMeds(cur);
@@ -1260,19 +1376,33 @@ details.dtl > .dbody{ padding:0 14px 12px; }
       var row = document.createElement("div"); row.className = "medrow";
       var mn = document.createElement("div"); mn.className = "mn";
       var b = document.createElement("b"); b.textContent = m.name + (m.dose ? " " + m.dose : ""); mn.appendChild(b);
-      var sp = document.createElement("span"); sp.textContent = m.sched==="prn" ? "As needed" : m.sched==="luteal" ? "Before your period" : (m.time==="both" ? "Morning and evening" : TLABEL[m.time||"am"]); mn.appendChild(sp);
+      if(m.kind==="supp"){ var tg = document.createElement("em"); tg.className = "stag"; tg.textContent = "supplement"; b.appendChild(tg); }
+      var ctr = medCounter(m, cur); if(ctr){ var sp = document.createElement("span"); sp.textContent = ctr; mn.appendChild(sp); }
       var bt = document.createElement("div"); bt.className = "medbtns";
       medTimes(m).forEach(function(t){
         var tk = medTaken(e, m, t), x = document.createElement("button");
         x.dataset.med = m.id; x.dataset.t = t; x.setAttribute("aria-pressed", String(tk));
         x.textContent = (t==="x" ? (tk ? "Took it" : "Took it?") : (medTimes(m).length>1 ? (t==="am" ? "AM" : "PM") : "Taken")) + (tk ? " ✓" : "");
-        x.setAttribute("aria-label", m.name + " " + (t==="x" ? "taken" : TLABEL[t].toLowerCase() + " dose taken"));
+        x.setAttribute("aria-label", m.name + " " + (t==="x" ? "taken" : (medTimes(m).length>1 ? TLABEL[t].toLowerCase() + " dose " : "") + "taken"));
         bt.appendChild(x);
       });
       row.appendChild(mn); row.appendChild(bt); box.appendChild(row);
     });
     lm.forEach(function(m){ var d = document.createElement("div"); d.className = "la"; d.textContent = "On long-acting: " + m.name + (m.dose ? " " + m.dose : "") + ", since " + parse(m.start).toLocaleDateString(undefined,{month:"short", year:"numeric"}); box.appendChild(d); });
+    var sched = list.filter(function(m){ return m.sched!=="prn"; });
+    var allBtn = document.getElementById("medsAll"), hasSupp = meds().some(function(m){ return m.kind==="supp" && !m.stop; });
+    document.getElementById("medsTitle").textContent = hasSupp ? "Meds and supplements" : "Meds";
+    allBtn.hidden = sched.length < 2;
+    var allDone = sched.length && sched.every(function(m){ return medTimes(m).every(function(t){ return medTaken(e, m, t); }); });
+    allBtn.setAttribute("aria-pressed", String(!!allDone)); allBtn.textContent = allDone ? "All taken ✓" : "All taken";
   }
+  document.getElementById("medsAll").addEventListener("click", function(){
+    var list = medsForDay(cur).filter(function(m){ return m.sched!=="prn"; }), e = ensure(cur); e.md = e.md || {};
+    var allDone = list.every(function(m){ return medTimes(m).every(function(t){ return medTaken(e, m, t); }); });
+    list.forEach(function(m){ if(allDone) delete e.md[m.id]; else { e.md[m.id] = {}; medTimes(m).forEach(function(t){ e.md[m.id][t] = true; }); } });
+    if(!Object.keys(e.md).length) delete e.md;
+    tidy(cur); persist(); renderLog();
+  });
   document.getElementById("medsList").addEventListener("click", function(ev){
     var b = ev.target.closest("button[data-med]"); if(!b) return;
     var e = ensure(cur); e.md = e.md || {};
@@ -1289,7 +1419,8 @@ details.dtl > .dbody{ padding:0 14px 12px; }
     var sc = mfSched();
     document.getElementById("mfDays").hidden = sc!=="weekdays";
     document.getElementById("mfLutWrap").hidden = sc!=="luteal";
-    document.getElementById("mfTimeWrap").hidden = sc==="prn" || sc==="long";
+    document.getElementById("mfTimeWrap").hidden = true;
+    document.getElementById("mfCycWrap").hidden = sc!=="cycle";
     document.getElementById("mfReplaceWrap").hidden = sc!=="long";
   }
   document.querySelectorAll("input[name=mfSched]").forEach(function(x){ x.addEventListener("change", syncMedForm); });
@@ -1303,6 +1434,8 @@ details.dtl > .dbody{ padding:0 14px 12px; }
     document.querySelectorAll("input[name=mfTime]").forEach(function(x){ x.checked = x.value===(m && m.time ? m.time : "am"); });
     document.getElementById("mfStart").value = m ? m.start : todayIso();
     document.getElementById("mfReplace").value = m && m.replace ? m.replace : "";
+    document.getElementById("mfOn").value = m && m.on ? m.on : 21; document.getElementById("mfOff").value = m && m.off ? m.off : 7;
+    document.querySelectorAll("input[name=mfKind]").forEach(function(x){ x.checked = x.value===(m && m.kind==="supp" ? "supp" : "med"); });
     document.getElementById("mfStart").max = todayIso();
     document.getElementById("mfMsg").textContent = "";
     document.getElementById("medForm").hidden = false; document.getElementById("medAdd").hidden = true;
@@ -1318,17 +1451,20 @@ details.dtl > .dbody{ padding:0 14px 12px; }
     if(sc==="weekdays" && !days.length){ msg.textContent = "Pick at least one day."; return; }
     var st = document.getElementById("mfStart").value; if(!validIso(st)) st = todayIso();
     var lut = Math.min(21, Math.max(3, parseInt(document.getElementById("mfLut").value,10) || 14));
-    var tm = (document.querySelector("input[name=mfTime]:checked")||{}).value || "am";
+    var m0 = editingMed ? meds().filter(function(x){ return x.id===editingMed; })[0] : null;
+    var tm = (m0 && m0.time) || "am";
     var m = editingMed ? meds().filter(function(x){ return x.id===editingMed; })[0] : null;
     if(!m){ m = {id:"m" + Date.now().toString(36)}; meds().push(m); }
-    m.name = name; m.dose = document.getElementById("mfDose").value.trim(); m.sched = sc; m.days = days; m.lut = lut; m.time = tm; m.start = st; m.replace = sc==="long" && validIso(document.getElementById("mfReplace").value) ? document.getElementById("mfReplace").value : null;
+    m.name = name; m.dose = document.getElementById("mfDose").value.trim(); m.sched = sc; m.days = days; m.lut = lut; m.time = tm; m.start = st;
+    m.kind = (document.querySelector("input[name=mfKind]:checked")||{}).value || "med";
+    if(sc==="cycle"){ m.on = Math.max(1, parseInt(document.getElementById("mfOn").value,10) || 21); m.off = Math.max(1, parseInt(document.getElementById("mfOff").value,10) || 7); } m.replace = sc==="long" && validIso(document.getElementById("mfReplace").value) ? document.getElementById("mfReplace").value : null;
     persist(); closeMedForm(); renderMedsManage(); renderLog();
   });
   function renderMedsManage(){
     var box = document.getElementById("medsManage"); box.innerHTML = "";
     meds().forEach(function(m){
       var d = document.createElement("div"); d.className = "medman";
-      var b = document.createElement("b"); b.textContent = m.name + (m.dose ? " " + m.dose : ""); d.appendChild(b);
+      var b = document.createElement("b"); b.textContent = m.name + (m.dose ? " " + m.dose : ""); if(m.kind==="supp"){ var tg = document.createElement("em"); tg.className = "stag"; tg.textContent = "supplement"; b.appendChild(tg); } d.appendChild(b);
       var s1 = document.createElement("span"); s1.textContent = schedText(m); d.appendChild(s1);
       var s2 = document.createElement("span"); s2.textContent = "Started " + fmt(m.start) + (m.stop ? ". Last dose " + fmt(addDays(m.stop,-1)) + "." : "."); d.appendChild(s2);
       var a = document.createElement("div"); a.className = "acts";
@@ -1438,49 +1574,218 @@ details.dtl > .dbody{ padding:0 14px 12px; }
     store.settings = store.settings || {}; store.settings.move = ev.target.checked; kinds(); persist(); renderKinds(); renderLog();
   });
 
-  // ---------- my trackers ----------
-  function trackers(){ if(!store.trackers) store.trackers = []; return store.trackers; }
-  function addTracker(name){
-    name = String(name||"").trim().slice(0,30); if(!name) return null;
+  // ---------- my trackers / custom questions ----------
+  function trackers(){ if(!store.trackers) store.trackers = []; store.trackers.forEach(function(t){ if(!t.type) t.type = "sev"; if(!t.place) t.place = "daily"; }); return store.trackers; }
+  function addTracker(name, type){
+    name = String(name||"").trim().slice(0,40); if(!name) return null;
     var ex = trackers().filter(function(x){ return x.name.toLowerCase()===name.toLowerCase(); })[0];
     if(ex){ ex.off = false; return ex; }
-    var t = {id:"t" + Date.now().toString(36) + Math.floor(Math.random()*99), name:name}; trackers().push(t); return t;
+    var t = {id:"t" + Date.now().toString(36) + Math.floor(Math.random()*99), name:name, type:type||"sev", place:"daily"}; trackers().push(t); return t;
+  }
+  function trHasData(id){ return Object.keys(store.entries).some(function(k){ var e = store.entries[k]; return e.tr && e.tr[id]!=null; }); }
+  function trText(t, v){
+    if(v==null || v==="") return "";
+    if(t.type==="sev") return sevLabel(v);
+    if(t.type==="yn") return v ? "yes" : "no";
+    if(t.type==="num") return v + (t.unit ? " " + t.unit : "");
+    return String(v).toLowerCase();
+  }
+  function trControl(t, e){
+    var v = e.tr ? e.tr[t.id] : undefined, wrap = document.createElement("div");
+    function btn(label, val, pressed){ var b = document.createElement("button"); b.textContent = label; b.dataset.tr = t.id; b.dataset.set = JSON.stringify(val); b.setAttribute("aria-pressed", String(!!pressed)); return b; }
+    if(t.type==="num"){
+      wrap.className = "ctr";
+      var m = document.createElement("button"); m.className = "pm"; m.textContent = "−"; m.dataset.tr = t.id; m.dataset.step = "-1"; m.setAttribute("aria-label", "Less");
+      var val = document.createElement("button"); val.className = "v"; val.textContent = v==null ? "–" : v; val.dataset.tr = t.id; val.dataset.clear = "1"; val.setAttribute("aria-label", v==null ? "Not answered" : v + " (tap to clear)");
+      var pl = document.createElement("button"); pl.className = "pm"; pl.textContent = "+"; pl.dataset.tr = t.id; pl.dataset.step = "1"; pl.setAttribute("aria-label", "More");
+      wrap.appendChild(m); wrap.appendChild(val); wrap.appendChild(pl);
+      if(t.unit){ var u = document.createElement("span"); u.className = "u"; u.textContent = t.unit; wrap.appendChild(u); }
+    } else if(t.type==="yn"){
+      wrap.className = "yn2"; wrap.appendChild(btn("No", 0, v===0)); wrap.appendChild(btn("Yes", 1, v===1));
+    } else if(t.type==="pick"){
+      wrap.className = "opts"; (t.options||[]).forEach(function(o){ wrap.appendChild(btn(o, o, v===o)); });
+    } else {
+      wrap.className = "scale"; [0,1,2,3].forEach(function(n){ var b = btn(SEV[n], n, v===n); b.dataset.v = n; wrap.appendChild(b); });
+    }
+    wrap.setAttribute("role","group"); wrap.setAttribute("aria-label", t.name);
+    return wrap;
+  }
+  function handleTrClick(b){
+    var t = trackers().filter(function(x){ return x.id===b.dataset.tr; })[0]; if(!t) return false;
+    var e = ensure(cur); e.tr = e.tr || {}; var v = e.tr[t.id];
+    if(b.dataset.clear){ delete e.tr[t.id]; }
+    else if(b.dataset.step){ var st = +b.dataset.step; if(v==null) e.tr[t.id] = st>0 ? 1 : 0; else e.tr[t.id] = Math.max(0, v + st); }
+    else { var nv = JSON.parse(b.dataset.set); if(v===nv) delete e.tr[t.id]; else e.tr[t.id] = nv; }
+    if(e.tf && e.tf[t.id] && !trActive(t, e.tr[t.id])){ delete e.tf[t.id]; if(!Object.keys(e.tf).length) delete e.tf; }
+    if(!Object.keys(e.tr).length) delete e.tr;
+    tidy(cur); persist(); renderLog(); return true;
+  }
+  var trNoteOpen = {}, trSaveTimer = null;
+  function trActive(t, v){
+    if(v==null || v==="") return false;
+    if(t.type==="sev" || t.type==="num") return v > 0;
+    if(t.type==="yn") return v===1;
+    return true;
+  }
+  function trBlock(t, e){
+    var frag = document.createElement("div");
+    frag.appendChild(trControl(t, e));
+    var v = e.tr ? e.tr[t.id] : null;
+    if(t.fu && trActive(t, v)){
+      var a = (e.tf && e.tf[t.id]) || {}, sel = a.sel || [];
+      var box = document.createElement("div"); box.className = "tfu";
+      var p = document.createElement("p"); p.textContent = t.fu.q + " "; var sm = document.createElement("small"); sm.textContent = t.fu.multi ? "pick any" : "pick one"; p.appendChild(sm); box.appendChild(p);
+      var ch = document.createElement("div"); ch.className = "tchips";
+      (t.fu.options||[]).concat(t.fu.other ? ["__other"] : []).forEach(function(o){
+        var b = document.createElement("button"); b.dataset.tfk = t.id; b.dataset.opt = o;
+        var on = o==="__other" ? (a.other!=null) : sel.indexOf(o)>=0;
+        b.setAttribute("aria-pressed", String(on)); b.textContent = (o==="__other" ? "Other" : o) + (on ? " ✓" : "");
+        ch.appendChild(b);
+      });
+      box.appendChild(ch);
+      if(t.fu.other && a.other!=null){ var inp = document.createElement("input"); inp.type = "text"; inp.maxLength = 80; inp.placeholder = "Other: describe it"; inp.value = a.other; inp.dataset.tfo = t.id; inp.setAttribute("aria-label", t.fu.q + " other"); box.appendChild(inp); }
+      frag.appendChild(box);
+    }
+    if(t.note){
+      var nt = e.tn ? e.tn[t.id] : "", key = cur + "|" + t.id;
+      if(nt || trNoteOpen[key]){
+        var nb = document.createElement("div"); nb.className = "tnote";
+        var ta = document.createElement("textarea"); ta.placeholder = "Note about " + t.name.replace(/\?$/,""); ta.value = nt || ""; ta.dataset.tn = t.id; ta.setAttribute("aria-label", "Note about " + t.name);
+        nb.appendChild(ta); frag.appendChild(nb);
+      } else {
+        var l = document.createElement("button"); l.className = "tnlink"; l.textContent = "+ Add a note"; l.dataset.tnopen = t.id; frag.appendChild(l);
+      }
+    }
+    return frag;
+  }
+  function handleTrExtra(ev){
+    var c = ev.target.closest("button[data-tfk]");
+    if(c){
+      var t = trackers().filter(function(x){ return x.id===c.dataset.tfk; })[0]; if(!t) return true;
+      var e = ensure(cur); e.tf = e.tf || {}; var a = e.tf[t.id] = e.tf[t.id] || {sel:[]}; a.sel = a.sel || [];
+      var o = c.dataset.opt;
+      if(o==="__other"){ if(a.other!=null) delete a.other; else { a.other = ""; if(!t.fu.multi) a.sel = []; } }
+      else { var i = a.sel.indexOf(o); if(i>=0) a.sel.splice(i,1); else { if(!t.fu.multi){ a.sel = []; delete a.other; } a.sel.push(o); } }
+      if(!a.sel.length && a.other==null) delete e.tf[t.id];
+      if(!Object.keys(e.tf).length) delete e.tf;
+      persist(); renderLog();
+      if(o==="__other"){ var inp = document.querySelector('input[data-tfo="'+t.id+'"]'); if(inp) inp.focus(); }
+      return true;
+    }
+    var n = ev.target.closest("button[data-tnopen]");
+    if(n){ trNoteOpen[cur + "|" + n.dataset.tnopen] = true; renderLog(); var ta = document.querySelector('textarea[data-tn="'+n.dataset.tnopen+'"]'); if(ta) ta.focus(); return true; }
+    return false;
+  }
+  function handleTrInput(ev){
+    var el = ev.target, e;
+    if(el.dataset && el.dataset.tfo){ e = ensure(cur); e.tf = e.tf || {}; var a = e.tf[el.dataset.tfo] = e.tf[el.dataset.tfo] || {sel:[]}; a.other = el.value; }
+    else if(el.dataset && el.dataset.tn){ e = ensure(cur); e.tn = e.tn || {}; if(el.value.trim()) e.tn[el.dataset.tn] = el.value; else delete e.tn[el.dataset.tn]; if(!Object.keys(e.tn).length) delete e.tn; }
+    else return;
+    clearTimeout(trSaveTimer); trSaveTimer = setTimeout(function(){ tidy(cur); persist(); }, 400);
   }
   function renderTrackCard(e){
-    var list = trackers().filter(function(x){ return !x.off; }), card = document.getElementById("trackCard"), box = document.getElementById("trackList");
+    var list = trackers().filter(function(x){ return !x.off && x.place!=="item"; }), card = document.getElementById("trackCard"), box = document.getElementById("trackList");
     card.hidden = !list.length || !!e.skip; box.innerHTML = "";
     list.forEach(function(t){
       var r = document.createElement("div"); r.className = "trow";
-      var p = document.createElement("p"); p.id = "tr-"+t.id; p.textContent = t.name; r.appendChild(p);
-      var sc = document.createElement("div"); sc.className = "scale"; sc.setAttribute("role","group"); sc.setAttribute("aria-labelledby","tr-"+t.id);
-      [0,1,2,3].forEach(function(v){ var b = document.createElement("button"); b.textContent = SEV[v]; b.dataset.tr = t.id; b.dataset.v = v; b.setAttribute("aria-pressed", String(!!(e.tr && e.tr[t.id]===v))); sc.appendChild(b); });
-      r.appendChild(sc); box.appendChild(r);
+      var p = document.createElement("p"); p.textContent = t.name; r.appendChild(p);
+      r.appendChild(trBlock(t, e)); box.appendChild(r);
     });
   }
+  function followUps(i, e){
+    var b0 = baseVal(entryScale(e));
+    if(e.r[i]==null || e.r[i] <= b0) return [];
+    return trackers().filter(function(t){ return !t.off && t.place==="item" && +t.item===i; });
+  }
   document.getElementById("trackList").addEventListener("click", function(ev){
-    var b = ev.target.closest("button[data-tr]"); if(!b) return;
-    var e = ensure(cur); e.tr = e.tr || {};
-    var v = +b.dataset.v; if(e.tr[b.dataset.tr]===v) delete e.tr[b.dataset.tr]; else e.tr[b.dataset.tr] = v;
-    if(!Object.keys(e.tr).length) delete e.tr;
-    tidy(cur); persist(); renderLog();
+    if(handleTrExtra(ev)) return;
+    var b = ev.target.closest("button[data-tr]"); if(b) handleTrClick(b);
   });
+  document.getElementById("trackList").addEventListener("input", handleTrInput);
+  document.getElementById("tiles").addEventListener("input", handleTrInput);
+  // settings
+  var trEditing = null;
+  function trTypeText(t){ return ({sev:"How much", yn:"Yes / No", num:"Number" + (t.unit ? ", " + t.unit : ""), pick:"Pick one: " + (t.options||[]).join(", ")})[t.type] + (t.place==="item" ? ". After: " + ITEMS[t.item] : ". Every day") + (t.fu ? ". Follow-up: " + t.fu.q.replace(/\?$/,"") : "") + (t.note ? ". Notes on" : ""); }
   function renderTrackSettings(){
     var box = document.getElementById("trackListSet"); box.innerHTML = "";
     trackers().filter(function(x){ return !x.off; }).forEach(function(t){
       var r = document.createElement("div"); r.className = "row2";
-      r.innerHTML = '<span class="nm"><span></span></span><button class="x">×</button>';
-      r.querySelector(".nm span").textContent = t.name; var x = r.querySelector(".x"); x.dataset.t = t.id; x.setAttribute("aria-label", "Remove " + t.name);
+      r.innerHTML = '<span class="nm"><span></span><small></small></span><span class="acts2"><button class="linkbtn" data-ed="1">Edit</button><button class="x" aria-label="Remove">×</button></span>';
+      r.querySelector(".nm span").textContent = t.name; r.querySelector(".nm small").textContent = trTypeText(t);
+      r.querySelector("[data-ed]").dataset.t = t.id; var x = r.querySelector(".x"); x.dataset.t = t.id; x.setAttribute("aria-label", "Remove " + t.name);
       box.appendChild(r);
     });
+    var sel = document.getElementById("tfItem");
+    if(!sel.options.length){
+      var allG = DOMAINS.concat(DOMAINS.indexOf(IMPAIR)<0 ? [IMPAIR] : []);
+      allG.forEach(function(g){ var og = document.createElement("optgroup"); og.label = g.q; g.items.forEach(function(i){ var o = document.createElement("option"); o.value = i; o.textContent = ITEMS[i]; og.appendChild(o); }); sel.appendChild(og); });
+      sel.value = "17";
+    }
   }
+  function tfType(){ return (document.querySelector("input[name=tfType]:checked")||{}).value || "sev"; }
+  function tfPlace(){ return (document.querySelector("input[name=tfPlace]:checked")||{}).value || "daily"; }
+  function syncTrForm(){
+    document.getElementById("tfUnitWrap").hidden = tfType()!=="num";
+    document.getElementById("tfOptsWrap").hidden = tfType()!=="pick";
+    document.getElementById("tfItemWrap").hidden = tfPlace()!=="item";
+  }
+  document.querySelectorAll("input[name=tfType], input[name=tfPlace]").forEach(function(x){ x.addEventListener("change", syncTrForm); });
+  function openTrForm(t){
+    trEditing = t ? t.id : null;
+    document.getElementById("tfName").value = t ? t.name : "";
+    document.querySelectorAll("input[name=tfType]").forEach(function(x){ x.checked = x.value===(t ? t.type : "sev"); });
+    var locked = !!(t && trHasData(t.id));
+    document.querySelectorAll("input[name=tfType]").forEach(function(x){ x.disabled = locked; });
+    document.getElementById("tfTypeLocked").hidden = !locked;
+    document.getElementById("tfUnit").value = t && t.unit ? t.unit : "";
+    document.getElementById("tfOpts").value = t && t.options ? t.options.join(", ") : "";
+    document.querySelectorAll("input[name=tfPlace]").forEach(function(x){ x.checked = x.value===(t && t.place==="item" ? "item" : "daily"); });
+    if(t && t.place==="item") document.getElementById("tfItem").value = String(t.item);
+    document.getElementById("tfMsg").textContent = "";
+    document.getElementById("trForm").hidden = false; document.getElementById("trackAddOpen").hidden = true;
+    var fu = t && t.fu;
+    document.getElementById("tfFuBox").hidden = !fu; document.getElementById("tfFuAdd").hidden = !!fu;
+    document.getElementById("tfFuQ").value = fu ? fu.q : "";
+    document.getElementById("tfFuOpts").value = fu ? (fu.options||[]).join(", ") : "";
+    document.getElementById("tfFuMulti").checked = fu ? !!fu.multi : true;
+    document.getElementById("tfFuOther").checked = fu ? !!fu.other : true;
+    document.getElementById("tfNote").checked = !!(t && t.note);
+    syncTrForm(); document.getElementById("tfName").focus();
+  }
+  function closeTrForm(){ document.getElementById("trForm").hidden = true; document.getElementById("trackAddOpen").hidden = false; trEditing = null; }
+  document.getElementById("trackAddOpen").addEventListener("click", function(){ renderTrackSettings(); openTrForm(null); });
+  document.getElementById("tfCancel").addEventListener("click", closeTrForm);
+  document.getElementById("tfFuAdd").addEventListener("click", function(){ document.getElementById("tfFuBox").hidden = false; document.getElementById("tfFuAdd").hidden = true; document.getElementById("tfFuQ").focus(); });
+  document.getElementById("tfFuRemove").addEventListener("click", function(){ document.getElementById("tfFuBox").hidden = true; document.getElementById("tfFuAdd").hidden = false; });
+  document.getElementById("tfSave").addEventListener("click", function(){
+    var msg = document.getElementById("tfMsg"), name = document.getElementById("tfName").value.trim().slice(0,40);
+    if(!name){ msg.textContent = "Add the question text."; return; }
+    var type = tfType(), opts = document.getElementById("tfOpts").value.split(",").map(function(x){ return x.trim().slice(0,20); }).filter(Boolean);
+    if(type==="pick" && opts.length < 2){ msg.textContent = "Add at least two options, separated by commas."; return; }
+    var t = trEditing ? trackers().filter(function(x){ return x.id===trEditing; })[0] : null;
+    if(!t){
+      if(trackers().some(function(x){ return !x.off && x.name.toLowerCase()===name.toLowerCase(); })){ msg.textContent = "You already have a question with that name."; return; }
+      t = {id:"t" + Date.now().toString(36) + Math.floor(Math.random()*99)}; trackers().push(t); t.type = type;
+    } else if(!trHasData(t.id)) t.type = type;
+    t.name = name; t.off = false;
+    t.unit = t.type==="num" ? document.getElementById("tfUnit").value.trim().slice(0,15) : "";
+    if(t.type==="pick") t.options = opts;
+    t.place = tfPlace(); if(t.place==="item") t.item = +document.getElementById("tfItem").value; else delete t.item;
+    if(!document.getElementById("tfFuBox").hidden){
+      var fq = document.getElementById("tfFuQ").value.trim().slice(0,40) || "Trigger?";
+      var fo = document.getElementById("tfFuOpts").value.split(",").map(function(x){ return x.trim().slice(0,30); }).filter(Boolean);
+      t.fu = {q:fq, options:fo, multi:document.getElementById("tfFuMulti").checked, other:document.getElementById("tfFuOther").checked};
+    } else delete t.fu;
+    t.note = document.getElementById("tfNote").checked;
+    persist(); closeTrForm(); renderTrackSettings(); renderLog();
+  });
   document.getElementById("trackListSet").addEventListener("click", function(ev){
+    var ed = ev.target.closest("[data-ed]");
+    if(ed){ var t0 = trackers().filter(function(x){ return x.id===ed.dataset.t; })[0]; if(t0) openTrForm(t0); return; }
     var b = ev.target.closest(".x"); if(!b) return;
-    var t = trackers().filter(function(x){ return x.id===b.dataset.t; })[0]; if(t){ t.off = true; persist(); renderTrackSettings(); renderLog(); }
+    var t = trackers().filter(function(x){ return x.id===b.dataset.t; })[0];
+    if(t && confirm("Remove “" + t.name + "”? Answers you already saved are kept.")){ t.off = true; persist(); renderTrackSettings(); renderLog(); }
   });
-  document.getElementById("trackAdd").addEventListener("click", function(){
-    var inp = document.getElementById("trackNew"); if(addTracker(inp.value)){ inp.value = ""; persist(); renderTrackSettings(); renderLog(); }
-  });
-  document.getElementById("trackNew").addEventListener("keydown", function(ev){ if(ev.key==="Enter") document.getElementById("trackAdd").click(); });
 
   // ---------- render today ----------
   var openG = {};
@@ -1512,6 +1817,11 @@ details.dtl > .dbody{ padding:0 14px 12px; }
             b.setAttribute("aria-pressed", String(e.r[i]===v)); row.appendChild(b);
           });
           body.appendChild(row);
+          followUps(i, e).forEach(function(t){
+            var fu = document.createElement("div"); fu.className = "fu";
+            var fp = document.createElement("p"); fp.textContent = t.name; fu.appendChild(fp);
+            fu.appendChild(trBlock(t, e)); body.appendChild(fu);
+          });
         });
         wrap.appendChild(body);
       }
@@ -1575,7 +1885,11 @@ details.dtl > .dbody{ padding:0 14px 12px; }
         parts.push(list.length ? "Symptoms: " + list.join(", ") + "." : "No symptoms.");
       } else if(e.jm) parts.push("Just mood, no symptom questions.");
     }
-    if(e.tr){ var tl = trackers().filter(function(x){ return e.tr[x.id]!=null && e.tr[x.id]>0; }).map(function(x){ return x.name + " (" + sevLabel(e.tr[x.id]) + ")"; }); if(tl.length) parts.push(tl.join(", ") + "."); }
+    if(e.tr){ var tl = trackers().filter(function(x){ var v = e.tr[x.id]; return v!=null && !(x.type==="sev" && v===0); }).map(function(x){
+      var s0 = x.name.replace(/\?$/,"") + ": " + trText(x, e.tr[x.id]), a = e.tf && e.tf[x.id];
+      if(a){ var bits = (a.sel||[]).map(function(o){ return o.toLowerCase(); }); if(a.other!=null) bits.push(a.other ? "other (" + a.other + ")" : "other"); if(bits.length) s0 += " (" + x.fu.q.replace(/\?$/,"").toLowerCase() + ": " + bits.join(", ") + ")"; }
+      if(e.tn && e.tn[x.id]) s0 += ", note added";
+      return s0; }); if(tl.length) parts.push(tl.join(". ") + "."); }
     if(e.mvy==="no") parts.push("No movement.");
     else if(e.mvy==="yes") parts.push((e.mvk && e.mvk.length) ? "Movement: " + e.mvk.map(function(id){ return kindName(id).toLowerCase(); }).join(", ") + "." : "Moved today.");
     var dueM = medsForDay(cur);
@@ -1725,6 +2039,14 @@ details.dtl > .dbody{ padding:0 14px 12px; }
       else if(kind.indexOf("tr:")===0){ var v = e.tr && e.tr[kind.slice(3)]; if(v!=null) vals.push(v); }
     });
     if(!vals.length) return "–";
+    if(kind.indexOf("tr:")===0){
+      var tk = trackers().filter(function(x){ return x.id===kind.slice(3); })[0] || {type:"sev"};
+      if(tk.type==="pick"){ var cnt = {}; vals.forEach(function(x){ cnt[x] = (cnt[x]||0) + 1; }); return Object.keys(cnt).map(function(k){ return k + " " + cnt[k]; }).join(", "); }
+      var av = vals.reduce(function(x,y){ return x+y; },0)/vals.length;
+      if(tk.type==="yn") return Math.round(av*100) + "% yes";
+      if(tk.type==="num") return av.toFixed(1) + (tk.unit ? " " + tk.unit : "");
+      return av.toFixed(1);
+    }
     var a = vals.reduce(function(x,y){ return x+y; },0)/vals.length;
     return kind==="move" ? Math.round(a*100)+"%" : a.toFixed(1);
   }
@@ -1763,13 +2085,55 @@ details.dtl > .dbody{ padding:0 14px 12px; }
       area.appendChild(d); var db = d.querySelector(".dbody"); var holdArea = area; area = db;
       if(moveOn()) card("move","Movement","k-move",true);
       if(trs.length){
-        var tb = '<table><thead><tr><th>Tracker (0–3)</th><th class="num">Week before</th><th class="num">Week after</th></tr></thead><tbody>';
+        var tb = '<table><thead><tr><th>My trackers</th><th class="num">Week before</th><th class="num">Week after</th></tr></thead><tbody>';
         trs.forEach(function(x){ tb += '<tr><td>'+esc(x.name)+'</td><td class="num">'+statOf("tr:"+x.id, w.pre)+'</td><td class="num">'+statOf("tr:"+x.id, w.post)+'</td></tr>'; });
         db.insertAdjacentHTML("beforeend", tb + '</tbody></table>');
+        var lo = cyc[0].start, hi = cyc[cyc.length-1].end; if(hi > todayIso()) hi = todayIso();
+        var preSet = {}; w.pre.forEach(function(d){ preSet[d] = 1; });
+        trs.filter(function(x){ return x.fu; }).forEach(function(x){
+          var act = 0, actPre = 0, na = 0, cnt = {}, others = [];
+          for(var d = lo; d <= hi; d = addDays(d,1)){ var e = store.entries[d]; if(!e || !e.tr || !trActive(x, e.tr[x.id])) continue;
+            act++; if(preSet[d]) actPre++;
+            var a = e.tf && e.tf[x.id]; if(!a || (!(a.sel||[]).length && a.other==null)){ na++; continue; }
+            (a.sel||[]).forEach(function(o){ cnt[o] = (cnt[o]||0) + 1; });
+            if(a.other!=null){ cnt["Other"] = (cnt["Other"]||0) + 1; if(a.other) others.push(a.other + " (" + parse(d).toLocaleDateString(undefined,{month:"short", day:"numeric"}) + ")"); } }
+          if(!act) return;
+          var mx = Math.max.apply(null, Object.keys(cnt).map(function(k){ return cnt[k]; }).concat([na,1]));
+          var hh = '<div class="trig"><h4>'+esc(x.name.replace(/\?$/,""))+'</h4><p class="hint" style="margin:0 0 6px">'+act+(act===1?' day':' days')+' in the cycles shown, '+actPre+' in the week before your period.</p><p class="hint" style="margin:0 0 4px"><b>'+esc(x.fu.q.replace(/\?$/,""))+'</b></p>';
+          Object.keys(cnt).sort(function(a,b){ return cnt[b]-cnt[a]; }).forEach(function(k){ hh += '<div class="trow2"><span>'+esc(k)+'</span><span class="bar"><i style="width:'+Math.round(100*cnt[k]/mx)+'%"></i></span><b>'+cnt[k]+'</b></div>'; });
+          if(na) hh += '<div class="trow2"><span>Not answered</span><span class="bar"><i style="width:'+Math.round(100*na/mx)+'%;opacity:.35"></i></span><b>'+na+'</b></div>';
+          if(others.length) hh += '<p class="hint" style="margin:6px 0 0">Other: '+esc(others.slice(-5).join("; "))+'</p>';
+          db.insertAdjacentHTML("beforeend", hh + '</div>');
+        });
       }
       area = holdArea;
     }
     colorBy = saved;
+    var rm = meds().filter(function(m){ return m.start <= cyc[cyc.length-1].end && (!m.stop || m.stop > cyc[0].start); });
+    if(rm.length){
+      var mc = document.createElement("div"); mc.className = "pcard k-meds"; mc.innerHTML = "<h3>Meds</h3>";
+      var lo = cyc[0].start, hi = cyc[cyc.length-1].end; if(hi > todayIso()) hi = todayIso();
+      rm.forEach(function(m){
+        var r = document.createElement("div"); r.className = "medsum";
+        var line = "", pctv = null;
+        if(m.sched==="long") line = "Long-acting. " + (m.stop ? "In place " + fmt(m.start) + " to " + fmt(addDays(m.stop,-1)) : "In place since " + fmt(m.start)) + ".";
+        else if(m.sched==="prn"){
+          var n = 0, nPre = 0, pre = {}; w.pre.forEach(function(d){ pre[d] = 1; });
+          for(var d = lo; d <= hi; d = addDays(d,1)){ if(medTaken(store.entries[d], m, "x")){ n++; if(pre[d]) nPre++; } }
+          line = "As needed. Taken on " + n + (n===1 ? " day" : " days") + (n ? ", " + nPre + " of them in the week before your period" : "") + ".";
+        } else {
+          var due = 0, got = 0;
+          for(var d2 = lo; d2 <= hi; d2 = addDays(d2,1)){ if(!medDue(m, d2)) continue; medTimes(m).forEach(function(tt){ due++; if(medTaken(store.entries[d2], m, tt)) got++; }); }
+          pctv = due ? Math.round(100*got/due) : null;
+          line = schedText(m) + ". Ticked " + got + " of " + due + " doses in the cycles shown.";
+        }
+        r.innerHTML = '<b></b><span></span>' + (pctv!=null ? '<div class="mbar"><i style="width:'+pctv+'%"></i></div>' : '');
+        r.querySelector("b").textContent = m.name + (m.dose ? " " + m.dose : "") + (m.stop ? " (stopped)" : "");
+        r.querySelector("span").textContent = line + (m.sched!=="long" ? " Since " + fmt(m.start) + "." : "");
+        mc.appendChild(r);
+      });
+      area.appendChild(mc);
+    }
   }
   function drawAllPeriods(area){
     var ons = onsets(), t = todayIso();
@@ -1780,10 +2144,11 @@ details.dtl > .dbody{ padding:0 14px 12px; }
     card.innerHTML = '<h3>Period history, ' + y0 + (y1>y0 ? ' to ' + y1 : '') + '</h3>';
     var avail = Math.max(260, (area.clientWidth || 340) - 26), labW = 38, W = avail - labW, rowH = 18, top = 14;
     var years = []; for(var y=y1; y>=y0; y--) years.push(y);
-    var svgEl = sv("svg",{width:avail, height: top + years.length*(rowH+6), role:"img", "aria-label":"Period days by year"});
+    var gapY = 16, evs = medEvents().filter(function(x){ return x.d <= t; });
+    var svgEl = sv("svg",{width:avail, height: top + 6 + years.length*(rowH+gapY), role:"img", "aria-label":"Period days by year"});
     ["J","F","M","A","M","J","J","A","S","O","N","D"].forEach(function(m, i){ var tx = sv("text",{x: labW + (i+0.5)*W/12, y:10, "font-size":"10", fill:"var(--muted)", "text-anchor":"middle"}); tx.textContent = m; svgEl.appendChild(tx); });
     years.forEach(function(y, r){
-      var yy = top + r*(rowH+6);
+      var yy = top + 8 + r*(rowH+gapY);
       var lb = sv("text",{x:labW-6, y:yy+rowH/2+4, "font-size":"11", fill:"var(--muted)", "text-anchor":"end"}); lb.textContent = y; svgEl.appendChild(lb);
       svgEl.appendChild(sv("rect",{x:labW, y:yy, width:W, height:rowH, rx:3, fill:"var(--t-period)", stroke:"var(--t-period-line)"}));
       var days = (y%4===0 && (y%100!==0 || y%400===0)) ? 366 : 365, dw = W/days;
@@ -1791,12 +2156,19 @@ details.dtl > .dbody{ padding:0 14px 12px; }
         var doy = diffDays(y+"-01-01", k), e = store.entries[k];
         svgEl.appendChild(sv("rect",{x: labW + doy*dw, y: yy+2, width: Math.max(1.2, dw), height: rowH-4, fill: e.m==="bleeding" ? "var(--bleed)" : "var(--spot)"}));
       });
+      evs.forEach(function(x){ if(parse(x.d).getFullYear()!==y) return;
+        var xx = labW + diffDays(y+"-01-01", x.d)*dw;
+        svgEl.appendChild(sv("rect",{x:xx-1, y:yy-3, width:2.2, height:rowH+6, fill:"var(--t-meds-yes)"}));
+        var lab = sv("text",{x: Math.min(Math.max(xx, labW+20), avail-20), y: yy-5, "font-size":"9.5", "font-weight":"700", fill:"var(--t-meds-ink)", "text-anchor":"middle"});
+        lab.textContent = x.m.name.length > 14 ? x.m.name.slice(0,13) + "…" : x.m.name; svgEl.appendChild(lab);
+      });
     });
     card.appendChild(svgEl);
     var L = []; for(var i=1;i<ons.length;i++){ var d = diffDays(ons[i-1], ons[i]); if(d>=15 && d<=60) L.push(d); }
     var Ls = L.slice().sort(function(a,b){ return a-b; });
     function pct(a, p){ return a.length ? a[Math.min(a.length-1, Math.max(0, Math.round((a.length-1)*p)))] : null; }
     var pl = ons.map(function(o){ var n=0; for(var d2=o; store.entries[d2] && store.entries[d2].m==="bleeding"; d2=addDays(d2,1)) n++; return n; }).sort(function(a,b){ return a-b; });
+    if(evs.length){ var hn = document.createElement("p"); hn.className = "hint"; hn.style.margin = "4px 0 0"; hn.textContent = "Purple lines mark when a med started or stopped. Long-acting meds like an IUD can change bleeding patterns."; card.appendChild(hn); }
     var st = document.createElement("div"); st.className = "pstat";
     st.innerHTML = '<div><b>'+(Ls.length ? pct(Ls,.5)+' days' : '–')+'</b>Median cycle</div><div><b>'+(Ls.length>2 ? pct(Ls,.1)+'–'+pct(Ls,.9) : '–')+'</b>Usual range</div><div><b>'+(pl.length ? pct(pl,.5)+' days' : '–')+'</b>Typical period</div>';
     card.appendChild(st); area.appendChild(card);
@@ -1881,8 +2253,14 @@ details.dtl > .dbody{ padding:0 14px 12px; }
         drawCell(svgEl, labW + (dn-1)*cell, y, size, d, hgt);
       }
     }
+    var evY = medEvents().filter(function(x){ return parse(x.d).getFullYear()===pixYear && x.d <= t; });
+    evY.forEach(function(x){ var dd = parse(x.d), mo2 = dd.getMonth(), dn2 = dd.getDate();
+      var r = sv("rect",{x: labW + (dn2-1)*cell - 1, y: top + mo2*rowH - 1, width: size+2, height: hgt+2, rx:3, fill:"none", stroke:"var(--t-meds-yes)", "stroke-width":2.2}); r.style.pointerEvents = "none"; svgEl.appendChild(r); });
     openDayFromSvg(svgEl);
     var sc = document.createElement("div"); sc.className = "chart-scroll"; sc.appendChild(svgEl); area.appendChild(sc);
+    if(evY.length){ var ml = document.createElement("div"); ml.className = "medflags";
+      evY.forEach(function(x){ var f = document.createElement("div"); f.innerHTML = '<i></i><span></span>'; f.querySelector("span").textContent = parse(x.d).toLocaleDateString(undefined,{month:"short", day:"numeric"}) + ": " + x.m.name + (x.m.dose ? " " + x.m.dose : "") + " " + x.kind; ml.appendChild(f); });
+      area.appendChild(ml); }
   }
   document.querySelectorAll("#rangeSel button").forEach(function(b){
     b.addEventListener("click", function(){
@@ -2041,11 +2419,11 @@ details.dtl > .dbody{ padding:0 14px 12px; }
     var ons = onsets();
     var ml = meds();
     var tl = trackers();
-    var rows = [HEADER.concat(["movement"]).concat(ml.map(function(m){ return "med:" + m.name; })).concat(tl.map(function(t){ return "tr:" + t.name; })).map(q).join(",")];
+    var rows = [HEADER.concat(["movement"]).concat(ml.map(function(m){ return "med:" + m.name; })).concat(tl.map(function(t){ return "tr:" + t.type + (t.type==="num" && t.unit ? "/" + t.unit : "") + ":" + t.name; })).concat(tl.filter(function(t){ return t.fu; }).map(function(t){ return "trf:" + t.name; })).concat(tl.filter(function(t){ return t.note; }).map(function(t){ return "trn:" + t.name; })).map(q).join(",")];
     Object.keys(store.entries).sort().forEach(function(d){
       var e = store.entries[d], ci = cycleInfo(d, ons);
       var mc = ml.map(function(m){ var o = e.md && e.md[m.id]; return o ? Object.keys(o).filter(function(k){ return o[k]; }).join("+") : ""; });
-      rows.push([d, ci.fwd, ci.back, e.m, e.mood, hasRatings(e) ? (entryScale(e)===6 ? "1-6" : "0-3") : "", e.skip ? 1 : ""].concat(e.r).concat([e.n]).concat([e.mvy==="no" ? "no" : e.mvy==="yes" ? ((e.mvk && e.mvk.length) ? e.mvk.map(kindName).join("+") : "yes") : ""]).concat(mc).concat(tl.map(function(t){ return e.tr && e.tr[t.id]!=null ? e.tr[t.id] : ""; })).map(q).join(","));
+      rows.push([d, ci.fwd, ci.back, e.m, e.mood, hasRatings(e) ? (entryScale(e)===6 ? "1-6" : "0-3") : "", e.skip ? 1 : ""].concat(e.r).concat([e.n]).concat([e.mvy==="no" ? "no" : e.mvy==="yes" ? ((e.mvk && e.mvk.length) ? e.mvk.map(kindName).join("+") : "yes") : ""]).concat(mc).concat(tl.map(function(t){ var v = e.tr ? e.tr[t.id] : null; return v==null ? "" : t.type==="yn" ? (v ? "yes" : "no") : v; })).concat(tl.filter(function(t){ return t.fu; }).map(function(t){ var a = e.tf && e.tf[t.id]; if(!a) return ""; var parts2 = (a.sel||[]).slice(); if(a.other!=null) parts2.push("other: " + a.other); return parts2.join(" + "); })).concat(tl.filter(function(t){ return t.note; }).map(function(t){ return e.tn && e.tn[t.id] ? e.tn[t.id] : ""; })).map(q).join(","));
     });
     return rows.join("\n") + "\n";
   }
@@ -2073,7 +2451,26 @@ details.dtl > .dbody{ padding:0 14px 12px; }
     var di = h.indexOf("date"), mi = h.indexOf("menses"), ni = h.indexOf("notes"), moi = h.indexOf("mood"), sci = h.indexOf("scale"), ski = h.indexOf("skipped");
     var ii = []; for(var k=1;k<=24;k++){ ii.push(h.indexOf("item"+String(k).padStart(2,"0"))); }
     if(di<0 || ii.some(function(x){ return x<0; })) throw new Error("This doesn’t look like a CSV exported from this page. It needs a date column and item01–item24.");
-    var count = 0, skipped = 0, medCols = [];
+    var count = 0, skipped = 0, medCols = [], trCols = [];
+    h.forEach(function(name, ix){
+      if(name.indexOf("tr:")!==0) return;
+      var nm = name.slice(3).trim(), unit = "", mt = /^(sev|yn|num|pick)(?:\/([^:]*))?:(.*)$/.exec(nm), type;
+      if(mt){ type = mt[1]; unit = mt[2] || ""; nm = mt[3].trim(); }
+      if(!nm) return;
+      var vals = rows.slice(1).map(function(r){ return (r[ix]||"").trim(); }).filter(Boolean);
+      var ex = trackers().filter(function(x){ return x.name.toLowerCase()===nm.toLowerCase(); })[0];
+      if(ex) type = ex.type;
+      else if(type){}
+      else if(!vals.length) type = "sev";
+      else if(vals.every(function(v){ return /^(yes|no)$/i.test(v); })) type = "yn";
+      else if(vals.every(function(v){ return /^[0-3]$/.test(v); })) type = "sev";
+      else if(vals.every(function(v){ return !isNaN(parseFloat(v)); })) type = "num";
+      else type = "pick";
+      var tk = ex || addTracker(nm, type);
+      if(!ex && type==="num" && unit) tk.unit = unit;
+      if(!ex && type==="pick"){ tk.options = vals.filter(function(v, i, a){ return a.indexOf(v)===i; }).slice(0,12); }
+      trCols.push({ix:ix, t:tk});
+    });
     h.forEach(function(name, ix){
       if(name.indexOf("med:")!==0) return;
       var nm = name.slice(4).trim(); if(!nm) return;
@@ -2091,7 +2488,24 @@ details.dtl > .dbody{ padding:0 14px 12px; }
       var mv = moi>=0 ? parseInt(r[moi],10) : NaN;
       var e = {m:m, r:vals, n: ni>=0 ? (r[ni]||"") : "", mood: (mv>=1 && mv<=5) ? mv : null, g:{}, sc:rsc, skip: ski>=0 && (r[ski]||"").trim()==="1"};
       if(m!=="none") e.mx = true;
-      h.forEach(function(name, ix){ if(name.indexOf("tr:")!==0) return; var tv = parseInt(r[ix],10); if(tv>=0 && tv<=3){ var tk = addTracker(name.slice(3)); if(tk){ e.tr = e.tr || {}; e.tr[tk.id] = tv; } } });
+      trCols.forEach(function(tc){
+        var raw = (r[tc.ix]||"").trim(); if(!raw) return; var tk = tc.t, v;
+        if(tk.type==="yn") v = /^(yes|1|true)$/i.test(raw) ? 1 : /^(no|0|false)$/i.test(raw) ? 0 : null;
+        else if(tk.type==="pick") v = raw;
+        else { v = parseFloat(raw); if(isNaN(v)) v = null; }
+        if(v!=null){ e.tr = e.tr || {}; e.tr[tk.id] = v; }
+      });
+      h.forEach(function(name, ix){
+        var raw = (r[ix]||"").trim(); if(!raw) return;
+        if(name.indexOf("trf:")===0 || name.indexOf("trn:")===0){
+          var tk = trackers().filter(function(x){ return x.name.toLowerCase()===name.slice(4).trim().toLowerCase(); })[0]; if(!tk) return;
+          if(name.indexOf("trn:")===0){ tk.note = true; e.tn = e.tn || {}; e.tn[tk.id] = raw; return; }
+          var a = {sel:[]}; raw.split(" + ").forEach(function(pc){ pc = pc.trim(); if(/^other:/i.test(pc)) a.other = pc.replace(/^other:\s*/i,""); else if(pc) a.sel.push(pc); });
+          if(!tk.fu) tk.fu = {q:"Follow-up", options:[], multi:true, other:true};
+          a.sel.forEach(function(o){ if(tk.fu.options.indexOf(o)<0) tk.fu.options.push(o); });
+          e.tf = e.tf || {}; e.tf[tk.id] = a;
+        }
+      });
       var mvi = h.indexOf("movement");
       if(mvi>=0){ var mvv = (r[mvi]||"").trim();
         if(mvv==="no") e.mvy = "no";
@@ -2422,7 +2836,8 @@ details.dtl > .dbody{ padding:0 14px 12px; }
     document.getElementById("jListView").hidden = !!jEditing; document.getElementById("jEditView").hidden = !jEditing;
     var qy = document.getElementById("jSearch").value.trim().toLowerCase();
     var ons = onsets(), box = document.getElementById("jEntries"); box.innerHTML = "";
-    var keys = Object.keys(store.entries).filter(function(k){ var e = store.entries[k]; return e.n && e.n.trim() && (!qy || e.n.toLowerCase().indexOf(qy)>=0); }).sort().reverse();
+    function allNoteText(e){ var tx = (e.n||"").trim(); if(e.tn) trackers().forEach(function(x){ if(e.tn[x.id]) tx += "\n" + x.name + " " + e.tn[x.id]; }); return tx; }
+    var keys = Object.keys(store.entries).filter(function(k){ var e = store.entries[k], tx = allNoteText(e); return tx.trim() && (!qy || tx.toLowerCase().indexOf(qy)>=0); }).sort().reverse();
     if(!keys.length){ box.innerHTML = '<p class="empty">' + (qy ? 'No notes match that search.' : 'No notes yet. What you write here, or under “Add a note” on Today, shows up in this list.') + '</p>'; return; }
     var lastM = "";
     keys.forEach(function(k){
@@ -2434,7 +2849,8 @@ details.dtl > .dbody{ padding:0 14px 12px; }
       b.innerHTML = '<span class="d"><b></b><span></span></span><span class="tx"></span>';
       b.querySelector(".d b").textContent = dd.toLocaleDateString(undefined,{weekday:"short", month:"short", day:"numeric"});
       b.querySelector(".d span").textContent = ci2.fwd!=null ? "Day " + ci2.fwd : "";
-      b.querySelector(".tx").textContent = e.n.trim();
+      b.querySelector(".tx").textContent = (e.n||"").trim();
+      if(e.tn) trackers().forEach(function(x){ if(!e.tn[x.id]) return; var js = document.createElement("span"); js.className = "jsub"; js.textContent = x.name.replace(/\?$/,"") + ": " + e.tn[x.id]; b.appendChild(js); });
       box.appendChild(b);
     });
   }
@@ -2565,6 +2981,23 @@ details.dtl > .dbody{ padding:0 14px 12px; }
     rd.readAsText(f);
   });
 
+  document.getElementById("dlApp").addEventListener("click", function(){
+    var msg = document.getElementById("dlMsg");
+    function go(html){ saveBlob("index.html", html, "text/html", msg, "Saved index.html (the app only, no entries)."); }
+    function fail(){ msg.textContent = "Couldn’t get the app file here. You can download index.html from the GitHub repo instead."; }
+    try{
+      fetch(location.href.split("#")[0].split("?")[0], {cache:"no-cache"}).then(function(r){ if(!r.ok) throw 0; return r.text(); }).then(function(html){
+        if(html.indexOf("drsp-log-v1") < 0) return fail();
+        go(html);
+      }).catch(fail);
+    }catch(err){ fail(); }
+  });
+  document.getElementById("copyReq").addEventListener("click", function(){
+    var txt = document.getElementById("reqText").textContent, msg = document.getElementById("dlMsg");
+    function fallback(){ var r = document.createRange(); r.selectNodeContents(document.getElementById("reqText")); var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r); msg.textContent = "Selected. Copy it from your phone’s menu."; }
+    if(navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(function(){ msg.textContent = "Copied."; }).catch(fallback); else fallback();
+  });
+
   var lastView = "log";
   document.getElementById("aboutBtn").addEventListener("click", function(){ var back = lastView; show("about"); lastView = back; window.scrollTo(0,0); });
   document.getElementById("aboutClose").addEventListener("click", function(){ show(lastView || "log"); window.scrollTo(0,0); });
@@ -2637,6 +3070,7 @@ details.dtl > .dbody{ padding:0 14px 12px; }
     o.push('</svg>');
     return o.join("");
   }
+  var withSupp = true;
   function buildReport(nCyc, withNotes){
     var t = todayIso(), ons = onsets(), si = Math.max(0, ons.length - 1 - nCyc);
     var start = ons.length ? ons[si] : addDays(t, -90);
@@ -2654,6 +3088,7 @@ details.dtl > .dbody{ padding:0 14px 12px; }
       if(e && e.skip) skipped++; else if(e && (e.mood!=null || hasRatings(e))) logged++;
       if(e && hasRatings(e) && entryScale(e)===6) any6 = true;
       if(e && e.n && e.n.trim()) notes.push([d, e.n.trim()]);
+      if(e && e.tn) trackers().forEach(function(x){ if(e.tn[x.id]) notes.push([d, x.name.replace(/\?$/,"") + ": " + e.tn[x.id]]); });
     }
     // before vs after windows
     var pre = {}, post = {};
@@ -2678,7 +3113,7 @@ details.dtl > .dbody{ padding:0 14px 12px; }
       return {mood: avg(moods), per: per.map(avg), n: n};
     }
     var A = winStats(pre), B = winStats(post);
-    var modeTxt = {every:"were asked every day", focus:"were asked in the week before each period and on days 4–10 after it starts", mood:"are currently not being asked (mood-only mode)"}[setting("mode","every")];
+    var modeTxt = {every:"were asked every day", focus:"were asked in the week before each period and on days 4–10 after it starts", mood:"are currently not being asked (symptom questionnaire skipped)"}[setting("mode","every")];
     var h = [];
     h.push('<div class="rpt">');
     h.push('<h1>Cycle and mood summary</h1>');
@@ -2710,10 +3145,24 @@ details.dtl > .dbody{ padding:0 14px 12px; }
       h.push('<tr'+(df!=null && df>=1 ? ' class="flag"' : '')+'><td>'+esc(dm.key==="mood" ? "Mood symptoms" : dm.q.replace(/\?$/,""))+'</td><td class="num">'+f1(a)+'</td><td class="num">'+f1(b)+'</td><td class="num">'+(df==null?'–':(df>0?'+':'')+df.toFixed(1))+'</td></tr>');
     });
     trackers().forEach(function(tk){
+      var lab = esc(tk.name) + ' <small>(' + ({sev:"0–3", yn:"% yes", num:(tk.unit ? esc(tk.unit) : "number"), pick:"count"})[tk.type] + ')</small>';
+      if(tk.type==="pick"){
+        var sp = statOf("tr:"+tk.id, Object.keys(pre)), so = statOf("tr:"+tk.id, Object.keys(post)); if(sp==="–" && so==="–") return;
+        h.push('<tr><td>'+lab+'</td><td class="num">'+esc(sp)+'</td><td class="num">'+esc(so)+'</td><td class="num">–</td></tr>'); return;
+      }
       function tav(days){ var v = []; Object.keys(days).forEach(function(dd){ var e4 = store.entries[dd]; if(e4 && e4.tr && e4.tr[tk.id]!=null) v.push(e4.tr[tk.id]); }); return avg(v); }
       var a2 = tav(pre), b2 = tav(post); if(a2==null && b2==null) return;
-      var df2 = (a2!=null && b2!=null) ? a2 - b2 : null;
-      h.push('<tr'+(df2!=null && df2>=1 ? ' class="flag"' : '')+'><td>'+esc(tk.name)+' <small>(my tracker)</small></td><td class="num">'+f1(a2)+'</td><td class="num">'+f1(b2)+'</td><td class="num">'+(df2==null?'–':(df2>0?'+':'')+df2.toFixed(1))+'</td></tr>');
+      var k = tk.type==="yn" ? 100 : 1, dec = tk.type==="yn" ? 0 : 1;
+      function fm(x){ return x==null ? "–" : (x*k).toFixed(dec) + (tk.type==="yn" ? "%" : ""); }
+      var df2 = (a2!=null && b2!=null) ? (a2 - b2)*k : null;
+      h.push('<tr'+(tk.type==="sev" && df2!=null && df2>=1 ? ' class="flag"' : '')+'><td>'+lab+'</td><td class="num">'+fm(a2)+'</td><td class="num">'+fm(b2)+'</td><td class="num">'+(df2==null?'–':(df2>0?'+':'')+df2.toFixed(dec)+(tk.type==="yn"?" pts":""))+'</td></tr>');
+    });
+    trackers().filter(function(x){ return x.fu; }).forEach(function(x){
+      var cnt = {}, act = 0;
+      for(var d5 = start; d5 <= t; d5 = addDays(d5,1)){ var e5 = store.entries[d5]; if(!e5 || !e5.tr || !trActive(x, e5.tr[x.id])) continue; act++; var a5 = e5.tf && e5.tf[x.id]; if(!a5) continue; (a5.sel||[]).forEach(function(o){ cnt[o] = (cnt[o]||0)+1; }); if(a5.other!=null) cnt.Other = (cnt.Other||0)+1; }
+      if(!act) return;
+      var txt = Object.keys(cnt).sort(function(a,b){ return cnt[b]-cnt[a]; }).map(function(k){ return k + " " + cnt[k]; }).join(", ") || "none recorded";
+      h.push('<tr><td colspan="4"><small>'+esc(x.name.replace(/\?$/,""))+' on '+act+' days in this period. '+esc(x.fu.q)+' '+esc(txt)+'</small></td></tr>');
     });
     h.push('</tbody></table>');
     h.push('<p class="note">Averages across the cycles shown ('+A.n+' days before, '+B.n+' days after). Symptoms 0–3. Bold rows differ by 1 point or more. Day −1 is the day before bleeding starts; day 4 is the fourth day after it starts.</p>');
@@ -2733,7 +3182,7 @@ details.dtl > .dbody{ padding:0 14px 12px; }
       h.push('<tr><td>Days with movement</td><td class="num">'+pct(mvPre)+'</td><td class="num">'+pct(mvPost)+'</td></tr></tbody></table>');
       h.push('<p class="note">Average mood on days with movement: '+f1(avg(moodY))+' ('+moodY.length+' days); without: '+f1(avg(moodN))+' ('+moodN.length+' days). This shows a pattern only, not cause and effect.</p>');
     }
-    var rmeds = meds().filter(function(m){ return m.start <= t && (!m.stop || m.stop > start); });
+    var rmeds = meds().filter(function(m){ return m.start <= t && (!m.stop || m.stop > start) && (withSupp || m.kind!=="supp"); });
     if(rmeds.length){
       h.push('<h2>Medications</h2><table><thead><tr><th>Medication</th><th>Schedule</th><th class="num">Taken</th></tr></thead><tbody>');
       rmeds.forEach(function(m){
@@ -2747,7 +3196,7 @@ details.dtl > .dbody{ padding:0 14px 12px; }
         }
         var takenTxt = m.sched==="long" ? "In place" : m.sched==="prn" ? (prnDays + (prnDays===1 ? ' day' : ' days')) : (due ? Math.round(100*got/due) + '%<br><small>' + got + ' of ' + due + ' doses</small>' : '–');
         var dates = 'Since ' + fmt(m.start) + (m.stop ? ', last dose ' + fmt(addDays(m.stop,-1)) : '');
-        h.push('<tr><td><b>'+esc(m.name + (m.dose ? ' ' + m.dose : ''))+'</b><br><small>'+esc(dates)+'</small></td><td>'+esc(schedText(m))+'</td><td class="num">'+takenTxt+'</td></tr>');
+        h.push('<tr><td><b>'+esc(m.name + (m.dose ? ' ' + m.dose : ''))+'</b>'+(m.kind==="supp" ? ' <small>(supplement)</small>' : '')+'<br><small>'+esc(dates)+'</small></td><td>'+esc(schedText(m))+'</td><td class="num">'+takenTxt+'</td></tr>');
       });
       h.push('</tbody></table><p class="note">Doses are counted as taken only when ticked in the app. An unticked dose may have been taken but not recorded.</p>');
     }
@@ -2765,6 +3214,7 @@ details.dtl > .dbody{ padding:0 14px 12px; }
     flushNotes();
     var rv = (document.querySelector("input[name=rcyc]:checked")||{}).value || "6";
     var n = rv==="all" ? 9999 : +rv;
+    withSupp = document.getElementById("rptSupp").checked;
     lastReport = buildReport(n, document.getElementById("rptNotes").checked);
     document.getElementById("rptBody").innerHTML = lastReport;
     document.getElementById("rptMsg").textContent = "";
