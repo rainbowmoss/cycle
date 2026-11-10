@@ -489,6 +489,10 @@ details.dtl > .dbody{ padding:0 14px 12px; }
 .trow2 .bar{ height:10px; border-radius:6px; background:var(--btnbg); border:1px solid var(--t-tr-line); overflow:hidden; } .trow2 .bar i{ display:block; height:100%; background:var(--t-tr-yes); }
 .jsub{ display:block; margin-top:4px; font-size:.82rem; color:var(--muted); }
 .copybox{ font-family:ui-monospace,Menlo,monospace; font-size:.78rem; background:var(--t-tr); border:1px solid var(--t-tr-line); border-radius:10px; padding:10px 12px; line-height:1.5; margin:10px 0; }
+.chgsheet{ margin-top:10px; padding:14px; border-radius:14px; background:var(--t-meds); border:1px solid var(--t-meds-line); }
+.chgsheet h3{ margin:0 0 4px; font-size:1.02rem; color:var(--t-meds-ink); }
+.chgsheet label.inline{ margin:8px 0; }
+.mhist{ margin:4px 0 4px; padding-left:10px; border-left:3px solid var(--t-meds-line); font-size:.8rem; color:var(--muted); } .mhist div{ margin:2px 0; }
 [hidden]{ display:none !important; }
 @media (prefers-reduced-motion: reduce){ *{ transition:none !important; } }
 </style>
@@ -839,6 +843,7 @@ details.dtl > .dbody{ padding:0 14px 12px; }
           <legend>When do you take it?</legend>
           <label class="inline"><input type="radio" name="mfSched" value="daily" checked> Every day</label>
           <label class="inline"><input type="radio" name="mfSched" value="weekdays"> Certain days of the week</label>
+          <label class="inline"><input type="radio" name="mfSched" value="every"> Every few days</label>
           <label class="inline"><input type="radio" name="mfSched" value="luteal"> Only in the days before my period</label>
           <label class="inline"><input type="radio" name="mfSched" value="cycle"> On/off cycle (like a pill pack)</label>
           <label class="inline"><input type="radio" name="mfSched" value="prn"> As needed</label>
@@ -848,6 +853,10 @@ details.dtl > .dbody{ padding:0 14px 12px; }
         <div id="mfLutWrap" hidden>
           <label class="inline">Days before my period: <input type="number" id="mfLut" min="3" max="21" value="14" inputmode="numeric"></label>
           <p class="hint" style="margin:4px 0 0">It shows up that many days before your period is due, and stays until your period starts.</p>
+        </div>
+        <div id="mfEveryWrap" hidden>
+          <label class="inline">Every <input type="number" id="mfEvery" min="2" max="60" value="2" inputmode="numeric"> days</label>
+          <p class="hint" style="margin:4px 0 0">2 = every other day. Counts from the start date below.</p>
         </div>
         <div id="mfCycWrap" hidden>
           <label class="inline"><input type="number" id="mfOn" min="1" max="90" value="21" inputmode="numeric"> days on, then <input type="number" id="mfOff" min="1" max="60" value="7" inputmode="numeric"> days off</label>
@@ -863,6 +872,15 @@ details.dtl > .dbody{ padding:0 14px 12px; }
         <label id="mfReplaceWrap" hidden>Replace by (optional)<input type="date" id="mfReplace"></label>
         <div class="stack"><button class="btn primary" id="mfSave">Save</button><button class="btn" id="mfCancel">Cancel</button></div>
         <p class="hint" id="mfMsg" aria-live="polite"></p>
+      </div>
+      <div class="chgsheet" id="chgSheet" hidden>
+        <h3>When did this change start?</h3>
+        <p class="hint" id="chgDesc"></p>
+        <label class="inline"><input type="radio" name="chgMode" value="from" checked> <span><b>From a date onward</b><br><span class="hint">Days before that keep the old schedule.</span></span></label>
+        <label class="fld" style="margin-left:26px">Starting<input type="date" id="chgDate"></label>
+        <label class="inline"><input type="radio" name="chgMode" value="fix"> <span><b>Fix a mistake</b><br><span class="hint">Use the new schedule for all past days too.</span></span></label>
+        <div class="stack"><button class="btn primary" id="chgSave">Save change</button><button class="btn" id="chgBack">Back</button></div>
+        <p class="hint" id="chgMsg" aria-live="polite"></p>
       </div>
     </div>
 
@@ -1313,13 +1331,23 @@ details.dtl > .dbody{ padding:0 14px 12px; }
   // ---------- medications ----------
   function meds(){ if(!store.meds) store.meds = []; return store.meds; }
   function medActive(m, d){ return m.start <= d && (!m.stop || d < m.stop); }
+  function medSeg(m, d){
+    var curFrom = m.cfrom || m.start;
+    if(!d || !m.hist || !m.hist.length || d >= curFrom) return {p:m, from:curFrom};
+    var best = null;
+    m.hist.forEach(function(h){ if(h.from <= d && (!best || h.from > best.from)) best = h; });
+    best = best || m.hist[0];
+    return {p:best, from:best.from};
+  }
   function medDue(m, d){
     if(!medActive(m, d)) return false;
-    if(m.sched==="daily") return true;
-    if(m.sched==="weekdays") return (m.days||[]).indexOf(parse(d).getDay()) >= 0;
-    if(m.sched==="cycle"){ var on = m.on||21, off = m.off||7, idx = diffDays(m.start, d) % (on+off); return idx < on; }
-    if(m.sched==="luteal"){
-      var ons = onsets(), lastOn = null, nextOn = null, N = m.lut || 14;
+    var sg = medSeg(m, d), p = sg.p;
+    if(p.sched==="daily") return true;
+    if(p.sched==="weekdays") return (p.days||[]).indexOf(parse(d).getDay()) >= 0;
+    if(p.sched==="cycle"){ var on = p.on||21, off = p.off||7, idx = ((diffDays(sg.from, d) % (on+off)) + (on+off)) % (on+off); return idx < on; }
+    if(p.sched==="every"){ var ev = p.every||2; return ((diffDays(sg.from, d) % ev) + ev) % ev === 0; }
+    if(p.sched==="luteal"){
+      var ons = onsets(), lastOn = null, nextOn = null, N = p.lut || 14;
       for(var i=0;i<ons.length;i++){ if(ons[i]<=d) lastOn = ons[i]; else { nextOn = ons[i]; break; } }
       if(nextOn){ var b = diffDays(d, nextOn); return b>=1 && b<=N; }
       var mc = medianCycle(ons);
@@ -1328,7 +1356,8 @@ details.dtl > .dbody{ padding:0 14px 12px; }
     }
     return false;
   }
-  function medTimes(m){ return m.sched==="prn" ? ["x"] : (m.time==="both" ? ["am","pm"] : [m.time || "am"]); }
+  function medTimes(m, d){ var p = medSeg(m, d).p; return p.sched==="prn" ? ["x"] : (p.time==="both" ? ["am","pm"] : [p.time || "am"]); }
+  function medHasTicks(m){ return Object.keys(store.entries).some(function(k){ var e = store.entries[k]; return e.md && e.md[m.id] && Object.keys(e.md[m.id]).length; }); }
   var TLABEL = {am:"Morning", pm:"Evening", x:"Took it"};
   var WD = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
   function schedText(m){
@@ -1338,23 +1367,30 @@ details.dtl > .dbody{ padding:0 14px 12px; }
     if(m.sched==="luteal") return "Last " + (m.lut||14) + " days before period" + t;
     if(m.sched==="long") return "Long-acting" + (m.replace ? ", replace by " + fmt(m.replace) : "");
     if(m.sched==="cycle") return "On/off: " + (m.on||21) + " days on, " + (m.off||7) + " off";
+    if(m.sched==="every") return (m.every||2)===2 ? "Every other day" : "Every " + m.every + " days";
     return "As needed";
   }
   function medEvents(){
     var ev = [];
     meds().forEach(function(m){
       if(m.sched==="prn") return;
-      if(m.start) ev.push({d:m.start, m:m, kind: m.sched==="long" ? "inserted" : "started"});
-      if(m.stop){ var last = addDays(m.stop,-1); ev.push({d:last, m:m, kind: m.sched==="long" ? "removed" : "stopped"}); }
+      var d0 = medSeg(m, m.start).p.dose;
+      if(m.start) ev.push({d:m.start, m:m, kind: m.sched==="long" ? "inserted" : "started", label: m.name + (d0 ? " " + d0 : "") + (m.sched==="long" ? " inserted" : " started")});
+      if(m.stop){ var last = addDays(m.stop,-1); ev.push({d:last, m:m, kind: m.sched==="long" ? "removed" : "stopped", label: m.name + (m.sched==="long" ? " removed" : " stopped")}); }
+      if(m.hist && m.hist.length){
+        var bounds = m.hist.map(function(h){ return h.from; }).slice(1).concat([m.cfrom]);
+        bounds.forEach(function(b){ var p = medSeg(m, b).p; ev.push({d:b, m:m, kind:"changed", label: m.name + " changed to " + schedText(p).toLowerCase() + (p.dose ? ", " + p.dose : "")}); });
+      }
     });
     return ev.sort(function(a,b){ return a.d < b.d ? -1 : 1; });
   }
-  function medsForDay(d){ return meds().filter(function(m){ return m.sched!=="long" && medActive(m, d) && (m.sched==="prn" || medDue(m, d)); }); }
+  function medsForDay(d){ return meds().filter(function(m){ var p = medSeg(m, d).p; return p.sched!=="long" && medActive(m, d) && (p.sched==="prn" || medDue(m, d)); }); }
   function longMeds(d){ return meds().filter(function(m){ return m.sched==="long" && medActive(m, d); }); }
   function medTaken(e, m, t){ return !!(e && e.md && e.md[m.id] && e.md[m.id][t]); }
   function prnTaken(e){ return !!(e && e.md && meds().some(function(m){ return m.sched==="prn" && e.md[m.id] && e.md[m.id].x; })); }
   function anyMedTaken(e){ return !!(e && e.md && Object.keys(e.md).some(function(k){ var o = e.md[k]; return o && Object.keys(o).some(function(t){ return o[t]; }); })); }
-  function medCounter(m, d){
+  function medCounter(m0, d){
+    var sg0 = medSeg(m0, d), m = Object.assign({}, sg0.p, {start: sg0.from});
     if(m.sched==="cycle"){ var on = m.on||21, off = m.off||7, idx = diffDays(m.start, d) % (on+off); return "Day " + (idx+1) + " of " + on + " on"; }
     if(m.sched==="luteal"){
       var ons = onsets(), N = m.lut||14, lastOn = null, nextOn = null;
@@ -1367,6 +1403,7 @@ details.dtl > .dbody{ padding:0 14px 12px; }
     }
     if(m.sched==="weekdays") return (m.days||[]).slice().sort().map(function(x){ return WD[x]; }).join(", ");
     if(m.sched==="prn") return "As needed";
+    if(m.sched==="every") return (m.every||2)===2 ? "Every other day" : "Every " + m.every + " days";
     return m.time==="both" ? "Twice a day" : "";
   }
   function renderMedsCard(e){
@@ -1376,15 +1413,15 @@ details.dtl > .dbody{ padding:0 14px 12px; }
     list.forEach(function(m){
       var row = document.createElement("div"); row.className = "medrow";
       var mn = document.createElement("div"); mn.className = "mn";
-      var b = document.createElement("b"); b.textContent = m.name + (m.dose ? " " + m.dose : ""); mn.appendChild(b);
+      var dz = medSeg(m, cur).p.dose; var b = document.createElement("b"); b.textContent = m.name + (dz ? " " + dz : ""); mn.appendChild(b);
       if(m.kind==="supp"){ var tg = document.createElement("em"); tg.className = "stag"; tg.textContent = "supplement"; b.appendChild(tg); }
       var ctr = medCounter(m, cur); if(ctr){ var sp = document.createElement("span"); sp.textContent = ctr; mn.appendChild(sp); }
       var bt = document.createElement("div"); bt.className = "medbtns";
-      medTimes(m).forEach(function(t){
+      medTimes(m, cur).forEach(function(t){
         var tk = medTaken(e, m, t), x = document.createElement("button");
         x.dataset.med = m.id; x.dataset.t = t; x.setAttribute("aria-pressed", String(tk));
-        x.textContent = (t==="x" ? (tk ? "Took it" : "Took it?") : (medTimes(m).length>1 ? (t==="am" ? "AM" : "PM") : "Taken")) + (tk ? " ✓" : "");
-        x.setAttribute("aria-label", m.name + " " + (t==="x" ? "taken" : (medTimes(m).length>1 ? TLABEL[t].toLowerCase() + " dose " : "") + "taken"));
+        x.textContent = (t==="x" ? (tk ? "Took it" : "Took it?") : (medTimes(m, cur).length>1 ? (t==="am" ? "AM" : "PM") : "Taken")) + (tk ? " ✓" : "");
+        x.setAttribute("aria-label", m.name + " " + (t==="x" ? "taken" : (medTimes(m, cur).length>1 ? TLABEL[t].toLowerCase() + " dose " : "") + "taken"));
         bt.appendChild(x);
       });
       row.appendChild(mn); row.appendChild(bt); box.appendChild(row);
@@ -1394,13 +1431,13 @@ details.dtl > .dbody{ padding:0 14px 12px; }
     var allBtn = document.getElementById("medsAll"), hasSupp = meds().some(function(m){ return m.kind==="supp" && !m.stop; });
     document.getElementById("medsTitle").textContent = hasSupp ? "Meds and supplements" : "Meds";
     allBtn.hidden = sched.length < 2;
-    var allDone = sched.length && sched.every(function(m){ return medTimes(m).every(function(t){ return medTaken(e, m, t); }); });
+    var allDone = sched.length && sched.every(function(m){ return medTimes(m, cur).every(function(t){ return medTaken(e, m, t); }); });
     allBtn.setAttribute("aria-pressed", String(!!allDone)); allBtn.textContent = allDone ? "All taken ✓" : "All taken";
   }
   document.getElementById("medsAll").addEventListener("click", function(){
     var list = medsForDay(cur).filter(function(m){ return m.sched!=="prn"; }), e = ensure(cur); e.md = e.md || {};
-    var allDone = list.every(function(m){ return medTimes(m).every(function(t){ return medTaken(e, m, t); }); });
-    list.forEach(function(m){ if(allDone) delete e.md[m.id]; else { e.md[m.id] = {}; medTimes(m).forEach(function(t){ e.md[m.id][t] = true; }); } });
+    var allDone = list.every(function(m){ return medTimes(m, cur).every(function(t){ return medTaken(e, m, t); }); });
+    list.forEach(function(m){ if(allDone) delete e.md[m.id]; else { e.md[m.id] = {}; medTimes(m, cur).forEach(function(t){ e.md[m.id][t] = true; }); } });
     if(!Object.keys(e.md).length) delete e.md;
     tidy(cur); persist(); renderLog();
   });
@@ -1422,6 +1459,7 @@ details.dtl > .dbody{ padding:0 14px 12px; }
     document.getElementById("mfLutWrap").hidden = sc!=="luteal";
     document.getElementById("mfTimeWrap").hidden = true;
     document.getElementById("mfCycWrap").hidden = sc!=="cycle";
+    document.getElementById("mfEveryWrap").hidden = sc!=="every";
     document.getElementById("mfReplaceWrap").hidden = sc!=="long";
   }
   document.querySelectorAll("input[name=mfSched]").forEach(function(x){ x.addEventListener("change", syncMedForm); });
@@ -1435,6 +1473,7 @@ details.dtl > .dbody{ padding:0 14px 12px; }
     document.querySelectorAll("input[name=mfTime]").forEach(function(x){ x.checked = x.value===(m && m.time ? m.time : "am"); });
     document.getElementById("mfStart").value = m ? m.start : todayIso();
     document.getElementById("mfReplace").value = m && m.replace ? m.replace : "";
+    document.getElementById("mfEvery").value = m && m.every ? m.every : 2;
     document.getElementById("mfOn").value = m && m.on ? m.on : 21; document.getElementById("mfOff").value = m && m.off ? m.off : 7;
     document.querySelectorAll("input[name=mfKind]").forEach(function(x){ x.checked = x.value===(m && m.kind==="supp" ? "supp" : "med"); });
     document.getElementById("mfStart").max = todayIso();
@@ -1454,11 +1493,54 @@ details.dtl > .dbody{ padding:0 14px 12px; }
     var lut = Math.min(21, Math.max(3, parseInt(document.getElementById("mfLut").value,10) || 14));
     var m0 = editingMed ? meds().filter(function(x){ return x.id===editingMed; })[0] : null;
     var tm = (m0 && m0.time) || "am";
-    var m = editingMed ? meds().filter(function(x){ return x.id===editingMed; })[0] : null;
+    var nf = {name:name, dose:document.getElementById("mfDose").value.trim(), sched:sc, days:days, lut:lut, time:tm, start:st,
+      kind:(document.querySelector("input[name=mfKind]:checked")||{}).value || "med",
+      replace: sc==="long" && validIso(document.getElementById("mfReplace").value) ? document.getElementById("mfReplace").value : null};
+    if(sc==="every") nf.every = Math.min(60, Math.max(2, parseInt(document.getElementById("mfEvery").value,10) || 2));
+    if(sc==="cycle"){ nf.on = Math.max(1, parseInt(document.getElementById("mfOn").value,10) || 21); nf.off = Math.max(1, parseInt(document.getElementById("mfOff").value,10) || 7); }
+    if(m0 && !schedSame(m0, nf) && medHasTicks(m0)){ openChgSheet(m0, nf); return; }
+    var m = m0;
     if(!m){ m = {id:"m" + Date.now().toString(36)}; meds().push(m); }
-    m.name = name; m.dose = document.getElementById("mfDose").value.trim(); m.sched = sc; m.days = days; m.lut = lut; m.time = tm; m.start = st;
-    m.kind = (document.querySelector("input[name=mfKind]:checked")||{}).value || "med";
-    if(sc==="cycle"){ m.on = Math.max(1, parseInt(document.getElementById("mfOn").value,10) || 21); m.off = Math.max(1, parseInt(document.getElementById("mfOff").value,10) || 7); } m.replace = sc==="long" && validIso(document.getElementById("mfReplace").value) ? document.getElementById("mfReplace").value : null;
+    applyMedFields(m, nf);
+    persist(); closeMedForm(); renderMedsManage(); renderLog();
+  });
+  function medHistLines(m){
+    if(!m.hist || !m.hist.length) return [];
+    var segs = m.hist.concat([Object.assign({}, m, {from: m.cfrom})]), out = [];
+    segs.forEach(function(sg, i){
+      var nx = segs[i+1], txt = schedText(sg) + (sg.dose ? ", " + sg.dose : "");
+      out.push(nx ? fmt(sg.from) + " – " + fmt(addDays(nx.from,-1)) + ": " + txt : "Since " + fmt(sg.from) + ": " + txt);
+    });
+    return out.reverse();
+  }
+  var SCHED_KEYS = ["sched","days","lut","on","off","every","time","dose"];
+  function schedSnap(o){ var r = {}; SCHED_KEYS.forEach(function(k){ r[k] = o[k]===undefined || o[k]===null || o[k]==="" ? null : JSON.parse(JSON.stringify(o[k])); });
+    if(r.sched!=="weekdays") r.days = null; if(r.sched!=="luteal") r.lut = null; if(r.sched!=="cycle"){ r.on = null; r.off = null; } if(r.sched!=="every") r.every = null; return r; }
+  function schedSame(a, b){ return JSON.stringify(schedSnap(a))===JSON.stringify(schedSnap(b)); }
+  function applyMedFields(m, nf){ Object.keys(nf).forEach(function(k){ m[k] = nf[k]; }); }
+  var chgPending = null;
+  function openChgSheet(m, nf){
+    chgPending = {m:m, nf:nf};
+    var a = schedText(m) + (m.dose ? ", " + m.dose : ""), b = schedText(nf) + (nf.dose ? ", " + nf.dose : "");
+    document.getElementById("chgDesc").textContent = "You changed " + m.name + " from “" + a.toLowerCase() + "” to “" + b.toLowerCase() + "”.";
+    var minD = addDays(m.cfrom || m.start, 1), dt = document.getElementById("chgDate");
+    dt.min = minD; dt.max = todayIso(); dt.value = todayIso() < minD ? minD : todayIso();
+    document.querySelectorAll("input[name=chgMode]").forEach(function(x){ x.checked = x.value==="from"; });
+    document.getElementById("chgMsg").textContent = "";
+    document.getElementById("medForm").hidden = true; document.getElementById("chgSheet").hidden = false;
+    document.getElementById("chgSheet").scrollIntoView({block:"nearest"});
+  }
+  document.getElementById("chgBack").addEventListener("click", function(){ document.getElementById("chgSheet").hidden = true; document.getElementById("medForm").hidden = false; chgPending = null; });
+  document.getElementById("chgSave").addEventListener("click", function(){
+    if(!chgPending) return;
+    var m = chgPending.m, nf = chgPending.nf, mode = (document.querySelector("input[name=chgMode]:checked")||{}).value || "from";
+    var D = document.getElementById("chgDate").value, curFrom = m.cfrom || m.start;
+    if(mode==="from"){
+      if(!validIso(D)){ document.getElementById("chgMsg").textContent = "Pick the date the change started."; return; }
+      if(D > curFrom){ var seg = schedSnap(m); seg.from = curFrom; m.hist = (m.hist||[]).concat([seg]); m.cfrom = D; }
+    }
+    var keepStart = m.start; applyMedFields(m, nf); if(mode==="from") m.start = keepStart;
+    chgPending = null; document.getElementById("chgSheet").hidden = true;
     persist(); closeMedForm(); renderMedsManage(); renderLog();
   });
   function renderMedsManage(){
@@ -1467,9 +1549,11 @@ details.dtl > .dbody{ padding:0 14px 12px; }
       var d = document.createElement("div"); d.className = "medman";
       var b = document.createElement("b"); b.textContent = m.name + (m.dose ? " " + m.dose : ""); if(m.kind==="supp"){ var tg = document.createElement("em"); tg.className = "stag"; tg.textContent = "supplement"; b.appendChild(tg); } d.appendChild(b);
       var s1 = document.createElement("span"); s1.textContent = schedText(m); d.appendChild(s1);
+      var hl = medHistLines(m);
+      if(hl.length){ var hd = document.createElement("div"); hd.className = "mhist"; hl.forEach(function(t){ var x = document.createElement("div"); x.textContent = t; hd.appendChild(x); }); d.appendChild(hd); }
       var s2 = document.createElement("span"); s2.textContent = "Started " + fmt(m.start) + (m.stop ? ". Last dose " + fmt(addDays(m.stop,-1)) + "." : "."); d.appendChild(s2);
       var a = document.createElement("div"); a.className = "acts";
-      [["edit","Edit"],[m.stop ? "restart" : "stop", m.stop ? "Restart" : "Stop taking"],["del","Delete"]].forEach(function(x){
+      [["edit","Edit"],[m.stop ? "restart" : "stop", m.stop ? "Restart" : (m.sched==="long" ? "Removed" : "Stop taking")]].concat(medHasTicks(m) ? [] : [["del","Delete"]]).forEach(function(x){
         var bt = document.createElement("button"); bt.className = "linkbtn"; bt.textContent = x[1]; bt.dataset.act = x[0]; bt.dataset.id = m.id;
         if(x[0]==="del") bt.style.color = "var(--bleed)";
         a.appendChild(bt);
@@ -1897,7 +1981,7 @@ details.dtl > .dbody{ padding:0 14px 12px; }
     if(dueM.length){
       var mt = [];
       dueM.forEach(function(m){
-        var ts = medTimes(m), got = ts.filter(function(t){ return medTaken(e, m, t); }).length;
+        var ts = medTimes(m, cur), got = ts.filter(function(t){ return medTaken(e, m, t); }).length;
         if(m.sched==="long") return;
         if(m.sched==="prn"){ if(got) mt.push(m.name + " taken"); }
         else mt.push(m.name + (got===ts.length ? " taken" : got ? " partly taken" : " not ticked"));
@@ -2124,9 +2208,9 @@ details.dtl > .dbody{ padding:0 14px 12px; }
           line = "As needed. Taken on " + n + (n===1 ? " day" : " days") + (n ? ", " + nPre + " of them in the week before your period" : "") + ".";
         } else {
           var due = 0, got = 0;
-          for(var d2 = lo; d2 <= hi; d2 = addDays(d2,1)){ if(!medDue(m, d2)) continue; medTimes(m).forEach(function(tt){ due++; if(medTaken(store.entries[d2], m, tt)) got++; }); }
+          for(var d2 = lo; d2 <= hi; d2 = addDays(d2,1)){ if(!medDue(m, d2)) continue; medTimes(m, d2).forEach(function(tt){ due++; if(medTaken(store.entries[d2], m, tt)) got++; }); }
           pctv = due ? Math.round(100*got/due) : null;
-          line = schedText(m) + ". Ticked " + got + " of " + due + " doses in the cycles shown.";
+          line = (m.hist && m.hist.length ? "Now: " + schedText(m).toLowerCase() + " (changed " + fmt(m.cfrom) + ")" : schedText(m)) + ". Ticked " + got + " of " + due + " doses in the cycles shown.";
         }
         r.innerHTML = '<b></b><span></span>' + (pctv!=null ? '<div class="mbar"><i style="width:'+pctv+'%"></i></div>' : '');
         r.querySelector("b").textContent = m.name + (m.dose ? " " + m.dose : "") + (m.stop ? " (stopped)" : "");
@@ -2260,7 +2344,7 @@ details.dtl > .dbody{ padding:0 14px 12px; }
     openDayFromSvg(svgEl);
     var sc = document.createElement("div"); sc.className = "chart-scroll"; sc.appendChild(svgEl); area.appendChild(sc);
     if(evY.length){ var ml = document.createElement("div"); ml.className = "medflags";
-      evY.forEach(function(x){ var f = document.createElement("div"); f.innerHTML = '<i></i><span></span>'; f.querySelector("span").textContent = parse(x.d).toLocaleDateString(undefined,{month:"short", day:"numeric"}) + ": " + x.m.name + (x.m.dose ? " " + x.m.dose : "") + " " + x.kind; ml.appendChild(f); });
+      evY.forEach(function(x){ var f = document.createElement("div"); f.innerHTML = '<i></i><span></span>'; f.querySelector("span").textContent = parse(x.d).toLocaleDateString(undefined,{month:"short", day:"numeric"}) + ": " + (x.label || (x.m.name + (x.m.dose ? " " + x.m.dose : "") + " " + x.kind)); ml.appendChild(f); });
       area.appendChild(ml); }
   }
   document.querySelectorAll("#rangeSel button").forEach(function(b){
@@ -3193,11 +3277,11 @@ details.dtl > .dbody{ padding:0 14px 12px; }
           var ee = store.entries[dd];
           if(m.sched==="prn"){ if(medTaken(ee, m, "x")) prnDays++; continue; }
           if(!medDue(m, dd)) continue;
-          medTimes(m).forEach(function(tt2){ due++; if(medTaken(ee, m, tt2)) got++; });
+          medTimes(m, dd).forEach(function(tt2){ due++; if(medTaken(ee, m, tt2)) got++; });
         }
         var takenTxt = m.sched==="long" ? "In place" : m.sched==="prn" ? (prnDays + (prnDays===1 ? ' day' : ' days')) : (due ? Math.round(100*got/due) + '%<br><small>' + got + ' of ' + due + ' doses</small>' : '–');
         var dates = 'Since ' + fmt(m.start) + (m.stop ? ', last dose ' + fmt(addDays(m.stop,-1)) : '');
-        h.push('<tr><td><b>'+esc(m.name + (m.dose ? ' ' + m.dose : ''))+'</b>'+(m.kind==="supp" ? ' <small>(supplement)</small>' : '')+'<br><small>'+esc(dates)+'</small></td><td>'+esc(schedText(m))+'</td><td class="num">'+takenTxt+'</td></tr>');
+        h.push('<tr><td><b>'+esc(m.name + (m.dose ? ' ' + m.dose : ''))+'</b>'+(m.kind==="supp" ? ' <small>(supplement)</small>' : '')+'<br><small>'+esc(dates)+'</small></td><td>'+esc(medHistLines(m).length ? medHistLines(m).slice().reverse().join("; ") : schedText(m))+'</td><td class="num">'+takenTxt+'</td></tr>');
       });
       h.push('</tbody></table><p class="note">Doses are counted as taken only when ticked in the app. An unticked dose may have been taken but not recorded.</p>');
     }
