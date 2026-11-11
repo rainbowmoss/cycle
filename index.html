@@ -493,6 +493,9 @@ details.dtl > .dbody{ padding:0 14px 12px; }
 .chgsheet h3{ margin:0 0 4px; font-size:1.02rem; color:var(--t-meds-ink); }
 .chgsheet label.inline{ margin:8px 0; }
 .mhist{ margin:4px 0 4px; padding-left:10px; border-left:3px solid var(--t-meds-line); font-size:.8rem; color:var(--muted); } .mhist div{ margin:2px 0; }
+.dragh{ touch-action:none; cursor:grab; background:var(--bg); border:1px solid var(--line); border-radius:9px; padding:6px 10px; font-size:1.1rem; color:var(--muted); letter-spacing:-2px; line-height:1; }
+#trackListSet.reordering .row2{ transition:box-shadow .15s; }
+#trackListSet .row2.dragging{ background:var(--surface); box-shadow:0 6px 18px rgba(0,0,0,.18); border-radius:10px; position:relative; z-index:2; }
 [hidden]{ display:none !important; }
 @media (prefers-reduced-motion: reduce){ *{ transition:none !important; } }
 </style>
@@ -787,8 +790,9 @@ details.dtl > .dbody{ padding:0 14px 12px; }
     </div>
 
     <div class="block prose" id="trackSetup">
-      <h2>My trackers</h2>
+      <div class="medhead"><h2 style="margin:0">My trackers</h2><button class="linkbtn" id="trReorderBtn" hidden>Reorder</button></div>
       <p class="hint">Add your own questions: how much (None to Severe), yes/no, a number (like coffees), or pick one of your own options (like Left / Right / Both). A question can show every day, or only after a specific symptom is rated.</p>
+      <p class="hint" id="trReorderHint" hidden>Hold and drag ⋮⋮ to reorder. You can also tap a handle and use the arrow keys.</p>
       <div class="kindlist" id="trackListSet"></div>
       <div class="stack"><button class="btn" id="trackAddOpen">Add a question</button></div>
       <div class="medform" id="trForm" hidden>
@@ -1791,13 +1795,22 @@ details.dtl > .dbody{ padding:0 14px 12px; }
   // settings
   var trEditing = null;
   function trTypeText(t){ return ({sev:"How much", yn:"Yes / No", num:"Number" + (t.unit ? ", " + t.unit : ""), pick:"Pick one: " + (t.options||[]).join(", ")})[t.type] + (t.place==="item" ? ". After: " + ITEMS[t.item] : ". Every day") + (t.fu ? ". Follow-up: " + t.fu.q.replace(/\?$/,"") : "") + (t.note ? ". Notes on" : ""); }
+  var trReorder = false;
   function renderTrackSettings(){
     var box = document.getElementById("trackListSet"); box.innerHTML = "";
-    trackers().filter(function(x){ return !x.off; }).forEach(function(t){
-      var r = document.createElement("div"); r.className = "row2";
-      r.innerHTML = '<span class="nm"><span></span><small></small></span><span class="acts2"><button class="linkbtn" data-ed="1">Edit</button><button class="x" aria-label="Remove">×</button></span>';
+    var act = trackers().filter(function(x){ return !x.off; });
+    if(act.length < 2) trReorder = false;
+    var rb = document.getElementById("trReorderBtn"); rb.hidden = act.length < 2; rb.textContent = trReorder ? "Done" : "Reorder";
+    document.getElementById("trReorderHint").hidden = !trReorder;
+    document.getElementById("trackAddOpen").hidden = trReorder || !document.getElementById("trForm").hidden;
+    box.classList.toggle("reordering", trReorder);
+    act.forEach(function(t){
+      var r = document.createElement("div"); r.className = "row2"; r.dataset.t = t.id;
+      if(trReorder) r.innerHTML = '<span class="nm"><span></span><small></small></span><span class="acts2"><button class="dragh" aria-label="">⋮⋮</button></span>';
+      else r.innerHTML = '<span class="nm"><span></span><small></small></span><span class="acts2"><button class="linkbtn" data-ed="1">Edit</button><button class="x" aria-label="Remove">×</button></span>';
       r.querySelector(".nm span").textContent = t.name; r.querySelector(".nm small").textContent = trTypeText(t);
-      r.querySelector("[data-ed]").dataset.t = t.id; var x = r.querySelector(".x"); x.dataset.t = t.id; x.setAttribute("aria-label", "Remove " + t.name);
+      if(trReorder){ var h = r.querySelector(".dragh"); h.dataset.t = t.id; h.setAttribute("aria-label", "Move " + t.name + ". Use arrow keys or drag."); }
+      else { r.querySelector("[data-ed]").dataset.t = t.id; var x = r.querySelector(".x"); x.dataset.t = t.id; x.setAttribute("aria-label", "Remove " + t.name); }
       box.appendChild(r);
     });
     var sel = document.getElementById("tfItem");
@@ -1807,6 +1820,48 @@ details.dtl > .dbody{ padding:0 14px 12px; }
       sel.value = "17";
     }
   }
+  function saveTrOrder(ids){
+    var all = trackers(), byId = {}; all.forEach(function(t){ byId[t.id] = t; });
+    var ordered = ids.map(function(id){ return byId[id]; }).filter(Boolean);
+    all.forEach(function(t){ if(ordered.indexOf(t)<0) ordered.push(t); });
+    store.trackers = ordered; persist(); renderLog();
+  }
+  document.getElementById("trReorderBtn").addEventListener("click", function(){
+    trReorder = !trReorder; if(trReorder) closeTrForm(); renderTrackSettings();
+  });
+  (function(){
+    var box = document.getElementById("trackListSet"), drag = null;
+    box.addEventListener("pointerdown", function(ev){
+      var h = ev.target.closest(".dragh"); if(!h || !trReorder) return;
+      ev.preventDefault();
+      var row = h.closest(".row2"); drag = {row:row, id:ev.pointerId};
+      row.classList.add("dragging"); try{ h.setPointerCapture(ev.pointerId); }catch(e){}
+    });
+    box.addEventListener("pointermove", function(ev){
+      if(!drag) return; ev.preventDefault();
+      var rows = [].slice.call(box.querySelectorAll(".row2")), y = ev.clientY;
+      for(var i=0;i<rows.length;i++){
+        var r = rows[i]; if(r===drag.row) continue;
+        var bb = r.getBoundingClientRect(), mid = bb.top + bb.height/2;
+        var before = drag.row.compareDocumentPosition(r) & Node.DOCUMENT_POSITION_PRECEDING;
+        if(before && y < mid){ box.insertBefore(drag.row, r); break; }
+        if(!before && y > mid){ box.insertBefore(drag.row, r.nextSibling); }
+      }
+    });
+    function end(){
+      if(!drag) return; drag.row.classList.remove("dragging"); drag = null;
+      saveTrOrder([].slice.call(box.querySelectorAll(".row2")).map(function(r){ return r.dataset.t; }));
+    }
+    box.addEventListener("pointerup", end); box.addEventListener("pointercancel", end);
+    box.addEventListener("keydown", function(ev){
+      var h = ev.target.closest(".dragh"); if(!h || (ev.key!=="ArrowUp" && ev.key!=="ArrowDown")) return;
+      ev.preventDefault();
+      var ids = [].slice.call(box.querySelectorAll(".row2")).map(function(r){ return r.dataset.t; }), i = ids.indexOf(h.dataset.t), j = ev.key==="ArrowUp" ? i-1 : i+1;
+      if(j<0 || j>=ids.length) return;
+      ids.splice(j, 0, ids.splice(i,1)[0]); saveTrOrder(ids); renderTrackSettings();
+      var nh = box.querySelector('.dragh[data-t="'+h.dataset.t+'"]'); if(nh) nh.focus();
+    });
+  })();
   function tfType(){ return (document.querySelector("input[name=tfType]:checked")||{}).value || "sev"; }
   function tfPlace(){ return (document.querySelector("input[name=tfPlace]:checked")||{}).value || "daily"; }
   function syncTrForm(){
@@ -1838,7 +1893,7 @@ details.dtl > .dbody{ padding:0 14px 12px; }
     syncTrForm(); document.getElementById("tfName").focus();
   }
   function closeTrForm(){ document.getElementById("trForm").hidden = true; document.getElementById("trackAddOpen").hidden = false; trEditing = null; }
-  document.getElementById("trackAddOpen").addEventListener("click", function(){ renderTrackSettings(); openTrForm(null); });
+  document.getElementById("trackAddOpen").addEventListener("click", function(){ trReorder = false; renderTrackSettings(); openTrForm(null); });
   document.getElementById("tfCancel").addEventListener("click", closeTrForm);
   document.getElementById("tfFuAdd").addEventListener("click", function(){ document.getElementById("tfFuBox").hidden = false; document.getElementById("tfFuAdd").hidden = true; document.getElementById("tfFuQ").focus(); });
   document.getElementById("tfFuRemove").addEventListener("click", function(){ document.getElementById("tfFuBox").hidden = true; document.getElementById("tfFuAdd").hidden = false; });
